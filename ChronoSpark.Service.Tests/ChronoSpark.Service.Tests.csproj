@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\WindowsService1\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Shouldly">
+      <HintPath>..\WindowsService1\packages\Shouldly.1.1.1.1\lib\35\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -52,6 +58,19 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChronoSpark.Data.Entities\ChronoSpark.Data.Entities.csproj">
+      <Project>{3f685749-2b45-4142-a681-8f27348f64b4}</Project>
+      <Name>ChronoSpark.Data.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsService1\ChronoSpark.Service.csproj">
+      <Project>{049a4861-0fdc-47d1-b87f-6469b9c9e6b1}</Project>
+      <Name>ChronoSpark.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
