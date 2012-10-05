@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1456BA80-8987-48D7-BD00-EB688AD9A47E}</ProjectGuid>
+    <ProjectGuid>{0A2DE804-6232-4F9A-A89E-D55835536467}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChronoSpark.Service.Tests</RootNamespace>
@@ -35,11 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\WindowsService1\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="Shouldly">
-      <HintPath>..\WindowsService1\packages\Shouldly.1.1.1.1\lib\35\Shouldly.dll</HintPath>
+      <HintPath>..\packages\Shouldly.1.1.1.1\lib\35\Shouldly.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -56,7 +56,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CIEnvTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,8 +67,8 @@
       <Project>{3f685749-2b45-4142-a681-8f27348f64b4}</Project>
       <Name>ChronoSpark.Data.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsService1\ChronoSpark.Service.csproj">
-      <Project>{049a4861-0fdc-47d1-b87f-6469b9c9e6b1}</Project>
+    <ProjectReference Include="..\ChronoSpark.Service\ChronoSpark.Service.csproj">
+      <Project>{e06f40ca-639c-4ea8-89df-216e8ce27813}</Project>
       <Name>ChronoSpark.Service</Name>
     </ProjectReference>
   </ItemGroup>

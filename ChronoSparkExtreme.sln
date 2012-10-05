@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Data", "ChronoSpark.Data\ChronoSpark.Data.csproj", "{2EC5C30E-E889-4B5B-9D73-95F18A12E739}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Data.Entities", "ChronoSpark.Data.Entities\ChronoSpark.Data.Entities.csproj", "{3F685749-2B45-4142-A681-8F27348F64B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Logic", "ChronoSpark.Logic\ChronoSpark.Logic.csproj", "{ECCA1BFF-8379-4853-BA5B-D485D48DCF93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Common", "ChronoSpark.Common\ChronoSpark.Common.csproj", "{5F6C0401-A900-46AC-9C3C-7401C47E38C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Clients.Cli", "ChronoSpark.Clients.Cli\ChronoSpark.Clients.Cli.csproj", "{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{60BBA3F2-3D5F-45D5-9AEF-BB89601DAC38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Service", "ChronoSpark.Service\ChronoSpark.Service.csproj", "{E06F40CA-639C-4EA8-89DF-216E8CE27813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Service.Tests", "ChronoSpark.Service.Tests\ChronoSpark.Service.Tests.csproj", "{0A2DE804-6232-4F9A-A89E-D55835536467}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.Logic.Tests", "ChronoSpark.Logic.Tests\ChronoSpark.Logic.Tests.csproj", "{786217EF-2A9D-4ACA-B267-6CDDA5F0242B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{12753B1D-9617-4123-8EED-6CB2A77789AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.WebClient", "ChronoSpark.WebClient\ChronoSpark.WebClient.csproj", "{807B9659-3D59-42A8-9297-E30939849C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoSpark.WebClient.Tests", "ChronoSpark.WebClient.Tests\ChronoSpark.WebClient.Tests.csproj", "{B980398D-6CA7-458C-876B-32D9F4DB33BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{CD6FE368-28B6-45C4-9539-CA827C4D0CE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EC5C30E-E889-4B5B-9D73-95F18A12E739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC5C30E-E889-4B5B-9D73-95F18A12E739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC5C30E-E889-4B5B-9D73-95F18A12E739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC5C30E-E889-4B5B-9D73-95F18A12E739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F685749-2B45-4142-A681-8F27348F64B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F685749-2B45-4142-A681-8F27348F64B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F685749-2B45-4142-A681-8F27348F64B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F685749-2B45-4142-A681-8F27348F64B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECCA1BFF-8379-4853-BA5B-D485D48DCF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECCA1BFF-8379-4853-BA5B-D485D48DCF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECCA1BFF-8379-4853-BA5B-D485D48DCF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECCA1BFF-8379-4853-BA5B-D485D48DCF93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F6C0401-A900-46AC-9C3C-7401C47E38C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6C0401-A900-46AC-9C3C-7401C47E38C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6C0401-A900-46AC-9C3C-7401C47E38C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6C0401-A900-46AC-9C3C-7401C47E38C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E06F40CA-639C-4EA8-89DF-216E8CE27813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E06F40CA-639C-4EA8-89DF-216E8CE27813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E06F40CA-639C-4EA8-89DF-216E8CE27813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E06F40CA-639C-4EA8-89DF-216E8CE27813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A2DE804-6232-4F9A-A89E-D55835536467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A2DE804-6232-4F9A-A89E-D55835536467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A2DE804-6232-4F9A-A89E-D55835536467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A2DE804-6232-4F9A-A89E-D55835536467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786217EF-2A9D-4ACA-B267-6CDDA5F0242B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786217EF-2A9D-4ACA-B267-6CDDA5F0242B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786217EF-2A9D-4ACA-B267-6CDDA5F0242B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786217EF-2A9D-4ACA-B267-6CDDA5F0242B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807B9659-3D59-42A8-9297-E30939849C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807B9659-3D59-42A8-9297-E30939849C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807B9659-3D59-42A8-9297-E30939849C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807B9659-3D59-42A8-9297-E30939849C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B980398D-6CA7-458C-876B-32D9F4DB33BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B980398D-6CA7-458C-876B-32D9F4DB33BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B980398D-6CA7-458C-876B-32D9F4DB33BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B980398D-6CA7-458C-876B-32D9F4DB33BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A2DE804-6232-4F9A-A89E-D55835536467} = {60BBA3F2-3D5F-45D5-9AEF-BB89601DAC38}
+		{786217EF-2A9D-4ACA-B267-6CDDA5F0242B} = {60BBA3F2-3D5F-45D5-9AEF-BB89601DAC38}
+		{B980398D-6CA7-458C-876B-32D9F4DB33BC} = {60BBA3F2-3D5F-45D5-9AEF-BB89601DAC38}
+		{0D2DDBE3-46E2-4F31-8910-4D0DF253EAFC} = {12753B1D-9617-4123-8EED-6CB2A77789AA}
+		{807B9659-3D59-42A8-9297-E30939849C07} = {12753B1D-9617-4123-8EED-6CB2A77789AA}
+		{2EC5C30E-E889-4B5B-9D73-95F18A12E739} = {CD6FE368-28B6-45C4-9539-CA827C4D0CE9}
+		{3F685749-2B45-4142-A681-8F27348F64B4} = {CD6FE368-28B6-45C4-9539-CA827C4D0CE9}
+	EndGlobalSection
+EndGlobal
