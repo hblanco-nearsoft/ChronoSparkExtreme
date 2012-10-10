@@ -9,8 +9,8 @@ namespace ChronoSpark.Data.Entities
     public class Task
     {
         public string ID { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public DateTime Date { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime Startdate { get; set; }
     }
 }

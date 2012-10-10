@@ -12,15 +12,20 @@ namespace ChronoSpark.Data
 {
     public interface IRepository
     {
+        bool Initialize();
+        bool Cleanup();
         bool Add<T>(T task);
+        bool Update<T>(T task);
+        bool Dcelete<T>(T task);
+       
     }
 
-    public class Repository
+    public class Repository : IRepository
     { 
         private DocumentStore Docstore;
 
         public bool Initialize() {
-            Docstore = new EmbeddableDocumentStore{ConnectionStringName="RavenDB", UseEmbeddedHttpServer=true}; // connection string where art thou?
+            Docstore = new EmbeddableDocumentStore{ConnectionStringName="RavenDB", UseEmbeddedHttpServer=true}; //http server needed??
         Docstore.Initialize();
         return true;
         }
@@ -44,10 +49,8 @@ namespace ChronoSpark.Data
         {
             using (var Session = Docstore.OpenSession())
             {
-                String TaskID;
-                TaskID = "Task";  //get the id
-                var task = Session.Load<Task>(TaskID);
-                Session.Delete(Task);
+                var task = Session.Load<Task>("Task.ID");
+                Session.Store(task);
                 Session.SaveChanges();
             
             }
@@ -59,9 +62,9 @@ namespace ChronoSpark.Data
         {
             using (var Session = Docstore.OpenSession())
             {
-                String TaskID;
-                TaskID = "Task";
-                var task = Session.Load<Task>(TaskID);
+                var task = Session.Load<Task>("Task.ID");
+                Session.Delete(task);
+                Session.SaveChanges();
             }
                return true;
         }
