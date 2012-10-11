@@ -10,6 +10,18 @@ using Raven.Client.Embedded;
 
 namespace ChronoSpark.Data
 {
+    /*  General Comments
+     *  1. Move the IRepository interface to its own file.
+     *  2. Watch out the indentation, I have to reformat the document because it was all weird.
+     *  3. Watch out for naming conventions:
+     *      3.1 Use Pascal Case: DocStore, CleanUp, etc., for methods and properties.
+     *      3.2 Use "Cammel Back" notation for variables inside the methods: storedDoc, myTask, etc.
+     *  4. Try to use descriptive names, like, if you are retrieving an document from the db, don't call it
+     *     "task", that's the most generic name ever, called descriptibly: storedDocument, toDeleteTask, etc.,
+     *     the idea is that your code can be EASILY, like a sentence.
+     *  5. Once that you implement some of the annotations put here, delete them.
+     */
+
     public interface IRepository
     {
         bool Initialize();
@@ -17,57 +29,101 @@ namespace ChronoSpark.Data
         bool Add<T>(T task);
         bool Update<T>(T task);
         bool Dcelete<T>(T task);
-       
+
     }
 
     public class Repository : IRepository
-    { 
-        private DocumentStore Docstore;
+    {
+        private DocumentStore DocStore; //Let's follow C#'s convention an Pascal Case all variables
 
-        public bool Initialize() {
-            Docstore = new EmbeddableDocumentStore{ConnectionStringName="RavenDB", UseEmbeddedHttpServer=true}; //http server needed??
-        Docstore.Initialize();
-        return true;
-        }
-
-        public bool Cleanup() {
-            Docstore.Dispose();
-            return true;
-        }
-        
-        public bool Add<T>(T Task)
+        public bool Initialize()
         {
-                using (var Session = Docstore.OpenSession())
-                {
-                    Session.Store(Task);
-                    Session.SaveChanges();
-                }
-            return true;
-        }
-
-        public bool Update<T>(T Task)
-        {
-            using (var Session = Docstore.OpenSession())
+            DocStore = new EmbeddableDocumentStore()
             {
+                ConnectionStringName = "RavenDB",
+                UseEmbeddedHttpServer = true
+            }; //http server needed?? No. And you can even get the Management Studio running: http://goo.gl/cEn9g
+
+            DocStore.Initialize();
+            return true;
+        }
+
+        public bool Cleanup()
+        {
+            /*  Validation Missing:
+                    1. What if we call Cleanup and DocStore is null?
+             */
+
+            /* Design Note: This cleanup would be better if we doing in the Dispose method of
+             * IDisposable interface, make this class implement that.
+                http://goo.gl/GwXQQ
+             */
+
+            DocStore.Dispose();
+            return true;
+        }
+
+        public bool Add<T>(T task)
+        {
+            using (var Session = DocStore.OpenSession())
+            {
+<<<<<<< HEAD
                 Task task = Session.Load<Task>("Task.ID");
                 Session.Store(Task);
+=======
+                /*  Validations Missing 
+                 *  1. You never checked for task being null or empty.
+                 *  2. You never checked that task has all the necessary property field out
+                 *      2.1 What would happend if task doesn't have a description or a time amount?
+                 */
+
+                Session.Store(task);
+>>>>>>> origin/master
                 Session.SaveChanges();
-            
+            }
+            return true;
+        }
+
+        public bool Update<T>(T task)
+        {
+            using (var Session = DocStore.OpenSession())
+            {
+                /*  Validation Missing
+                 *  1. You are not checking that the storedTask actually exists
+                 *  2. You are not checking the that task is not null or empty
+                 *  3. You are not checking that task has a valid ID.
+                 */
+
+                var storedTask = Session.Load<Task>("Task.ID");
+                /*When and how are you putting the values of task into the object that you got from the 
+                 * session? Let's use something called ValueInjecter, is a object mapper. http://goo.gl/izdEm
+                 * You can install that via Nuget.
+                */
+                Session.Store(task);
+                Session.SaveChanges();
             }
 
             return true;
         }
 
-        public bool Delete<T>(T Task)
+        public bool Delete<T>(T task)
         {
-            using (var Session = Docstore.OpenSession())
+            using (var Session = DocStore.OpenSession())
             {
-                var task = Session.Load<Task>("Task.ID");
-                Session.Delete(task);
-                Session.SaveChanges();
-            }
-               return true;
-        }
+                /* Validations Missing 
+                 *  1. Check that the task is not null or empty
+                 *  2. Check that task has a valid id
+                 *  3. Check that the id that you want to delete, actually exists and that you can delete.
+                 *  4. I don't know right now if we are going to have a special rule for deletion, but if
+                 *     we decide so, we would need to also delete it.
+                 */
 
+                var storedTask = Session.Load<Task>("Task.ID");
+                Session.Delete(storedTask);
+                Session.SaveChanges();
+
+                return true;
+            }
         }
     }
+}

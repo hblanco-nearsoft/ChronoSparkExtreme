@@ -12,5 +12,9 @@ namespace ChronoSpark.Data.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Startdate { get; set; }
+
+        //How are we going to messure the duration of a task?
+        //How are we going to track who is editing this task?
+        //Do you think we are going to be needing somekind of permissions schema?
     }
 }
