@@ -49,8 +49,8 @@ namespace ChronoSpark.Data
         {
             using (var Session = Docstore.OpenSession())
             {
-                var task = Session.Load<Task>("Task.ID");
-                Session.Store(task);
+                Task task = Session.Load<Task>("Task.ID");
+                Session.Store(Task);
                 Session.SaveChanges();
             
             }
