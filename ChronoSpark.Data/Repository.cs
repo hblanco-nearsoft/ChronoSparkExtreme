@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Raven.Client.Document;
 using Raven.Client.Connection;
 using Raven.Client.Embedded;
+using System.Runtime.InteropServices;
 
 
 namespace ChronoSpark.Data
@@ -21,36 +22,30 @@ namespace ChronoSpark.Data
      *     the idea is that your code can be EASILY, like a sentence.
      *  5. Once that you implement some of the annotations put here, delete them.
      */
-
-    public interface IRepository
-    {
-        bool Initialize();
-        bool Cleanup();
-        bool Add<T>(T task);
-        bool Update<T>(T task);
-        bool Dcelete<T>(T task);
-
-    }
-
-    public class Repository : IRepository
+    public class Repository : IRepository, IDisposable
     {
         private DocumentStore DocStore; //Let's follow C#'s convention an Pascal Case all variables
+        private bool Disposed = false;
 
         public bool Initialize()
         {
             DocStore = new EmbeddableDocumentStore()
             {
-                ConnectionStringName = "RavenDB",
-                UseEmbeddedHttpServer = true
+                ConnectionStringName = "RavenDB"
             }; //http server needed?? No. And you can even get the Management Studio running: http://goo.gl/cEn9g
 
             DocStore.Initialize();
             return true;
         }
 
-        public bool Cleanup()
+        public bool CleanUp()
         {
-            /*  Validation Missing:
+            return true;
+        }
+
+        public virtual bool Dispose(bool disposing)
+        {
+              /*  Validation Missing:
                     1. What if we call Cleanup and DocStore is null?
              */
 
@@ -58,8 +53,24 @@ namespace ChronoSpark.Data
              * IDisposable interface, make this class implement that.
                 http://goo.gl/GwXQQ
              */
+            if (!Disposed)
+            {
+                if (disposing)
+                {
+                    if (DocStore != null)
+                    {
+                        DocStore.Dispose();
+                    }
+                }
+                Disposed = true;
+            }
+            return true;
+        }
 
-            DocStore.Dispose();
+        public bool Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
             return true;
         }
 
@@ -67,18 +78,16 @@ namespace ChronoSpark.Data
         {
             using (var Session = DocStore.OpenSession())
             {
-<<<<<<< HEAD
-                Task task = Session.Load<Task>("Task.ID");
-                Session.Store(Task);
-=======
+
+                Task newTask = Session.Load<Task>("Task.ID");
+                Session.Store(newTask);
                 /*  Validations Missing 
                  *  1. You never checked for task being null or empty.
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
 
-                Session.Store(task);
->>>>>>> origin/master
+                Session.Store(newTask);
                 Session.SaveChanges();
             }
             return true;
