@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChronoSpark.Data
 {
-    public interface IDisposable
-    {
-        void Dispose();
-    }
+    //public interface IDisposable
+    //{
+    //    void Dispose();
+    //}
 }

@@ -7,22 +7,17 @@ using Raven.Client.Document;
 using Raven.Client.Connection;
 using Raven.Client.Embedded;
 using System.Runtime.InteropServices;
-
+using Omu.ValueInjecter;
+using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Data
 {
     /*  General Comments
-     *  1. Move the IRepository interface to its own file.
-     *  2. Watch out the indentation, I have to reformat the document because it was all weird.
-     *  3. Watch out for naming conventions:
-     *      3.1 Use Pascal Case: DocStore, CleanUp, etc., for methods and properties.
-     *      3.2 Use "Cammel Back" notation for variables inside the methods: storedDoc, myTask, etc.
-     *  4. Try to use descriptive names, like, if you are retrieving an document from the db, don't call it
+     *     Try to use descriptive names, like, if you are retrieving an document from the db, don't call it
      *     "task", that's the most generic name ever, called descriptibly: storedDocument, toDeleteTask, etc.,
      *     the idea is that your code can be EASILY, like a sentence.
-     *  5. Once that you implement some of the annotations put here, delete them.
      */
-    public class Repository : IRepository, IDisposable
+    public class Repository : IRepository, IDisposable 
     {
         private DocumentStore DocStore; //Let's follow C#'s convention an Pascal Case all variables
         private bool Disposed = false;
@@ -31,7 +26,8 @@ namespace ChronoSpark.Data
         {
             DocStore = new EmbeddableDocumentStore()
             {
-                ConnectionStringName = "RavenDB"
+                ConnectionStringName = "RavenDB",
+                UseEmbeddedHttpServer = true
             }; //http server needed?? No. And you can even get the Management Studio running: http://goo.gl/cEn9g
 
             DocStore.Initialize();
@@ -59,7 +55,7 @@ namespace ChronoSpark.Data
                 {
                     if (DocStore != null)
                     {
-                        DocStore.Dispose();
+                         DocStore.Dispose();
                     }
                 }
                 Disposed = true;
@@ -74,26 +70,25 @@ namespace ChronoSpark.Data
             return true;
         }
 
-        public bool Add<T>(T task)
+        public bool Add<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
-
-                Task newTask = Session.Load<Task>("Task.ID");
-                Session.Store(newTask);
+                //var doc = Session.Load<T>(task.LoadString());
+                //Session.Store(newTask);
                 /*  Validations Missing 
                  *  1. You never checked for task being null or empty.
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
 
-                Session.Store(newTask);
+                Session.Store(task);
                 Session.SaveChanges();
             }
             return true;
         }
 
-        public bool Update<T>(T task)
+        public bool Update<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
@@ -102,20 +97,16 @@ namespace ChronoSpark.Data
                  *  2. You are not checking the that task is not null or empty
                  *  3. You are not checking that task has a valid ID.
                  */
-
-                var storedTask = Session.Load<Task>("Task.ID");
-                /*When and how are you putting the values of task into the object that you got from the 
-                 * session? Let's use something called ValueInjecter, is a object mapper. http://goo.gl/izdEm
-                 * You can install that via Nuget.
-                */
-                Session.Store(task);
+                var doc = Session.Load<T>(task.LoadString());
+                doc.InjectFrom(task);
+                Session.Store(doc);
                 Session.SaveChanges();
             }
 
             return true;
         }
 
-        public bool Delete<T>(T task)
+        public bool Delete<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
@@ -127,12 +118,17 @@ namespace ChronoSpark.Data
                  *     we decide so, we would need to also delete it.
                  */
 
-                var storedTask = Session.Load<Task>("Task.ID");
-                Session.Delete(storedTask);
+                var doc = Session.Load<T>(task.LoadString());
+                Session.Delete(doc);
                 Session.SaveChanges();
 
                 return true;
             }
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
