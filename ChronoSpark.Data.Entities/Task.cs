@@ -8,13 +8,8 @@ namespace ChronoSpark.Data.Entities
 {
     public enum TaskState
     {
-
-    }
-
-    public interface IRavenEntity
-    {
-        String ID { get; set; }
-        String LoadString();
+        InProgress,
+        Finished
     }
     
     public class Task : IRavenEntity      
@@ -26,15 +21,28 @@ namespace ChronoSpark.Data.Entities
         public DateTime StartDate { get; set; }
         public int Duration { get; set; } //In minutes
         public TaskState State { get; set; }
-        
-        
-        //How are we going to messure the duration of a task?
+        public String LastEditedBy { get; set; }
         //How are we going to track who is editing this task?
-        //Do you think we are going to be needing somekind of permissions schema?
+        public bool SelfValidate()
+        {
+            if (ID != null) 
+            {
+                if (Description != null)
+                {
+                    if (Duration != null) 
+                    {
+                        return true;
+                    }
+                    return false; 
+                }
+                return false;
+            }
+            return false;
+        }
 
         public string LoadString()
         {
-            return "Task.ID";
+            return ID;
         }
     }
 }

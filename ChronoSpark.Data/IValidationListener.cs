@@ -9,8 +9,8 @@ namespace ChronoSpark.Data
 {
     public interface IValidationListener
     {
-  //      public void Register<T>(Action<T> validate);
-  //      public bool BeforeStore(string key, object entityInstance, RavenJObject metadata, RavenJObject original);
-  //      public void AfterStore(string key, object entityInstance, RavenJObject metadata);
+        void Register<T>(Action<T> validate);
+        bool BeforeStore(string key, object entityInstance, RavenJObject metadata, RavenJObject original);
+        void AfterStore(string key, object entityInstance, RavenJObject metadata);
     }
 }

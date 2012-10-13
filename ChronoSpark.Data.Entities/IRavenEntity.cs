@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChronoSpark.Data
 {
-    //public interface IDisposable
-    //{
-    //    void Dispose();
-    //}
+    public interface IRavenEntity
+    {
+        String ID { get; set; }
+        String LoadString();
+        bool SelfValidate();
+    }
 }

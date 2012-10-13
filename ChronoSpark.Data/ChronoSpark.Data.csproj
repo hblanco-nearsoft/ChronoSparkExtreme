@@ -105,7 +105,6 @@
   <ItemGroup>
     <Compile Include="IValidationListener.cs" />
     <Compile Include="ValidationListener.cs" />
-    <Compile Include="IDisposable.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

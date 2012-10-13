@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ChronoSpark.Data
 {
-    public interface IRepository
+    public interface IRepository 
     {
         bool Initialize();
         bool CleanUp();
-        bool Add<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity;
-        bool Update<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity;
-        bool Delete<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity;
+        bool Add<T>(T task) where T : class, IRavenEntity;
+        bool Update<T>(T task) where T : class, IRavenEntity;
+        bool Delete<T>(T task) where T : class, IRavenEntity; 
 
     }
 }

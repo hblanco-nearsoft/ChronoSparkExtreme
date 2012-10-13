@@ -8,7 +8,6 @@ using Raven.Client.Connection;
 using Raven.Client.Embedded;
 using System.Runtime.InteropServices;
 using Omu.ValueInjecter;
-using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Data
 {
@@ -28,7 +27,7 @@ namespace ChronoSpark.Data
             {
                 ConnectionStringName = "RavenDB",
                 UseEmbeddedHttpServer = true
-            }; //http server needed?? No. And you can even get the Management Studio running: http://goo.gl/cEn9g
+            }; 
 
             DocStore.Initialize();
             return true;
@@ -67,10 +66,18 @@ namespace ChronoSpark.Data
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+             if (!Disposed)
+            {
+                    if (DocStore != null)
+                    {
+                         DocStore.Dispose();
+                    }
+                Disposed = true;
+            }
             return true;
         }
 
-        public bool Add<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
+        public bool Add<T>(T task) where T : class, IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
@@ -81,14 +88,17 @@ namespace ChronoSpark.Data
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
-
-                Session.Store(task);
-                Session.SaveChanges();
-            }
-            return true;
+                if (task.SelfValidate())
+                {
+                    Session.Store(task);
+                    Session.SaveChanges();
+                    return true;
+                }
+                return false;
+            }  
         }
 
-        public bool Update<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
+        public bool Update<T>(T task) where T : class, IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
@@ -99,18 +109,21 @@ namespace ChronoSpark.Data
                  */
                 var doc = Session.Load<T>(task.LoadString());
                 doc.InjectFrom(task);
-                Session.Store(doc);
-                Session.SaveChanges();
-            }
-
-            return true;
+                if (doc.SelfValidate())
+                {
+                    Session.Store(doc);
+                    Session.SaveChanges();
+                    return true;
+                }
+                return false;
+            }   
         }
 
-        public bool Delete<T>(T task) where T : class, ChronoSpark.Data.Entities.IRavenEntity
+        public bool Delete<T>(T task) where T : class, IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
             {
-                /* Validations Missing 
+                /* Validations Missing  
                  *  1. Check that the task is not null or empty
                  *  2. Check that task has a valid id
                  *  3. Check that the id that you want to delete, actually exists and that you can delete.
@@ -119,16 +132,20 @@ namespace ChronoSpark.Data
                  */
 
                 var doc = Session.Load<T>(task.LoadString());
-                Session.Delete(doc);
-                Session.SaveChanges();
+                if (doc.SelfValidate())
+                {
 
-                return true;
+                    Session.Delete(doc);
+                    Session.SaveChanges();
+                    return true;
+                }
+                return false;
             }
         }
 
         void IDisposable.Dispose()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //this was created the at the same time as disopose();?
         }
     }
 }
