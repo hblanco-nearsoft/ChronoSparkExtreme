@@ -15,6 +15,8 @@ namespace ChronoSpark.Data
      *     Try to use descriptive names, like, if you are retrieving an document from the db, don't call it
      *     "task", that's the most generic name ever, called descriptibly: storedDocument, toDeleteTask, etc.,
      *     the idea is that your code can be EASILY, like a sentence.
+     *     
+     * Oct. 15. Good Work! We are almost there with the data layer, need some unit testing though.
      */
     public class Repository : IRepository, IDisposable 
     {
@@ -29,7 +31,11 @@ namespace ChronoSpark.Data
                 UseEmbeddedHttpServer = true
             }; 
 
-            DocStore.Initialize();
+            /* The initialize operation is REALLY heavy on the things it does,
+             * we need to find a way to make this call only ONCE in the whole
+             * app life cycle.
+             * */
+            DocStore.Initialize(); 
             return true;
         }
 
@@ -81,14 +87,12 @@ namespace ChronoSpark.Data
         {
             using (var Session = DocStore.OpenSession())
             {
-                //var doc = Session.Load<T>(task.LoadString());
-                //Session.Store(newTask);
                 /*  Validations Missing 
                  *  1. You never checked for task being null or empty.
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
-                if (task.SelfValidate())
+                if (task.Validate())
                 {
                     Session.Store(task);
                     Session.SaveChanges();
@@ -98,6 +102,7 @@ namespace ChronoSpark.Data
             }  
         }
 
+        //This Method is kind of cool! good work.
         public bool Update<T>(T task) where T : class, IRavenEntity
         {
             using (var Session = DocStore.OpenSession())
@@ -109,7 +114,7 @@ namespace ChronoSpark.Data
                  */
                 var doc = Session.Load<T>(task.LoadString());
                 doc.InjectFrom(task);
-                if (doc.SelfValidate())
+                if (doc.Validate())
                 {
                     Session.Store(doc);
                     Session.SaveChanges();
@@ -131,8 +136,14 @@ namespace ChronoSpark.Data
                  *     we decide so, we would need to also delete it.
                  */
 
+
+                /*  What are you going to validate here?
+                 *  Remember that we only need to have a VALID object ID to be able to delete it,
+                 *  and you are trying to load if BEFORE knowing if we have it.
+                 */
                 var doc = Session.Load<T>(task.LoadString());
-                if (doc.SelfValidate())
+                
+                if (doc.Validate()) 
                 {
 
                     Session.Delete(doc);
@@ -141,11 +152,6 @@ namespace ChronoSpark.Data
                 }else
                 return false;
             }
-        }
-
-        void IDisposable.Dispose()
-        {
-            throw new NotImplementedException(); //this was created the at the same time as disopose();?
         }
     }
 }

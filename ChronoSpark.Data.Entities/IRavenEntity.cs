@@ -10,6 +10,6 @@ namespace ChronoSpark.Data
     {
         String ID { get; set; }
         String LoadString();
-        bool SelfValidate();
+        bool Validate();
     }
 }
