@@ -29,15 +29,13 @@ namespace ChronoSpark.Data.Entities
             {
                 if (Description != null)
                 {
-                    if (Duration != null) 
+                    if (Duration != null)
                     {
                         return true;
                     }
-                    return false; 
-                }
-                return false;
+                }   
             }
-            return false;
+                return false;
         }
 
         public string LoadString()

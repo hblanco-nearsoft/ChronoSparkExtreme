@@ -93,7 +93,7 @@ namespace ChronoSpark.Data
                     Session.Store(task);
                     Session.SaveChanges();
                     return true;
-                }
+                }else
                 return false;
             }  
         }
@@ -114,7 +114,7 @@ namespace ChronoSpark.Data
                     Session.Store(doc);
                     Session.SaveChanges();
                     return true;
-                }
+                }else
                 return false;
             }   
         }
@@ -138,7 +138,7 @@ namespace ChronoSpark.Data
                     Session.Delete(doc);
                     Session.SaveChanges();
                     return true;
-                }
+                }else
                 return false;
             }
         }
