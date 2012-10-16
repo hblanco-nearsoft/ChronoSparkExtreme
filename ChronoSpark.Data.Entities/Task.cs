@@ -39,7 +39,11 @@ namespace ChronoSpark.Data.Entities
 
         public string LoadString()
         {
-            return ID; //What if this is Empty? What if I call this BEFORE having an ID?
+            if (ID.IsNotNullOrEmpty())
+            {
+                return ID; //What if this is Empty? What if I call this BEFORE having an ID?
+            }
+            return "there's no ID";
         }
     }
 }

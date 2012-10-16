@@ -8,6 +8,7 @@ using Raven.Client.Connection;
 using Raven.Client.Embedded;
 using System.Runtime.InteropServices;
 using Omu.ValueInjecter;
+using Raven.Client;
 
 namespace ChronoSpark.Data
 {
@@ -20,44 +21,66 @@ namespace ChronoSpark.Data
      */
 
     /*
-        Repository.Instance.Add<Task>(new { .. });
+        var repo = new Repostory();
+     *  repo.Add<Task>(task);
      */
     public class Repository : IRepository, IDisposable 
     {
         private DocumentStore DocStore;
         private bool Disposed = false;
 
-        #region For Singleton
-        
-        private Repository()
-        {
+        #region Constructors
 
-        } //1. There should be only ONE instance of this class
-        private static Repository _instance;
-        public static Repository Instance//3. Create a single access point
+        public Repository()
         {
-            get
-            {
-                // 2. Create a single instance
-                return _instance ?? (_instance = new Repository());
-            }
+        }
 
+        public Repository(IDocumentStore AltDocStore)
+        {
+            _docStore = AltDocStore;
+            _docStore.Initialize();
         }
 
         #endregion
+
+        //#region For Singleton
+        
+        //private Repository()
+        //{
+
+        //} //1. There should be only ONE instance of this class
+        //private static Repository _instance;
+        //public static Repository Instance//3. Create a single access point
+        //{
+        //    get
+        //    {
+        //        // 2. Create a single instance
+        //        return _instance ?? (_instance = new Repository());
+        //    }
+
+        //}
+
+        //#endregion
 
         #region for Dependency Injection
         //Need some explanation here
-        private static DocumentStore _DocStoreInstance;
-
-        public bool DocStoreInstance(DocumentStore AltDocStore)  
+        private static IDocumentStore _docStore;
+        public static bool RavenInitialize()
         {
-            _DocStoreInstance = AltDocStore;
-            _DocStoreInstance.Initialize();
+            _docStore = new EmbeddableDocumentStore()
+            {
+                ConnectionStringName = "RavenDB",
+                RunInMemory = true
+                //UseEmbeddedHttpServer = true
+            };
+
+            _docStore.Initialize();
             return true;
         }
-        #endregion
 
+    //   protected virtual bool DocStoreInstance(IDocumentStore AltDocStore);
+
+        #endregion
 
         public bool Initialize()
         {
@@ -92,7 +115,7 @@ namespace ChronoSpark.Data
 
         public bool Add<T>(T task) where T : class, IRavenEntity
         {
-            using (var Session = DocStore.OpenSession())
+            using (var Session = _docStore.OpenSession())
             {
                 /*  Validations Missing 
                  *  1. You never checked for task being null or empty.
@@ -112,31 +135,33 @@ namespace ChronoSpark.Data
         //This Method is kind of cool! good work.
         public bool Update<T>(T task) where T : class, IRavenEntity
         {
-            using (var Session = DocStore.OpenSession())
+            using (var Session = _docStore.OpenSession())
             {
                 /*  Validation Missing
                  *  1. You are not checking that the storedTask actually exists
                  *  2. You are not checking the that task is not null or empty
                  *  3. You are not checking that task has a valid ID.
                  */
-                task.Validate(); //You validate the item here but you do nothing with the result =P
-                
-                var doc = Session.Load<T>(task.LoadString());
-                doc.InjectFrom(task);
-                
-                if (doc.Validate())
+                if (task.Validate()) //You validate the item here but you do nothing with the result =P
                 {
-                    Session.Store(doc);
-                    Session.SaveChanges();
-                    return true;
+                    var doc = Session.Load<T>(task.LoadString());
+                    doc.InjectFrom(task);
+
+                    if (doc.Validate())
+                    {
+                        Session.Store(doc);
+                        Session.SaveChanges();
+                        return true;
+                    }
+                    else { return false; } //TIP: Always use brackets, even for one liners, makes clearer.
                 }
-                else { return false; } //TIP: Always use brackets, even for one liners, makes clearer.
-            }   
+                else { return false; }
+            } 
         }
 
         public bool Delete<T>(T task) where T : class, IRavenEntity
         {
-            using (var Session = DocStore.OpenSession())
+            using (var Session = _docStore.OpenSession())
             {
                 /* Validations Missing  
                  *  1. Check that the task is not null or empty
@@ -151,17 +176,19 @@ namespace ChronoSpark.Data
                  *  Remember that we only need to have a VALID object ID to be able to delete it,
                  *  and you are trying to load if BEFORE knowing if we have it.
                  */
-                task.Validate(); //You validate the item here but you do nothing with the result =P
-                var doc = Session.Load<T>(task.LoadString());
-                
-                if (doc.Validate()) 
-                {
+                if (task.Validate())
+                { //You validate the item here but you do nothing with the result =P
+                    var doc = Session.Load<T>(task.LoadString());
+                    if (doc.Validate())
+                    {
 
-                    Session.Delete(doc);
-                    Session.SaveChanges();
-                    return true;
-                }else
-                return false;
+                        Session.Delete(doc);
+                        Session.SaveChanges();
+                        return true;
+                    }
+                    else { return false; }
+                }
+                else { return false; }
             }
         }
 
@@ -184,7 +211,7 @@ namespace ChronoSpark.Data
             if (item == null) { return default(T); }
             string myStr = String.Empty;
 
-            using (var session = DocStore.OpenSession())
+            using (var session = _docStore.OpenSession())
             {
                 var storedItem = session.Load<T>(item.LoadString());
 

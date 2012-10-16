@@ -2,7 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
-
+using Raven.Client.Document;
+using Raven.Client.Connection;
+using Raven.Client.Embedded;
 using Shouldly;
 
 namespace UnitTestProject1
@@ -11,17 +13,25 @@ namespace UnitTestProject1
     public class RepositoryTests
     {
         [TestMethod]
-        public void RepostoryAdd_AddsANewItem_ReturnsTrueOnSuccess()
+        public void RepostoryAdd_AddsANewValidItem_ReturnsTrueOnSuccess()
         {
-            //Missing: 1. A way to configure the Repository
+            var newTask = new Task
+            {
+                Name = "This is a Test",
+                Duration = 5
+            };
+   //         var reminder = new Reminder();
+              
+            var repo = new Repository(new EmbeddableDocumentStore()
+            { 
+                DataDirectory = "~/Data/Debug", 
+                RunInMemory = true
+            });
 
-            var newTask = new Task();
+            repo.Add<Task>(newTask);
+//repo.Add<Reminder>(reminder);
 
-            Repository.Instance.Add<Task>(newTask);
-
-            var storedTasks = Repository.Instance.GetById<Task>(newTask);
-
-            storedTasks.Name.ShouldBe("My Important Task");
+            repo.GetById<Task>(newTask).Description.ShouldBe("This is a Test");
         }
 
         
