@@ -47,6 +47,7 @@ namespace ChronoSpark.Data
         #endregion
 
         #region for Dependency Injection
+        //Need some explanation here
         private static DocumentStore _DocStoreInstance;
 
         public bool DocStoreInstance(DocumentStore AltDocStore)  
@@ -118,16 +119,18 @@ namespace ChronoSpark.Data
                  *  2. You are not checking the that task is not null or empty
                  *  3. You are not checking that task has a valid ID.
                  */
-                task.Validate();
+                task.Validate(); //You validate the item here but you do nothing with the result =P
+                
                 var doc = Session.Load<T>(task.LoadString());
                 doc.InjectFrom(task);
+                
                 if (doc.Validate())
                 {
                     Session.Store(doc);
                     Session.SaveChanges();
                     return true;
-                }else
-                return false;
+                }
+                else { return false; } //TIP: Always use brackets, even for one liners, makes clearer.
             }   
         }
 
@@ -148,7 +151,7 @@ namespace ChronoSpark.Data
                  *  Remember that we only need to have a VALID object ID to be able to delete it,
                  *  and you are trying to load if BEFORE knowing if we have it.
                  */
-                task.Validate();
+                task.Validate(); //You validate the item here but you do nothing with the result =P
                 var doc = Session.Load<T>(task.LoadString());
                 
                 if (doc.Validate()) 
