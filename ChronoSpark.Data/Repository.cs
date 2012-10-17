@@ -73,15 +73,16 @@ namespace ChronoSpark.Data
                 RunInMemory = true
                 //UseEmbeddedHttpServer = true
             };
-
+            
             _docStore.Initialize();
+          
             return true;
         }
 
-    //   protected virtual bool DocStoreInstance(IDocumentStore AltDocStore);
+      // protected virtual bool DocStoreInstance(IDocumentStore AltDocStore);
 
         #endregion
-
+    
         public bool Initialize()
         {
             DocStore = new EmbeddableDocumentStore()
@@ -98,7 +99,7 @@ namespace ChronoSpark.Data
             return true;
         }
 
-        public bool Dispose(bool Disposing)
+   /*     public bool Dispose(bool Disposing)
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -112,8 +113,8 @@ namespace ChronoSpark.Data
             }
             return true;
         }
-
-        public bool Add<T>(T task) where T : class, IRavenEntity
+        */
+        public bool Add<T>(T item) where T : class, IRavenEntity
         {
             using (var Session = _docStore.OpenSession())
             {
@@ -122,18 +123,18 @@ namespace ChronoSpark.Data
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
-                if (task.Validate())
+                if (item.ValidateToAdd())
                 {
-                    Session.Store(task);
+                    Session.Store(item);
                     Session.SaveChanges();
                     return true;
-                }else
-                return false;
+                }
+                else { return false; }
             }  
         }
 
         //This Method is kind of cool! good work.
-        public bool Update<T>(T task) where T : class, IRavenEntity
+        public bool Update<T>(T item) where T : class, IRavenEntity
         {
             using (var Session = _docStore.OpenSession())
             {
@@ -142,10 +143,10 @@ namespace ChronoSpark.Data
                  *  2. You are not checking the that task is not null or empty
                  *  3. You are not checking that task has a valid ID.
                  */
-                if (task.Validate()) //You validate the item here but you do nothing with the result =P
+                if (item.Validate()) //You validate the item here but you do nothing with the result =P
                 {
-                    var doc = Session.Load<T>(task.LoadString());
-                    doc.InjectFrom(task);
+                    var doc = Session.Load<T>(item.LoadString());
+                    doc.InjectFrom(item);
 
                     if (doc.Validate())
                     {
@@ -159,13 +160,11 @@ namespace ChronoSpark.Data
             } 
         }
 
-        public bool Delete<T>(T task) where T : class, IRavenEntity
+        public bool Delete<T>(T item) where T : class, IRavenEntity
         {
             using (var Session = _docStore.OpenSession())
             {
                 /* Validations Missing  
-                 *  1. Check that the task is not null or empty
-                 *  2. Check that task has a valid id
                  *  3. Check that the id that you want to delete, actually exists and that you can delete.
                  *  4. I don't know right now if we are going to have a special rule for deletion, but if
                  *     we decide so, we would need to also delete it.
@@ -176,15 +175,19 @@ namespace ChronoSpark.Data
                  *  Remember that we only need to have a VALID object ID to be able to delete it,
                  *  and you are trying to load if BEFORE knowing if we have it.
                  */
-                if (task.Validate())
-                { //You validate the item here but you do nothing with the result =P
-                    var doc = Session.Load<T>(task.LoadString());
-                    if (doc.Validate())
+                if (item.Validate())
+                {
+                    if (DocStore.DatabaseCommands.Head(item.Id) != null)
                     {
+                        var doc = Session.Load<T>(item.LoadString());
+                        if (doc.Validate())
+                        {
 
-                        Session.Delete(doc);
-                        Session.SaveChanges();
-                        return true;
+                            Session.Delete(doc);
+                            Session.SaveChanges();
+                            return true;
+                        }
+                        else { return false; }
                     }
                     else { return false; }
                 }

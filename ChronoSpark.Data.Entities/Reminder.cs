@@ -9,24 +9,33 @@ namespace ChronoSpark.Data.Entities
 {
     public class Reminder : IRavenEntity 
     {
-        public String ID { get; set; }
+        public String Id { get; set; }
         public String Description {get; set;}
         public int Interval {get; set;} // in minutes
         
 
         public String LoadString() 
         { 
-            if(ID.IsNotNullOrEmpty())
+            if(Id.IsNotNullOrEmpty())
             {
-                return ID;
+                return Id;
             }
             return "There's no ID";
         }
         
         public bool Validate()
         {
-            
-            if (ID != null && Description.IsNotNullOrEmpty() && Interval > 0)
+           
+            if (Id != null && Description.IsNotNullOrEmpty() && Interval > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool ValidateToAdd() 
+        {
+            if (Description.IsNotNullOrEmpty() && Interval > 0) 
             {
                 return true;
             }

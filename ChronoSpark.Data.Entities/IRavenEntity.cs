@@ -8,8 +8,9 @@ namespace ChronoSpark.Data
 {
     public interface IRavenEntity
     {
-        String ID { get; set; }
+        String Id { get; set; }
         String LoadString();
         bool Validate();
+        bool ValidateToAdd();
     }
 }

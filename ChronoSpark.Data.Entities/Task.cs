@@ -16,7 +16,7 @@ namespace ChronoSpark.Data.Entities
     
     public class Task : IRavenEntity      
     {
-        public String ID { get; set; }
+        public String Id { get; set; }
         public String Name { get; set; }
         public String Client { get; set; }
         public String Description { get; set; }
@@ -28,7 +28,15 @@ namespace ChronoSpark.Data.Entities
         public bool Validate()
         {
             
-            if (ID != null && Description.IsNotNullOrEmpty() && Duration > 0)
+            if (Id != null && Description.IsNotNullOrEmpty() && Duration > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool ValidateToAdd(){
+            if(Description.IsNotNullOrEmpty())
             {
                 return true;
             }
@@ -39,9 +47,9 @@ namespace ChronoSpark.Data.Entities
 
         public string LoadString()
         {
-            if (ID.IsNotNullOrEmpty())
+            if (Id.IsNotNullOrEmpty())
             {
-                return ID; //What if this is Empty? What if I call this BEFORE having an ID?
+                return Id; //What if this is Empty? What if I call this BEFORE having an ID?
             }
             return "there's no ID";
         }
