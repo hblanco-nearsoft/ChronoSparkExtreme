@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using Omu.ValueInjecter;
 using Raven.Client;
 
+
 namespace ChronoSpark.Data
 {
     /*  General Comments
@@ -85,7 +86,7 @@ namespace ChronoSpark.Data
     
         public bool Initialize()
         {
-            DocStore = new EmbeddableDocumentStore()
+            _docStore = new EmbeddableDocumentStore()
             {
                 ConnectionStringName = "RavenDB",
                 UseEmbeddedHttpServer = true
@@ -114,7 +115,7 @@ namespace ChronoSpark.Data
             return true;
         }
         */
-        public bool Add<T>(T item) where T : class, IRavenEntity
+        public bool Add<T>(T newItem) where T : class, IRavenEntity
         {
             using (var Session = _docStore.OpenSession())
             {
@@ -123,9 +124,9 @@ namespace ChronoSpark.Data
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
-                if (item.ValidateToAdd())
+                if (newItem.ValidateToAdd())
                 {
-                    Session.Store(item);
+                    Session.Store(newItem);
                     Session.SaveChanges();
                     return true;
                 }
@@ -134,7 +135,7 @@ namespace ChronoSpark.Data
         }
 
         //This Method is kind of cool! good work.
-        public bool Update<T>(T item) where T : class, IRavenEntity
+        public bool Update<T>(T UpdatedItem) where T : class, IRavenEntity
         {
             using (var Session = _docStore.OpenSession())
             {
@@ -143,10 +144,11 @@ namespace ChronoSpark.Data
                  *  2. You are not checking the that task is not null or empty
                  *  3. You are not checking that task has a valid ID.
                  */
-                if (item.Validate()) //You validate the item here but you do nothing with the result =P
+                if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
+                if (UpdatedItem.Validate()) //You validate the item here but you do nothing with the result =P
                 {
-                    var doc = Session.Load<T>(item.LoadString());
-                    doc.InjectFrom(item);
+                    var doc = Session.Load<T>(UpdatedItem.LoadString());
+                    doc.InjectFrom(UpdatedItem);
 
                     if (doc.Validate())
                     {
@@ -160,9 +162,9 @@ namespace ChronoSpark.Data
             } 
         }
 
-        public bool Delete<T>(T item) where T : class, IRavenEntity
+        public bool Delete<T>(T toDeleteItem) where T : class, IRavenEntity
         {
-            using (var Session = _docStore.OpenSession())
+            using (var session = _docStore.OpenSession())
             {
                 /* Validations Missing  
                  *  3. Check that the id that you want to delete, actually exists and that you can delete.
@@ -170,24 +172,19 @@ namespace ChronoSpark.Data
                  *     we decide so, we would need to also delete it.
                  */
 
-
                 /*  What are you going to validate here?
                  *  Remember that we only need to have a VALID object ID to be able to delete it,
                  *  and you are trying to load if BEFORE knowing if we have it.
                  */
-                if (item.Validate())
+                if (toDeleteItem.Validate())
                 {
-                    if (DocStore.DatabaseCommands.Head(item.Id) != null)
+                    if (session.Advanced.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
+                    var doc = session.Load<T>(toDeleteItem.LoadString());
+                    if (doc.Validate())
                     {
-                        var doc = Session.Load<T>(item.LoadString());
-                        if (doc.Validate())
-                        {
-
-                            Session.Delete(doc);
-                            Session.SaveChanges();
-                            return true;
-                        }
-                        else { return false; }
+                        session.Delete(doc);
+                        session.SaveChanges();
+                        return true;
                     }
                     else { return false; }
                 }
@@ -200,9 +197,9 @@ namespace ChronoSpark.Data
             GC.SuppressFinalize(this);
             if (!Disposed)
             {
-                if (DocStore != null)
+                if (_docStore != null)
                 {
-                    DocStore.Dispose();
+                    _docStore.Dispose();
                 }
                 Disposed = true;
             }
@@ -213,11 +210,10 @@ namespace ChronoSpark.Data
         {
             if (item == null) { return default(T); }
             string myStr = String.Empty;
-
             using (var session = _docStore.OpenSession())
             {
+                if (session.Advanced.DatabaseCommands.Head(item.Id) == null) { return default(T); }
                 var storedItem = session.Load<T>(item.LoadString());
-
                 return storedItem;
             }
         }
