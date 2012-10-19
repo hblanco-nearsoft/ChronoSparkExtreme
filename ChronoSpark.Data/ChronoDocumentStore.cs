@@ -3,12 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using ChronoSpark.Common;
+using Raven.Client.Document;
+using Raven.Client.Listeners;
+using ChronoSpark.Data.Entities;
+using Raven.Client.Embedded;
+
 
 namespace ChronoSpark.Data
 {
-     public class ValidationListener : IValidationListener
+    public class ChronoDocumentStore : EmbeddableDocumentStore, IDocumentStoreListener
     {
+        public ChronoDocumentStore()    
+            : base()
+        {
+            this.Register<Task>(task => { if (task.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
+
+            RegisterListener(this);
+        }
+
         readonly Dictionary<Type, List<Action<object>>> validations = new Dictionary<Type, List<Action<object>>>();
      
         public void Register<T>(Action<T> validate)

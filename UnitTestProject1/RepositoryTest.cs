@@ -274,5 +274,27 @@ namespace UnitTestProject1
             repo.Delete<Task>(nonExistentTask).ShouldBe(false);
         }
 
+        [TestMethod]
+        public void ChronoDataStore()
+        {
+            var docStore = new ChronoDocumentStore
+            {
+                DataDirectory = "~/Data/Debug",
+                RunInMemory = true
+            };
+
+            docStore.Initialize();
+
+            var task = new Task();
+
+            using (var session = docStore.OpenSession())
+            {
+                session.Store(task);
+
+                Should.Throw<ArgumentNullException>(session.SaveChanges);
+            }
+        }
+
+
     }
 }
