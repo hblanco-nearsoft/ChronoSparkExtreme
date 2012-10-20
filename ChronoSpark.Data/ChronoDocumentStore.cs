@@ -18,6 +18,9 @@ namespace ChronoSpark.Data
             : base()
         {
             this.Register<Task>(task => { if (task.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
+            this.Register<Task>(task => { if (task.Duration <= 0) throw new IndexOutOfRangeException("Duration Should be longer than 0"); });
+            this.Register<Reminder>(reminder => { if (reminder.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannto be null"); });
+            this.Register<Reminder>(reminder => { if (reminder.Interval <= 0) throw new IndexOutOfRangeException("The Inverval must be longer than 0"); });
 
             RegisterListener(this);
         }
