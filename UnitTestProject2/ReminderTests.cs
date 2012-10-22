@@ -25,87 +25,87 @@ namespace ChronoSpark.Data.Entities.Tests
             unidentifiedReminder.LoadString().ShouldBe("There's no ID");
         }
 
-        [TestMethod]
-        public void ReminderValidateToAdd_ReminderIsValid_ReturnsTrue() 
-        {
-            var validReminder = new Reminder 
-            {
-                Description = "Valid Description",
-                Interval = 5
-            };
+    //    [TestMethod]
+    //    public void ReminderValidateToAdd_ReminderIsValid_ReturnsTrue() 
+    //    {
+    //        var validReminder = new Reminder 
+    //        {
+    //            Description = "Valid Description",
+    //            Interval = 5
+    //        };
 
-            validReminder.ValidateToAdd().ShouldBe(true);
-        }
+    //        validReminder.ValidateToAdd().ShouldBe(true);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidateToAdd_ReminderHasNoDescription_ReturnsFalse() 
-        {
-            var descriptionlessReminder = new Reminder 
-            {
-                Interval =5
-            };
+    //    [TestMethod]
+    //    public void ReminderValidateToAdd_ReminderHasNoDescription_ReturnsFalse() 
+    //    {
+    //        var descriptionlessReminder = new Reminder 
+    //        {
+    //            Interval =5
+    //        };
 
-            descriptionlessReminder.ValidateToAdd().ShouldBe(false);
-        }
+    //        descriptionlessReminder.ValidateToAdd().ShouldBe(false);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidateToAdd_ReminderHasNoInterval_ReturnsFalse()
-        {
-            var descriptionlessReminder = new Reminder
-            {
-                Description = "Valid Description"
-            };
+    //    [TestMethod]
+    //    public void ReminderValidateToAdd_ReminderHasNoInterval_ReturnsFalse()
+    //    {
+    //        var descriptionlessReminder = new Reminder
+    //        {
+    //            Description = "Valid Description"
+    //        };
 
-            descriptionlessReminder.ValidateToAdd().ShouldBe(false);
-        }
+    //        descriptionlessReminder.ValidateToAdd().ShouldBe(false);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidate_ReminderHasValidIdDescriptionAndInterval_ReturnsTrue() 
-        {
-            var validReminder = new Reminder 
-            {
-                Id = "valid ID",
-                Description = "Valid Description",
-                Interval = 5
-            };
+    //    [TestMethod]
+    //    public void ReminderValidate_ReminderHasValidIdDescriptionAndInterval_ReturnsTrue() 
+    //    {
+    //        var validReminder = new Reminder 
+    //        {
+    //            Id = "valid ID",
+    //            Description = "Valid Description",
+    //            Interval = 5
+    //        };
 
-            validReminder.Validate().ShouldBe(true);
-        }
+    //        validReminder.Validate().ShouldBe(true);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidate_ReminderHasNoDescription_ReturnsFalse() 
-        {
-            var validReminder = new Reminder
-            {
-                Id = "valid ID",
-                Interval = 5
-            };
+    //    [TestMethod]
+    //    public void ReminderValidate_ReminderHasNoDescription_ReturnsFalse() 
+    //    {
+    //        var validReminder = new Reminder
+    //        {
+    //            Id = "valid ID",
+    //            Interval = 5
+    //        };
 
-            validReminder.Validate().ShouldBe(false);
-        }
+    //        validReminder.Validate().ShouldBe(false);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidate_ReminderHasNoId_ReturnsFalse()
-        {
-            var validReminder = new Reminder
-            {
-                Description = "Valid Description",
-                Interval = 5
-            };
+    //    [TestMethod]
+    //    public void ReminderValidate_ReminderHasNoId_ReturnsFalse()
+    //    {
+    //        var validReminder = new Reminder
+    //        {
+    //            Description = "Valid Description",
+    //            Interval = 5
+    //        };
 
-            validReminder.Validate().ShouldBe(false);
-        }
+    //        validReminder.Validate().ShouldBe(false);
+    //    }
 
-        [TestMethod]
-        public void ReminderValidate_ReminderHasNoInterval_ReturnsFalse()
-        {
-            var validReminder = new Reminder
-            {
-                Id = "valid ID",
-                Description = "Valid Description"
-            };
+    //    [TestMethod]
+    //    public void ReminderValidate_ReminderHasNoInterval_ReturnsFalse()
+    //    {
+    //        var validReminder = new Reminder
+    //        {
+    //            Id = "valid ID",
+    //            Description = "Valid Description"
+    //        };
 
-            validReminder.Validate().ShouldBe(false);
-        }
+    //        validReminder.Validate().ShouldBe(false);
+    //    }
     }
 }

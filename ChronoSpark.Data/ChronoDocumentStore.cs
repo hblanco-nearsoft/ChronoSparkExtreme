@@ -19,8 +19,11 @@ namespace ChronoSpark.Data
         {
             this.Register<Task>(task => { if (task.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
             this.Register<Task>(task => { if (task.Duration <= 0) throw new IndexOutOfRangeException("Duration Should be longer than 0"); });
-            this.Register<Reminder>(reminder => { if (reminder.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannto be null"); });
+            this.Register<Reminder>(reminder => { if (reminder.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
             this.Register<Reminder>(reminder => { if (reminder.Interval <= 0) throw new IndexOutOfRangeException("The Inverval must be longer than 0"); });
+            this.Register<Task>(task => {if (task.Id.IsNullOrEmpty()) throw new ArgumentNullException ("Id cannot be null"); });
+            this.Register<Reminder>(reminder => { if (reminder.Id.IsNullOrEmpty()) throw new ArgumentNullException("Id cannot be null"); });
+
 
             RegisterListener(this);
         }
@@ -34,7 +37,7 @@ namespace ChronoSpark.Data
                 validations[typeof (T)] = list = new List<Action<object>>();
     
            list.Add(o => validate((T) o));
-       }
+        }
     
        public bool BeforeStore(string key, object entityInstance, RavenJObject metadata, RavenJObject original)
        {
@@ -52,5 +55,5 @@ namespace ChronoSpark.Data
        public void AfterStore(string key, object entityInstance, RavenJObject metadata)
        {
        }
-   }
+    }
 }

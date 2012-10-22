@@ -11,6 +11,7 @@ namespace ChronoSpark.Data.Entities
     public enum TaskState
     {
         InProgress,
+        Suspended,
         Finished
     }
     
@@ -25,33 +26,33 @@ namespace ChronoSpark.Data.Entities
         public TaskState State { get; set; }
         public String LastEditedBy { get; set; }
   
-        public bool Validate()
-        {
+        //public bool Validate()
+        //{
             
-            if (Id != null && Description.IsNotNullOrEmpty() && Duration > 0)
-            {
-                return true;
-            }
-            return false;
-        }
+        //    if (Id != null && Description.IsNotNullOrEmpty() && Duration > 0)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
-        public bool ValidateToAdd(){
-            if(Description.IsNotNullOrEmpty())
-            {
-                return true;
-            }
-            return false;
-        }
+        //public bool ValidateToAdd(){
+        //    if(Description.IsNotNullOrEmpty())
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
             
   
 
-        public string LoadString()
-        {
-            if (Id.IsNotNullOrEmpty())
-            {
-                return Id; //What if this is Empty? What if I call this BEFORE having an ID?
-            }
-            return "there's no ID";
-        }
+        //public string LoadString()
+        //{
+        //    if (Id.IsNotNullOrEmpty())
+        //    {
+        //        return Id; //What if this is Empty? What if I call this BEFORE having an ID?
+        //    }
+        //    return "there's no ID";
+        //}
     }
 }

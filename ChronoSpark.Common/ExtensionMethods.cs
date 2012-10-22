@@ -23,4 +23,6 @@ namespace ChronoSpark.Common
             return obj == null;
         }
     }
+
+
 }

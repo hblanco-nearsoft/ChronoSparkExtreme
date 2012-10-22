@@ -9,7 +9,7 @@ using Raven.Client.Embedded;
 using System.Runtime.InteropServices;
 using Omu.ValueInjecter;
 using Raven.Client;
-
+using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Data
 {
@@ -68,7 +68,7 @@ namespace ChronoSpark.Data
         private static IDocumentStore _docStore;
         public static bool RavenInitialize()
         {
-            _docStore = new EmbeddableDocumentStore()
+            _docStore = new ChronoDocumentStore()
             {
                 ConnectionStringName = "RavenDB",
                 RunInMemory = true
@@ -124,13 +124,14 @@ namespace ChronoSpark.Data
                  *  2. You never checked that task has all the necessary property field out
                  *      2.1 What would happend if task doesn't have a description or a time amount?
                  */
-                if (newItem.ValidateToAdd())
+                try
                 {
                     Session.Store(newItem);
                     Session.SaveChanges();
                     return true;
                 }
-                else { return false; }
+                catch (ArgumentNullException) { return false; }
+                catch(IndexOutOfRangeException) { return false; } 
             }  
         }
 
@@ -145,20 +146,17 @@ namespace ChronoSpark.Data
                  *  3. You are not checking that task has a valid ID.
                  */
                 if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
-                if (UpdatedItem.Validate()) //You validate the item here but you do nothing with the result =P
-                {
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
                     doc.InjectFrom(UpdatedItem);
 
-                    if (doc.Validate())
+                    try
                     {
                         Session.Store(doc);
                         Session.SaveChanges();
                         return true;
                     }
-                    else { return false; } //TIP: Always use brackets, even for one liners, makes clearer.
-                }
-                else { return false; }
+                    catch (ArgumentNullException) { return false; }
+                    catch (IndexOutOfRangeException) { return false; }
             } 
         }
 
@@ -176,19 +174,18 @@ namespace ChronoSpark.Data
                  *  Remember that we only need to have a VALID object ID to be able to delete it,
                  *  and you are trying to load if BEFORE knowing if we have it.
                  */
-                if (toDeleteItem.Validate())
-                {
+
                     if (session.Advanced.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
                     var doc = session.Load<T>(toDeleteItem.LoadString());
-                    if (doc.Validate())
+                    try
                     {
                         session.Delete(doc);
                         session.SaveChanges();
                         return true;
                     }
-                    else { return false; }
-                }
-                else { return false; }
+                    catch (ArgumentNullException) { return false; }
+                    catch (IndexOutOfRangeException) { return false; }
+
             }
         }
 

@@ -12,7 +12,6 @@ namespace UnitTestProject1
     [TestClass]
     public class RepositoryTests
     {
-        private Repository _repo;
 
         // according to https://groups.google.com/forum/?fromgroups=#!topic/ravendb/M6TGgs9O4M8 
         //to clear when running in memory we create a new databasedocument. would using it as testinitialize 
@@ -41,6 +40,7 @@ namespace UnitTestProject1
             var newTask = new Task
             {
                 Description = "This is a Test",
+                Duration = 5
             };
             var newReminder = new Reminder()
             {
@@ -48,7 +48,7 @@ namespace UnitTestProject1
                 Interval = 5
             };
               
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             { 
                 DataDirectory = "~/Data/Debug", 
                 RunInMemory = true
@@ -79,7 +79,7 @@ namespace UnitTestProject1
                 Interval = 0
             };
 
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true 
@@ -96,10 +96,11 @@ namespace UnitTestProject1
             var newTask = new Task
             {
                 Id = Guid.NewGuid().ToString(),
-                Description = "Hello"
+                Description = "Hello",
+                Duration = 5
             };
 
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -117,7 +118,7 @@ namespace UnitTestProject1
         [TestMethod] 
         public void RepositoryGetByID_IsGivenNullItem_ReturnsDefault() 
         {
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -137,7 +138,7 @@ namespace UnitTestProject1
                 Duration = 7
             };
 
-            var repo = new Repository(new EmbeddableDocumentStore
+            var repo = new Repository(new ChronoDocumentStore
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -162,7 +163,7 @@ namespace UnitTestProject1
                 Interval = 5
             };
 
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -197,7 +198,7 @@ namespace UnitTestProject1
                 Description = "",
                 Interval = 0
             };
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -223,7 +224,7 @@ namespace UnitTestProject1
                 Duration = 6
             };
 
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -244,8 +245,11 @@ namespace UnitTestProject1
         [TestMethod]
         public void RepositoryDelete_IsGivenInvalidItem_ReturnsFalse() 
         {
-            var invalidTask = new Task();
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var invalidTask = new Task {
+            Description = "",
+            Id = ""
+            };
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
@@ -265,7 +269,7 @@ namespace UnitTestProject1
                 Description = "I don't exist",
                 Duration = 6
             };
-            var repo = new Repository(new EmbeddableDocumentStore()
+            var repo = new Repository(new ChronoDocumentStore()
             {
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
