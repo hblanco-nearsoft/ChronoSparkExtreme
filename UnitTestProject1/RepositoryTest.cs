@@ -179,8 +179,6 @@ namespace UnitTestProject1
             repo.Update<Task>(storedTask).ShouldBe(true);
             repo.Update<Reminder>(storedReminder).ShouldBe(true);
 
-           // repo.GetById<Task>(storedTask).Description.ShouldBe("Changed Task");
-           // repo.GetById<Reminder>(storedReminder).Description.ShouldBe("Changed Reminder");
         }
 
 
@@ -190,13 +188,14 @@ namespace UnitTestProject1
             var storedTask = new Task
             {
                 Id = Guid.NewGuid().ToString(),
-                Description = "New Task"
+                Description = "New Task",
+                Duration = 5
             };
             var storedReminder = new Reminder 
             {
                 Id = Guid.NewGuid().ToString(),
-                Description = "",
-                Interval = 0
+                Description = "New Reminder",
+                Interval = 5
             };
             var repo = new Repository(new ChronoDocumentStore()
             {
@@ -209,9 +208,27 @@ namespace UnitTestProject1
             storedTask.Description = "Changed Task";
             storedReminder.Description = "Changed Reminder";
 
+            var fakeTask = new Task 
+            {
+                Id = storedTask.Id,
+                Description = ""
+            };
 
-            repo.Update<Task>(storedTask).ShouldBe(false);
-            repo.Update<Reminder>(storedReminder).ShouldBe(false);
+            var fakeReminder = new Reminder
+            {
+                Id = storedReminder.Id,
+                Interval = 0
+            };
+
+            var nonExistingTask = new Task { 
+                Id =Guid.NewGuid().ToString(),
+                Description = "not in the database",
+                Duration = 5
+            };
+
+            repo.Update<Task>(fakeTask).ShouldBe(false);
+            repo.Update<Reminder>(fakeReminder).ShouldBe(false);
+            repo.Update<Task>(nonExistingTask).ShouldBe(false);
         }
 
         [TestMethod]
@@ -256,8 +273,6 @@ namespace UnitTestProject1
             });
 
             repo.Delete<Task>(invalidTask).ShouldBe(false);
-
-
         }
 
         [TestMethod]
@@ -298,7 +313,5 @@ namespace UnitTestProject1
                 Should.Throw<ArgumentNullException>(session.SaveChanges);
             }
         }
-
-
     }
 }

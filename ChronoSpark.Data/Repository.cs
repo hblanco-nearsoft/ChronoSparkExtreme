@@ -20,11 +20,6 @@ namespace ChronoSpark.Data
      *     
      * Oct. 15. Good Work! We are almost there with the data layer, need some unit testing though.
      */
-
-    /*
-        var repo = new Repostory();
-     *  repo.Add<Task>(task);
-     */
     public class Repository : IRepository, IDisposable 
     {
         private DocumentStore DocStore;
@@ -44,27 +39,8 @@ namespace ChronoSpark.Data
 
         #endregion
 
-        //#region For Singleton
-        
-        //private Repository()
-        //{
 
-        //} //1. There should be only ONE instance of this class
-        //private static Repository _instance;
-        //public static Repository Instance//3. Create a single access point
-        //{
-        //    get
-        //    {
-        //        // 2. Create a single instance
-        //        return _instance ?? (_instance = new Repository());
-        //    }
-
-        //}
-
-        //#endregion
-
-        #region for Dependency Injection
-        //Need some explanation here
+  
         private static IDocumentStore _docStore;
         public static bool RavenInitialize()
         {
@@ -80,9 +56,7 @@ namespace ChronoSpark.Data
             return true;
         }
 
-      // protected virtual bool DocStoreInstance(IDocumentStore AltDocStore);
 
-        #endregion
     
         public bool Initialize()
         {
@@ -164,8 +138,7 @@ namespace ChronoSpark.Data
         {
             using (var session = _docStore.OpenSession())
             {
-                /* Validations Missing  
-                 *  3. Check that the id that you want to delete, actually exists and that you can delete.
+                /*
                  *  4. I don't know right now if we are going to have a special rule for deletion, but if
                  *     we decide so, we would need to also delete it.
                  */
