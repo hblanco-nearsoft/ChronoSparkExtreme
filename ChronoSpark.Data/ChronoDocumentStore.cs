@@ -17,11 +17,11 @@ namespace ChronoSpark.Data
         public ChronoDocumentStore()    
             : base()
         {
-            this.Register<Task>(task => { if (task.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
-            this.Register<Task>(task => { if (task.Duration <= 0) throw new IndexOutOfRangeException("Duration Should be longer than 0"); });
+            this.Register<SparkTask>(task => { if (task.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
+            this.Register<SparkTask>(task => { if (task.Duration <= 0) throw new IndexOutOfRangeException("Duration Should be longer than 0"); });
             this.Register<Reminder>(reminder => { if (reminder.Description.IsNullOrEmpty()) throw new ArgumentNullException("Description cannot be null"); });
             this.Register<Reminder>(reminder => { if (reminder.Interval <= 0) throw new IndexOutOfRangeException("The Inverval must be longer than 0"); });
-            this.Register<Task>(task => {if (task.Id.IsNullOrEmpty()) throw new ArgumentNullException ("Id cannot be null"); });
+            this.Register<SparkTask>(task => {if (task.Id.IsNullOrEmpty()) throw new ArgumentNullException ("Id cannot be null"); });
             this.Register<Reminder>(reminder => { if (reminder.Id.IsNullOrEmpty()) throw new ArgumentNullException("Id cannot be null"); });
 
 

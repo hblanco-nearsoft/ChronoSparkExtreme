@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddItemCmd.cs" />
+    <Compile Include="DeleteItemCmd.cs" />
+    <Compile Include="GetByIdCmd.cs" />
+    <Compile Include="SparkInvoker.cs" />
+    <Compile Include="UpdateItemCmd.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

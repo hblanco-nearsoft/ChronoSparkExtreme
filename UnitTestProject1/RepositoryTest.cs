@@ -37,7 +37,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void RepostoryAdd_AddsANewValidItem_ReturnsTrueOnSuccess()
         {
-            var newTask = new Task
+            var newTask = new SparkTask
             {
                 Description = "This is a Test",
                 Duration = 5
@@ -54,14 +54,14 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.Add<Task>(newTask).ShouldBe(true);
+            repo.Add<SparkTask>(newTask).ShouldBe(true);
             repo.Add<Reminder>(newReminder).ShouldBe(true);
         }
 
         [TestMethod]
         public void RepostoryAdd_AddsANewInvalidItem_ReturnsFalseOnFailure()
         {
-            var descriptionlessTask = new Task
+            var descriptionlessTask = new SparkTask
             {
                 Description = "",
                 Duration = 5
@@ -85,7 +85,7 @@ namespace UnitTestProject1
                 RunInMemory = true 
             });
 
-            repo.Add<Task>(descriptionlessTask).ShouldBe(false);
+            repo.Add<SparkTask>(descriptionlessTask).ShouldBe(false);
             repo.Add<Reminder>(descriptionlessReminder).ShouldBe(false);
             repo.Add<Reminder>(noIntervalReminder).ShouldBe(false);
         }
@@ -93,7 +93,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void RepositoryGetByID_IsGivenAValidId_ReturnsATask()
         {
-            var newTask = new Task
+            var newTask = new SparkTask
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "Hello",
@@ -105,11 +105,11 @@ namespace UnitTestProject1
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
             });
-            repo.Add<Task>(newTask);
+            repo.Add<SparkTask>(newTask);
 
-            var stored = repo.GetById<Task>(newTask);
+            var stored = repo.GetById<SparkTask>(newTask);
             
-            stored.ShouldBeTypeOf<Task>();
+            stored.ShouldBeTypeOf<SparkTask>();
             stored.ShouldNotBe(null);
             stored.Id.ShouldBe(newTask.Id);
             stored.Description.ShouldBe("Hello");
@@ -124,14 +124,14 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.GetById<Task>(null).ShouldBe(null);
+            repo.GetById<SparkTask>(null).ShouldBe(null);
         }
 
         [TestMethod]
         public void RepositoryGetById_IsGivenNonExistingItem_ReturnsDefault()
         {
 
-            var nonExistingTask = new Task 
+            var nonExistingTask = new SparkTask 
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "this doesn't exist in the database",
@@ -144,13 +144,13 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.GetById<Task>(nonExistingTask).ShouldBe(null);
+            repo.GetById<SparkTask>(nonExistingTask).ShouldBe(null);
         }
 
         [TestMethod]
         public void RepositoryUpdate_IsGivenExistingId_ReturnsTrue() 
         {
-            var storedTask = new Task 
+            var storedTask = new SparkTask 
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "New Task",
@@ -169,14 +169,14 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.Add<Task>(storedTask);
+            repo.Add<SparkTask>(storedTask);
             repo.Add<Reminder>(storedReminder);
 
             storedTask.Description = "Changed Task";
             storedReminder.Description = "Changed Reminder";
 
             
-            repo.Update<Task>(storedTask).ShouldBe(true);
+            repo.Update<SparkTask>(storedTask).ShouldBe(true);
             repo.Update<Reminder>(storedReminder).ShouldBe(true);
 
         }
@@ -185,7 +185,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void RepositoryUpdate_IsGivenInvalidItem_ReturnsFalse()
         {
-            var storedTask = new Task
+            var storedTask = new SparkTask
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "New Task",
@@ -202,13 +202,13 @@ namespace UnitTestProject1
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
             });
-            repo.Add<Task>(storedTask);
+            repo.Add<SparkTask>(storedTask);
             repo.Add<Reminder>(storedReminder);
 
             storedTask.Description = "Changed Task";
             storedReminder.Description = "Changed Reminder";
 
-            var fakeTask = new Task 
+            var fakeTask = new SparkTask 
             {
                 Id = storedTask.Id,
                 Description = ""
@@ -220,21 +220,21 @@ namespace UnitTestProject1
                 Interval = 0
             };
 
-            var nonExistingTask = new Task { 
+            var nonExistingTask = new SparkTask { 
                 Id =Guid.NewGuid().ToString(),
                 Description = "not in the database",
                 Duration = 5
             };
 
-            repo.Update<Task>(fakeTask).ShouldBe(false);
+            repo.Update<SparkTask>(fakeTask).ShouldBe(false);
             repo.Update<Reminder>(fakeReminder).ShouldBe(false);
-            repo.Update<Task>(nonExistingTask).ShouldBe(false);
+            repo.Update<SparkTask>(nonExistingTask).ShouldBe(false);
         }
 
         [TestMethod]
         public void RepositoryDelete_IsGivenAnExistingId_ItemIsDeleted() 
         {
-            var newTask = new Task
+            var newTask = new SparkTask
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "I want to delete this",
@@ -247,22 +247,22 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.Add<Task>(newTask);
+            repo.Add<SparkTask>(newTask);
 
-            var checkTask = repo.GetById<Task>(newTask);
+            var checkTask = repo.GetById<SparkTask>(newTask);
             checkTask.Id.ShouldBe(newTask.Id);
             checkTask.Description.ShouldBe(newTask.Description);
             checkTask.Duration.ShouldBe(newTask.Duration);
 
-            repo.Delete<Task>(newTask).ShouldBe(true);
+            repo.Delete<SparkTask>(newTask).ShouldBe(true);
 
-            repo.GetById<Task>(newTask).ShouldBe(null);
+            repo.GetById<SparkTask>(newTask).ShouldBe(null);
         }
 
         [TestMethod]
         public void RepositoryDelete_IsGivenInvalidItem_ReturnsFalse() 
         {
-            var invalidTask = new Task {
+            var invalidTask = new SparkTask {
             Description = "",
             Id = ""
             };
@@ -272,13 +272,13 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.Delete<Task>(invalidTask).ShouldBe(false);
+            repo.Delete<SparkTask>(invalidTask).ShouldBe(false);
         }
 
         [TestMethod]
         public void RepositoryDelete_IsGivenNonExistentItem_ReturnsFalse() 
         {
-            var nonExistentTask = new Task
+            var nonExistentTask = new SparkTask
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "I don't exist",
@@ -290,7 +290,7 @@ namespace UnitTestProject1
                 RunInMemory = true
             });
 
-            repo.Delete<Task>(nonExistentTask).ShouldBe(false);
+            repo.Delete<SparkTask>(nonExistentTask).ShouldBe(false);
         }
 
         [TestMethod]
@@ -304,7 +304,7 @@ namespace UnitTestProject1
 
             docStore.Initialize();
 
-            var task = new Task();
+            var task = new SparkTask();
 
             using (var session = docStore.OpenSession())
             {

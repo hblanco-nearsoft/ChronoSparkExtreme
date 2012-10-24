@@ -42,7 +42,7 @@
     <Compile Include="EntitiesExtensions.cs" />
     <Compile Include="IRavenEntity.cs" />
     <Compile Include="Reminder.cs" />
-    <Compile Include="Task.cs" />
+    <Compile Include="SparkTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

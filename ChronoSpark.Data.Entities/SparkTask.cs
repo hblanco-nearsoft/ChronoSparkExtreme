@@ -15,7 +15,7 @@ namespace ChronoSpark.Data.Entities
         Finished
     }
     
-    public class Task : IRavenEntity      
+    public class SparkTask : IRavenEntity      
     {
         public String Id { get; set; }
         public String Name { get; set; }
