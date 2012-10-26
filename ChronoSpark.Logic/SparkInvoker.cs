@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChronoSpark.Logic
 {
-    class SparkInvoker
+    public class SparkInvoker
     {
         ICommand TheCommand;
 
@@ -17,7 +17,6 @@ namespace ChronoSpark.Logic
 
         public bool Invoke() 
         {
-
             TheCommand.Execute();
             return true;
         }

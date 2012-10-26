@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChronoSpark.Logic
 {
-    interface ICommand
+    public interface ICommand
     {
         
         bool Execute();

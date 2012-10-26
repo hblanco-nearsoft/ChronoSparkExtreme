@@ -42,7 +42,9 @@
     <Compile Include="AddItemCmd.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="GetByIdCmd.cs" />
+    <Compile Include="ICommandFactory.cs" />
     <Compile Include="SparkInvoker.cs" />
+    <Compile Include="TaskWorker.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />

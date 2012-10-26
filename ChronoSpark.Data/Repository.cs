@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using Omu.ValueInjecter;
 using Raven.Client;
 using ChronoSpark.Data.Entities;
+using Raven.Storage.Esent;
+using Raven.Storage.Managed;
 
 namespace ChronoSpark.Data
 {

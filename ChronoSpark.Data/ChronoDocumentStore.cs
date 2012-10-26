@@ -8,6 +8,8 @@ using Raven.Client.Document;
 using Raven.Client.Listeners;
 using ChronoSpark.Data.Entities;
 using Raven.Client.Embedded;
+using Raven.Storage.Esent;
+
 
 
 namespace ChronoSpark.Data

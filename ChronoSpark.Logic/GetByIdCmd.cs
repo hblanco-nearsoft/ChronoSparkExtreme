@@ -8,15 +8,15 @@ using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
-    class GetByIdCmd
+    public class GetByIdCmd : ICommand, ICommandFactory
     {
         
-        Repository Repo;
+        IRepository Repo;
         IRavenEntity ItemToGet;
 
         public GetByIdCmd() { }
 
-        public GetByIdCmd(Repository receivedRepository, IRavenEntity receivedItem) 
+        public GetByIdCmd(IRepository receivedRepository, IRavenEntity receivedItem) 
         {
 
             Repo = receivedRepository;
@@ -24,12 +24,16 @@ namespace ChronoSpark.Logic
 
         }
 
-        public bool execute() 
+        public bool Execute() 
         {
 
             Repo.GetById(ItemToGet);
             return true;
 
         }
+
+        public String CommandName { get; set; }
+        public String CommandDescription { get; set; }
+
     }
 }

@@ -1,9 +1,12 @@
 ﻿using ChronoSpark.Logic;
+using ChronoSpark.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Raven.Storage.Esent;
+using Raven.Storage.Managed;
 
 namespace ChronoSpark.Clients.Cli
 {
@@ -18,15 +21,17 @@ namespace ChronoSpark.Clients.Cli
             Console.WriteLine("DONE!");
 
             Console.WriteLine("Enter 'exit' to terminate. ");
+
             while (!exit)
             {
                 Console.Write("ChronoSpark => ");
+
                 var cmd = Console.ReadLine();
 
                 var result = SparkLogic.ProcessCommand(cmd);
 
                 Console.WriteLine(result);
-                //exit = true;
+               // exit = true;
             }
 
         }

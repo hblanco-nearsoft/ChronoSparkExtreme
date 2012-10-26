@@ -8,15 +8,16 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    class AddItemCmd : ICommand
+    public class AddItemCmd : ICommand, ICommandFactory
     {
-
-        Repository Repo;
+        //should the command receive the entity or just the arguments and for it inside?
+        //how should i pass the repo? Should i do that in the first place?
+        IRepository Repo;
         IRavenEntity ItemToAdd;
 
         public AddItemCmd() { }
 
-        public AddItemCmd(Repository receivedRepo, IRavenEntity receivedItem)
+        public AddItemCmd(IRepository receivedRepo, IRavenEntity receivedItem)
         {
 
             ItemToAdd = receivedItem;
@@ -32,6 +33,8 @@ namespace ChronoSpark.Logic
  
         }
 
+        public String CommandName { get; set; }
+        public String CommandDescription { get; set; }
     }
 }
    

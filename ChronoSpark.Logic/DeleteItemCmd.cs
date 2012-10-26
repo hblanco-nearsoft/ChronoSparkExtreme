@@ -9,15 +9,15 @@ using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
-    class DeleteItemCmd : ICommand
+    public class DeleteItemCmd : ICommand, ICommandFactory
     {
 
-        Repository Repo;
+        IRepository Repo;
         IRavenEntity ItemToDelete;
 
         public DeleteItemCmd() { }
 
-        public DeleteItemCmd(Repository receivedRepository, IRavenEntity receivedItem) 
+        public DeleteItemCmd(IRepository receivedRepository, IRavenEntity receivedItem) 
         {
 
             Repo = receivedRepository;
@@ -30,6 +30,9 @@ namespace ChronoSpark.Logic
             Repo.Delete(ItemToDelete);
             return true;
         }
+
+        public String CommandName { get; set; }
+        public String CommandDescription { get; set; }
 
         
     }

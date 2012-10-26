@@ -38,6 +38,9 @@
     <Reference Include="Raven.Storage.Esent">
       <HintPath>..\packages\RavenDB.Database.1.0.960\lib\net40\Raven.Storage.Esent.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Storage.Managed">
+      <HintPath>..\packages\RavenDB.Database.1.0.960\lib\net40\Raven.Storage.Managed.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +57,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChronoSpark.Data.Entities\ChronoSpark.Data.Entities.csproj">
+      <Project>{3f685749-2b45-4142-a681-8f27348f64b4}</Project>
+      <Name>ChronoSpark.Data.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChronoSpark.Logic\ChronoSpark.Logic.csproj">
       <Project>{ecca1bff-8379-4853-ba5b-d485d48dcf93}</Project>
       <Name>ChronoSpark.Logic</Name>

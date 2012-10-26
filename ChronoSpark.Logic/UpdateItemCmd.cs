@@ -8,15 +8,15 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    class UpdateItemCmd : ICommand
+    public class UpdateItemCmd : ICommand, ICommandFactory  
     {
 
-        Repository Repo;
+       IRepository Repo;
        IRavenEntity ItemUpdated;
 
         public UpdateItemCmd() { }
 
-        public UpdateItemCmd(Repository receivedRepository, IRavenEntity receivedItem) 
+        public UpdateItemCmd(IRepository receivedRepository, IRavenEntity receivedItem) 
         {
 
             Repo = receivedRepository; 
@@ -31,5 +31,8 @@ namespace ChronoSpark.Logic
             return true;
 
         }
+
+        public String CommandName { get; set; }
+        public String CommandDescription { get; set; }
     }
 }
