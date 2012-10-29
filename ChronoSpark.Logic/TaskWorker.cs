@@ -10,11 +10,12 @@ namespace ChronoSpark.Logic
 {
     public class TaskWorker //trying to just receive the data needed and construct the entity might use a factory?
     {
-        public IRavenEntity getItem(String newDescription, int newDuration) 
+        public IRavenEntity getTask(String newDescription, int newDuration) 
         {
 
             IRavenEntity workingEntity = new SparkTask 
-            { Description = newDescription,
+            { 
+              Description = newDescription,
               Duration = newDuration
             };
             return workingEntity;

@@ -33,8 +33,8 @@ namespace ChronoSpark.Logic
  
         }
 
-        public String CommandName { get; set; }
-        public String CommandDescription { get; set; }
+        public String CommandName { get { return "add"; } }
+        public String CommandDescription { get { return "add typeofentity description"; } }
     }
 }
    

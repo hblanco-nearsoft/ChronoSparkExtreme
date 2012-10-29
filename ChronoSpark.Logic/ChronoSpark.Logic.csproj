@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddItemCmd.cs" />
+    <Compile Include="ReminderWorker.cs" />
     <Compile Include="DeleteItemCmd.cs" />
+    <Compile Include="EntityDeterminator.cs" />
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="SparkInvoker.cs" />

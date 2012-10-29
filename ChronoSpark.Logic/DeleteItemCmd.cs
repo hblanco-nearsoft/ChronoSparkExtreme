@@ -31,8 +31,8 @@ namespace ChronoSpark.Logic
             return true;
         }
 
-        public String CommandName { get; set; }
-        public String CommandDescription { get; set; }
+        public String CommandName { get { return "delete"; } }
+        public String CommandDescription { get { return "delete rules"; } }
 
         
     }

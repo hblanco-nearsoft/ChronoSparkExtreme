@@ -32,7 +32,7 @@ namespace ChronoSpark.Logic
 
         }
 
-        public String CommandName { get; set; }
-        public String CommandDescription { get; set; }
+        public String CommandName { get { return "update"; } }
+        public String CommandDescription { get { return "update itemtosave"; } }
     }
 }

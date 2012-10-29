@@ -8,8 +8,8 @@ namespace ChronoSpark.Logic
 {
     interface ICommandFactory
     {
-        String CommandName { get; set; }
-        String CommandDescription { get; set; }
+        String CommandName { get; }
+        String CommandDescription { get; }
 
         //ICommand MakeCommand(String[] Arguments);
     }
