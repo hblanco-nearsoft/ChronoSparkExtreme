@@ -5,14 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using ChronoSpark.Data.Entities;
 using ChronoSpark.Data;
+using System.IO;
 
 namespace ChronoSpark.Logic
 {
-    public class TaskWorker //trying to just receive the data needed and construct the entity might use a factory?
+    public class TaskWorker: IWorker
     {
-        public IRavenEntity getTask(String newDescription, int newDuration) 
+        public IRavenEntity getItem() 
         {
+            Console.WriteLine("Enter a Description for the Task");
+            String newDescription = Console.ReadLine();
 
+            int newDuration = 1; //kind of as default.
             IRavenEntity workingEntity = new SparkTask 
             { 
               Description = newDescription,

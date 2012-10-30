@@ -8,11 +8,14 @@ using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
-    class ReminderWorker
+    class ReminderWorker : IWorker
     {
-        public IRavenEntity getReminder(String newDescription, int newInterval)
+        public IRavenEntity getItem()
         {
-
+            Console.WriteLine("Enter a Description for the Reminder");
+            String newDescription = Console.ReadLine();
+            Console.WriteLine("Enter number in minutes for the remainder interval");
+            int newInterval = int.Parse(Console.ReadLine());//add some validations
             IRavenEntity workingEntity = new Reminder
             {
                 Description = newDescription,

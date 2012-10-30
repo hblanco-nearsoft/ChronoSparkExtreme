@@ -15,15 +15,19 @@ namespace ChronoSpark.Logic
         IRepository Repo;
         IRavenEntity ItemToDelete;
 
-        public DeleteItemCmd() { }
-
-        public DeleteItemCmd(IRepository receivedRepository, IRavenEntity receivedItem) 
+        public DeleteItemCmd(IRepository receivedRepository) 
         {
 
             Repo = receivedRepository;
-            ItemToDelete = receivedItem;
 
         }
+
+        public bool SetEntity(IRavenEntity receivedEntity)
+        {
+            ItemToDelete = receivedEntity;
+            return true;
+        }
+
 
         public bool Execute() 
         {

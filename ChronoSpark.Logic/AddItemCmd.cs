@@ -15,14 +15,17 @@ namespace ChronoSpark.Logic
         IRepository Repo;
         IRavenEntity ItemToAdd;
 
-        public AddItemCmd() { }
-
-        public AddItemCmd(IRepository receivedRepo, IRavenEntity receivedItem)
+        public AddItemCmd(IRepository receivedRepository)
         {
 
-            ItemToAdd = receivedItem;
-            Repo = receivedRepo;
+            Repo = receivedRepository;
                  
+        }
+
+        public bool SetEntity(IRavenEntity receivedEntity)
+        {
+            ItemToAdd = receivedEntity;
+            return true;
         }
 
         public bool Execute() 

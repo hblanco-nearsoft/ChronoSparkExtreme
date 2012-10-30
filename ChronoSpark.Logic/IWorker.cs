@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoSpark.Data.Entities;
 using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
-    public interface ICommand
+    interface IWorker
     {
-        bool SetEntity(IRavenEntity receivedEntity);
-        bool Execute();
-    } 
+
+        IRavenEntity getItem();
+        
+    }
 }

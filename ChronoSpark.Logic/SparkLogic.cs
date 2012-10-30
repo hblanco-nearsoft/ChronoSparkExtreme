@@ -23,21 +23,34 @@ namespace ChronoSpark.Logic
 
         public static string ProcessCommand(string cmd)
         {
-            IRepository repo = new Repository(); 
-            if (cmd == "add task") //instead of case or if we could use factory pattern?
-            {
-                
-                Console.WriteLine("Escriba una Descripcion para la tarea");
-                string nameOfTask = Console.ReadLine();
-                int durOfTask = 1;//for now just adding a default value will probably change later.
-                // obviously needs to add option for other fields
-                EntityDeterminator determinator = new EntityDeterminator();
-                //IRavenEntity entity = determinator.getItem();
-                //AddItemCmd command = new AddItemCmd(repo, entity);
-                //SparkInvoker Invoker = new SparkInvoker(command);
-                return "The command was processed:Task Added";
-            }
-            else { return cmd + " is not a recognized command"; }
+            IRepository repo = new Repository();//trying something different
+            string[] words = cmd.Split(' ');
+            EntityDeterminator entityDeterminator= new EntityDeterminator();
+            CommandDeterminator commandDeterminator = new CommandDeterminator();
+            ICommand theCommand;
+            IRavenEntity itemToWork;
+            
+            theCommand = commandDeterminator.GetCommand(words[0],repo);
+            itemToWork = entityDeterminator.getEntity(words[1]);
+            theCommand.SetEntity(itemToWork);
+            SparkInvoker invoker = new SparkInvoker(theCommand);
+            invoker.Invoke();
+            return "The command was processed";
+
+            //if (cmd == "add task")
+            //{
+            //    Console.WriteLine("Escriba una Descripcion para la tarea");
+            //    string nameOfTask = Console.ReadLine();
+            //    int durOfTask = 1;//for now just adding a default value will probably change later.
+            //    // obviously needs to add option for other fields
+            //    EntityDeterminator determinator = new EntityDeterminator();
+            //    //IRavenEntity entity = determinator.getItem();
+            //    //AddItemCmd command = new AddItemCmd(repo, entity);
+            //    //SparkInvoker Invoker = new SparkInvoker(command);
+            //    return "The command was processed:Task Added";
+            //}
+            //else { return cmd + " is not a recognized command"; }     
+
         }
     }
 }

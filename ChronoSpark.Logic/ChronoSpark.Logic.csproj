@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddItemCmd.cs" />
+    <Compile Include="CommandDeterminator.cs" />
+    <Compile Include="IWorker.cs" />
     <Compile Include="ReminderWorker.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="EntityDeterminator.cs" />

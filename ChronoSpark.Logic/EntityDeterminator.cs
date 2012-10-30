@@ -11,30 +11,29 @@ namespace ChronoSpark.Logic
     public class EntityDeterminator
     {
 
-        public IRavenEntity getItem(String entityType, String[] arguments)
+        public IRavenEntity getEntity(String receivedCommand)
         {
-            if (entityType == "task")
+
+
+            if (receivedCommand == "task")
             {
                 IRavenEntity taskToReturn = new SparkTask();
                 TaskWorker taskWorker = new TaskWorker();
-                String description = arguments[0];
-                int duration = int.Parse( arguments[1] );
                 //etc
-                taskToReturn = taskWorker.getTask(description, duration);
+                taskToReturn = taskWorker.getItem();
                 return taskToReturn;
             }
-            if (entityType == "reminder")
+            if (receivedCommand == "reminder")
             {
                 IRavenEntity reminderToReturn = new Reminder();
                 ReminderWorker reminderWorker = new ReminderWorker();
-                String description = arguments[0];
-                int interval = int.Parse(arguments[1]);
                 //etc
-                reminderToReturn = reminderWorker.getReminder(description, interval);
+                reminderToReturn = reminderWorker.getItem();
                 return reminderToReturn;
             }
             else
             {
+                Console.WriteLine(receivedCommand +" is not an identified entity");
                 return null;
             }
         }

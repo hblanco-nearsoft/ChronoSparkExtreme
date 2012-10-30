@@ -14,14 +14,18 @@ namespace ChronoSpark.Logic
        IRepository Repo;
        IRavenEntity ItemUpdated;
 
-        public UpdateItemCmd() { }
 
-        public UpdateItemCmd(IRepository receivedRepository, IRavenEntity receivedItem) 
+        public UpdateItemCmd(IRepository receivedRepository) 
         {
 
             Repo = receivedRepository; 
-            ItemUpdated = receivedItem;
 
+        }
+
+        public bool SetEntity(IRavenEntity receivedEntity)
+        {
+            ItemUpdated = receivedEntity;
+            return true;
         }
 
         public bool Execute()

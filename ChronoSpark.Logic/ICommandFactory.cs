@@ -11,6 +11,5 @@ namespace ChronoSpark.Logic
         String CommandName { get; }
         String CommandDescription { get; }
 
-        //ICommand MakeCommand(String[] Arguments);
     }
 }
