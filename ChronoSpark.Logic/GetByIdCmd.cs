@@ -41,5 +41,9 @@ namespace ChronoSpark.Logic
         public String CommandName { get { return "getbyid"; } }
         public String CommandDescription { get { return "getbyid id"; } }
 
+        public ICommand MakeCommand()
+        {
+            return new GetByIdCmd(Repo);
+        }
     }
 }

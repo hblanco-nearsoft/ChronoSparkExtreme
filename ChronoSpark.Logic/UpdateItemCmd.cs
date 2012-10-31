@@ -38,5 +38,10 @@ namespace ChronoSpark.Logic
 
         public String CommandName { get { return "update"; } }
         public String CommandDescription { get { return "update itemtosave"; } }
+
+        public ICommand MakeCommand()
+        {
+            return new UpdateItemCmd(Repo);
+        }
     }
 }

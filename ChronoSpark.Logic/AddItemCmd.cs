@@ -32,12 +32,18 @@ namespace ChronoSpark.Logic
         {
 
             Repo.Add(ItemToAdd);
+            Console.WriteLine("Item saved");
             return true;
  
         }
 
         public String CommandName { get { return "add"; } }
         public String CommandDescription { get { return "add typeofentity description"; } }
+
+        public ICommand MakeCommand() 
+        {
+            return new AddItemCmd(Repo);
+        }
     }
 }
    

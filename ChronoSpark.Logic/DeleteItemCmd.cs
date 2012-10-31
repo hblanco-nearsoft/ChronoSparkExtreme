@@ -38,6 +38,9 @@ namespace ChronoSpark.Logic
         public String CommandName { get { return "delete"; } }
         public String CommandDescription { get { return "delete rules"; } }
 
-        
+        public ICommand MakeCommand()
+        {
+            return new DeleteItemCmd(Repo);
+        }
     }
 }
