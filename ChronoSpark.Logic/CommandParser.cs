@@ -15,9 +15,10 @@ namespace ChronoSpark.Logic
             this.availableCommands = availableCommands;
         }
 
-        internal ICommand ParseCommand(String[] args)
+        internal ICommand ParseCommand(String readCommand)
         {
-            var requestedCommandName = args[0];
+            
+            var requestedCommandName = readCommand;
             var command = FindRequestedCommand(requestedCommandName);
             return command.MakeCommand();
         }  

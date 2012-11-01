@@ -10,26 +10,23 @@ namespace ChronoSpark.Logic
 {
     public class EntityDeterminator
     {
-
         public IRavenEntity getEntity(String receivedCommand)
         {
-
-
             if (receivedCommand == "task")
             {
                 IRavenEntity taskToReturn = new SparkTask();
-                TaskWorker taskWorker = new TaskWorker();
+                //TaskWorker taskWorker = new TaskWorker();
                 //etc
-                taskToReturn = taskWorker.getItem();
+                // taskToReturn = taskWorker.getItem();
                 return taskToReturn;
             }
             if (receivedCommand == "reminder")
             {
                 IRavenEntity reminderToReturn = new Reminder();
-                ReminderWorker reminderWorker = new ReminderWorker();
+                //ReminderWorker reminderWorker = new ReminderWorker();
                 //etc
-                reminderToReturn = reminderWorker.getItem();
-                return reminderToReturn;
+                //reminderToReturn = reminderWorker.getItem();
+               return reminderToReturn;
             }
             else
             {
@@ -37,7 +34,5 @@ namespace ChronoSpark.Logic
                 return null;
             }
         }
-
-
     }
 }

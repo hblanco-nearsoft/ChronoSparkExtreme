@@ -14,13 +14,10 @@ namespace ChronoSpark.Logic
         IRepository Repo;
         IRavenEntity ItemToGet;
 
-
-
         public GetByIdCmd(IRepository receivedRepository) 
         {
 
             Repo = receivedRepository;
-
 
         }
 

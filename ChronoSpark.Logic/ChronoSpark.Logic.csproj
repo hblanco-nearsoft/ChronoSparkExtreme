@@ -39,17 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddItemCmd.cs" />
-    <Compile Include="CommandDeterminator.cs" />
+    <Compile Include="AddReminderCmd.cs" />
+    <Compile Include="AddTaskCmd.cs" />
     <Compile Include="CommandParser.cs" />
-    <Compile Include="IWorker.cs" />
-    <Compile Include="ReminderWorker.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="EntityDeterminator.cs" />
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="SparkInvoker.cs" />
-    <Compile Include="TaskWorker.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />

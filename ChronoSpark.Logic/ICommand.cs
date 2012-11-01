@@ -9,7 +9,6 @@ namespace ChronoSpark.Logic
 {
     public interface ICommand
     {
-        bool SetEntity(IRavenEntity receivedEntity);
         bool Execute();
     } 
 }

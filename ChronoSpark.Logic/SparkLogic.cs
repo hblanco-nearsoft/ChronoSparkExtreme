@@ -24,14 +24,22 @@ namespace ChronoSpark.Logic
         
         public static string ProcessCommand(string cmd)
         {
-           
+            var availableCommands = GetAvailableCommands();
             if(cmd.Length == 0)
-            {
-                var availableCommands = GetAvailableCommands();
+            { 
                 PrintUsage(availableCommands);
                 return " "; 
             }
-                return "wait";
+
+            var parser = new CommandParser(availableCommands);
+            var command = parser.ParseCommand(cmd);
+
+            if (command != null)
+            {
+                command.Execute();
+                return "command was executed";
+            }
+            return "Unidentified command";
         } 
 
          static IEnumerable<ICommandFactory> GetAvailableCommands()
@@ -39,14 +47,13 @@ namespace ChronoSpark.Logic
              Repository repo = new Repository();
              return new ICommandFactory[]
              {
-                 new AddItemCmd(repo),
+                 new AddTaskCmd(repo),
+                 new AddReminderCmd(repo),
                  new DeleteItemCmd(repo),
                  new UpdateItemCmd(repo),
                  new GetByIdCmd(repo),
              };
-
          }   
-
 
             private static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {
