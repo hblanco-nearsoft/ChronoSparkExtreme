@@ -20,7 +20,11 @@ namespace ChronoSpark.Logic
             
             var requestedCommandName = readCommand;
             var command = FindRequestedCommand(requestedCommandName);
-            return command.MakeCommand();
+            if (command != null)
+            {
+                return command.MakeCommand();
+            }
+            else { return null; }
         }  
          
         ICommandFactory FindRequestedCommand(String commandName)

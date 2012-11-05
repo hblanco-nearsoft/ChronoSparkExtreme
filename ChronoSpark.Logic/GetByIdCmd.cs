@@ -12,7 +12,7 @@ namespace ChronoSpark.Logic
     {
         
         IRepository Repo;
-        IRavenEntity ItemToGet;
+        public IRavenEntity ItemToWork { get; set; }
 
         public GetByIdCmd(IRepository receivedRepository) 
         {
@@ -23,14 +23,14 @@ namespace ChronoSpark.Logic
 
         public bool SetEntity(IRavenEntity receivedEntity)
         {
-            ItemToGet = receivedEntity;
+            ItemToWork = receivedEntity;
             return true;
         }
 
         public bool Execute() 
         {
 
-            Repo.GetById(ItemToGet);
+            Repo.GetById(ItemToWork);
             return true;
 
         }

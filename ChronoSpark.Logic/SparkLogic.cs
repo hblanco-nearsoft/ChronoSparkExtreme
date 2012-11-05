@@ -10,7 +10,6 @@ namespace ChronoSpark.Logic
     public class SparkLogic
     {
         private static bool wasInitialized = false;
-        
        
         public static bool Initialize()
         {
@@ -24,16 +23,56 @@ namespace ChronoSpark.Logic
         
         public static string ProcessCommand(string cmd)
         {
+
+            var commandParts = cmd.Split(' ');
+            IRavenEntity usableEntity;
+
             var availableCommands = GetAvailableCommands();
-            if(cmd.Length == 0)
-            { 
+            if (cmd.Length == 0)
+            {
                 PrintUsage(availableCommands);
-                return " "; 
+                return " ";
             }
 
             var parser = new CommandParser(availableCommands);
-            var command = parser.ParseCommand(cmd);
+            var command = parser.ParseCommand(commandParts[0]);
 
+            if (command == null) 
+            {
+                return "Unidentified Command";
+            }
+
+            if (commandParts[0] == "add") 
+            {
+                if (commandParts.Length < 2) 
+                {
+                    return "You need to specify a type of entity";
+                }
+
+                 EntityWorker entityWorker = new EntityWorker();
+                 usableEntity = entityWorker.GetItem(commandParts[1]);
+                 if (usableEntity == null)
+                 {
+                    return commandParts[1] + " is not a valid entity";
+                 }
+                 command.ItemToWork = usableEntity;
+            }
+
+            if (commandParts[0] == "add")
+            {
+                if (commandParts.Length < 2)
+                {
+                    return "You need to specify a type of entity";
+                }
+
+                EntityWorker entityWorker = new EntityWorker();
+                usableEntity = entityWorker.GetItem(commandParts[1]);
+                if (usableEntity == null)
+                {
+                    return commandParts[1] + " is not a valid entity";
+                }
+                command.ItemToWork = usableEntity;
+            }
             if (command != null)
             {
                 command.Execute();
@@ -47,8 +86,7 @@ namespace ChronoSpark.Logic
              Repository repo = new Repository();
              return new ICommandFactory[]
              {
-                 new AddTaskCmd(repo),
-                 new AddReminderCmd(repo),
+                 new AddItemCmd(repo),
                  new DeleteItemCmd(repo),
                  new UpdateItemCmd(repo),
                  new GetByIdCmd(repo),
@@ -61,7 +99,7 @@ namespace ChronoSpark.Logic
                 foreach(var command in availableCommands)
                     Console.WriteLine("  {0}", command.CommandDescription);
             }
-
+           
             //IRepository repo = new Repository();//trying something different
             //string[] words = cmd.Split(' ');
             //EntityDeterminator entityDeterminator= new EntityDeterminator();

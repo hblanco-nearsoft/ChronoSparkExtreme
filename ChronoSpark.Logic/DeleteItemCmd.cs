@@ -13,7 +13,7 @@ namespace ChronoSpark.Logic
     {
 
         IRepository Repo;
-        IRavenEntity ItemToDelete;
+        public IRavenEntity ItemToWork {get; set;}
 
         public DeleteItemCmd(IRepository receivedRepository) 
         {
@@ -24,14 +24,14 @@ namespace ChronoSpark.Logic
 
         public bool SetEntity(IRavenEntity receivedEntity)
         {
-            ItemToDelete = receivedEntity;
+            ItemToWork = receivedEntity;
             return true;
         }
 
 
         public bool Execute() 
         {
-            Repo.Delete(ItemToDelete);
+            Repo.Delete(ItemToWork);
             return true;
         }
 

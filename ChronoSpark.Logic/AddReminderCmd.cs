@@ -11,8 +11,8 @@ namespace ChronoSpark.Logic
     class AddReminderCmd: ICommand, ICommandFactory
     {
         IRepository Repo;
-        Reminder ItemToAdd = new Reminder();
-
+        //Reminder ItemToAdd = new Reminder();
+        public IRavenEntity ItemToWork { get; set; }
         public AddReminderCmd(IRepository receivedRepository)
         {
 
@@ -22,17 +22,17 @@ namespace ChronoSpark.Logic
 
         public bool Execute() 
         {
-            while (ItemToAdd.Description == null)
-            {
-                Console.WriteLine("Add a description for the reminder");
-                ItemToAdd.Description = Console.ReadLine();
-            }
-            while (ItemToAdd.Interval == 0)
-            {
-                Console.WriteLine("Add an interval (in minutes) for the reminder");
-                ItemToAdd.Interval = int.Parse(Console.ReadLine());
-            }
-            Repo.Add(ItemToAdd);
+            //while (ItemToAdd.Description == null)
+            //{
+            //    Console.WriteLine("Add a description for the reminder");
+            //    ItemToAdd.Description = Console.ReadLine();
+            //}
+            //while (ItemToAdd.Interval == 0)
+            //{
+            //    Console.WriteLine("Add an interval (in minutes) for the reminder");
+            //    ItemToAdd.Interval = int.Parse(Console.ReadLine());
+            //}
+            Repo.Add(ItemToWork);
             Console.WriteLine("Reminder saved");
             return true;
         }
@@ -42,7 +42,7 @@ namespace ChronoSpark.Logic
 
         public ICommand MakeCommand() 
         {
-            return new AddTaskCmd(Repo);
+            return new AddItemCmd(Repo);
         }
     }
 }

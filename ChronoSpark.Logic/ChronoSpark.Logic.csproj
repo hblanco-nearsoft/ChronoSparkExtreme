@@ -40,13 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddReminderCmd.cs" />
-    <Compile Include="AddTaskCmd.cs" />
+    <Compile Include="AddItemCmd.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="DeleteItemCmd.cs" />
-    <Compile Include="EntityDeterminator.cs" />
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="SparkInvoker.cs" />
+    <Compile Include="EntityWorker.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />

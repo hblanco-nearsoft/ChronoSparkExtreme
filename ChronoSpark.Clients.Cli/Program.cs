@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Raven.Storage.Esent;
 using Raven.Storage.Managed;
+using ChronoSpark.Data;
 
 namespace ChronoSpark.Clients.Cli
 {
@@ -15,11 +16,11 @@ namespace ChronoSpark.Clients.Cli
         static void Main(string[] args)
         {
             var exit = false;
-
+            
             Console.Write("Initializing ChronoSpark Time Manager...");
             SparkLogic.Initialize();
             Console.WriteLine("DONE!");
-
+            
             Console.WriteLine("Enter 'exit' to terminate. ");
 
             while (!exit)
@@ -29,7 +30,10 @@ namespace ChronoSpark.Clients.Cli
                 var cmd = Console.ReadLine();
 
                 var result = SparkLogic.ProcessCommand(cmd);
-
+                if (cmd == "exit")
+                {
+                    exit = true;
+                }
                 Console.WriteLine(result);
                // exit = true;
             }
