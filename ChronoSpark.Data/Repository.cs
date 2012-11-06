@@ -95,11 +95,6 @@ namespace ChronoSpark.Data
         {
             using (var Session = _docStore.OpenSession())
             {
-                /*  Validations Missing 
-                 *  1. You never checked for task being null or empty.
-                 *  2. You never checked that task has all the necessary property field out
-                 *      2.1 What would happend if task doesn't have a description or a time amount?
-                 */
                 try
                 {
                     Session.Store(newItem);
@@ -116,11 +111,7 @@ namespace ChronoSpark.Data
         {
             using (var Session = _docStore.OpenSession())
             {
-                /*  Validation Missing
-                 *  1. You are not checking that the storedTask actually exists
-                 *  2. You are not checking the that task is not null or empty
-                 *  3. You are not checking that task has a valid ID.
-                 */
+
                 if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
                     doc.InjectFrom(UpdatedItem);
@@ -143,11 +134,6 @@ namespace ChronoSpark.Data
                 /*
                  *  4. I don't know right now if we are going to have a special rule for deletion, but if
                  *     we decide so, we would need to also delete it.
-                 */
-
-                /*  What are you going to validate here?
-                 *  Remember that we only need to have a VALID object ID to be able to delete it,
-                 *  and you are trying to load if BEFORE knowing if we have it.
                  */
 
                     if (session.Advanced.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
@@ -189,5 +175,21 @@ namespace ChronoSpark.Data
                 return storedItem;
             }
         }
+
+        //public T GetByName<T>(String name, String typeOfEntity) where T : class, IRavenEntity
+        //{
+        //    if (name == null) { return default(T); }
+        //    string myStr = String.Empty;
+        //    using (var session = _docStore.OpenSession())
+        //    {
+        //        if (typeOfEntity == "task")
+        //        {
+        //            var queriedTasks = session.Query<SparkTask>().Where(c => c.Description == name);
+        //        }
+        //        var queriedReminders = session.Query<Reminder>().Where(c => c.Description == name);
+                
+        //        //return storedItem;
+        //    }
+        //}
     }
 }

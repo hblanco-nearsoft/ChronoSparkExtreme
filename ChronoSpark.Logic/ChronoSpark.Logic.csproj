@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddReminderCmd.cs" />
     <Compile Include="AddItemCmd.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="DeleteItemCmd.cs" />

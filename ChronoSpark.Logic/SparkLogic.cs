@@ -1,4 +1,5 @@
 ﻿using ChronoSpark.Data;
+using ChronoSpark.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace ChronoSpark.Logic
     public class SparkLogic
     {
         private static bool wasInitialized = false;
-       
         public static bool Initialize()
         {
             if (wasInitialized) { return true; }
@@ -19,8 +19,9 @@ namespace ChronoSpark.Logic
             wasInitialized = true;
             return true;
         }
-
         
+        private SparkTask ActiveTask;
+
         public static string ProcessCommand(string cmd)
         {
 
@@ -58,21 +59,18 @@ namespace ChronoSpark.Logic
                  command.ItemToWork = usableEntity;
             }
 
-            if (commandParts[0] == "add")
-            {
-                if (commandParts.Length < 2)
-                {
-                    return "You need to specify a type of entity";
-                }
+            //if (commandParts[0] == "load") 
+            //{
+            //    if (commandParts.Length < 2) 
+            //    {
+            //        return "You need to specify a type of entity";
+            //    }
+            //    if (commandParts.Length < 3)
+            //    {
+            //        return "You need to specify an entity";
+            //    }
+            //}
 
-                EntityWorker entityWorker = new EntityWorker();
-                usableEntity = entityWorker.GetItem(commandParts[1]);
-                if (usableEntity == null)
-                {
-                    return commandParts[1] + " is not a valid entity";
-                }
-                command.ItemToWork = usableEntity;
-            }
             if (command != null)
             {
                 command.Execute();
@@ -81,7 +79,7 @@ namespace ChronoSpark.Logic
             return "Unidentified command";
         } 
 
-         static IEnumerable<ICommandFactory> GetAvailableCommands()
+        static IEnumerable<ICommandFactory> GetAvailableCommands()
          {
              Repository repo = new Repository();
              return new ICommandFactory[]
@@ -93,36 +91,13 @@ namespace ChronoSpark.Logic
              };
          }   
 
-            private static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
+        private static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {
                 Console.WriteLine("List of Commands:");
                 foreach(var command in availableCommands)
                     Console.WriteLine("  {0}", command.CommandDescription);
             }
-           
-            //IRepository repo = new Repository();//trying something different
-            //string[] words = cmd.Split(' ');
-            //EntityDeterminator entityDeterminator= new EntityDeterminator();
-            //CommandDeterminator commandDeterminator = new CommandDeterminator();
-            //ICommand theCommand;
-            //IRavenEntity itemToWork;
-            //if (words[0] != null)
-            //{
-            //    theCommand = commandDeterminator.GetCommand(words[0], repo);
-            //    if (words[1] != null && words.Count() > 1)
-            //    {
-            //        itemToWork = entityDeterminator.getEntity(words[1]);
-            //        if (itemToWork != null)
-            //        {
-            //            theCommand.SetEntity(itemToWork);
-            //            SparkInvoker invoker = new SparkInvoker(theCommand);
-            //            invoker.Invoke();
-            //            return "The command was processed";
-            //        }
-            //        else { return "No such item type"; }
-            //    }
-            //    else { return "Please Specify the type of item to work with"; }
-            //}else{ return "A command neets to be specified"; }
+     
 
     }
 }
