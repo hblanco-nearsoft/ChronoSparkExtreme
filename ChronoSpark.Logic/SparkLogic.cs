@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ChronoSpark.Logic
 {
     public class SparkLogic
@@ -20,7 +21,7 @@ namespace ChronoSpark.Logic
             return true;
         }
         
-        private SparkTask ActiveTask;
+        //private IRavenEntity ActiveTask;
 
         public static string ProcessCommand(string cmd)
         {
@@ -43,7 +44,7 @@ namespace ChronoSpark.Logic
                 return "Unidentified Command";
             }
 
-            if (commandParts[0] == "add") 
+            if (commandParts[0] == "add")  //what happens when i receive more arguments than expected?
             {
                 if (commandParts.Length < 2) 
                 {
@@ -59,17 +60,49 @@ namespace ChronoSpark.Logic
                  command.ItemToWork = usableEntity;
             }
 
-            //if (commandParts[0] == "load") 
-            //{
-            //    if (commandParts.Length < 2) 
-            //    {
-            //        return "You need to specify a type of entity";
-            //    }
-            //    if (commandParts.Length < 3)
-            //    {
-            //        return "You need to specify an entity";
-            //    }
-            //}
+            if (commandParts[0] == "delete") 
+            {
+                if (commandParts.Length < 2) 
+                {
+                    return "You need to specify a type of entity";
+                }
+                if (commandParts[1] == "task" )
+                {
+                    // command.ItemToWork = GetActiveTask();
+                    return "";
+                }
+                
+            }
+
+            if (commandParts[0] == "update")
+            {
+                if (commandParts.Length < 2)
+                {
+                    return "You need to specify a type of entity";
+                }
+                if (commandParts[1] == "task") 
+                {
+                    //command.ItemToWork = GetActiveTask();
+                    return "";
+                }
+                if (commandParts[1] == "Reminder") { }
+            }
+
+            if (commandParts[0] == "load") 
+            {
+                if (commandParts.Length < 2) 
+                {
+                    return "You need to specify a type of entity";
+                }
+                if (commandParts[1] == "task") 
+                {
+                    if (commandParts.Length < 3) { return "An ID is needed"; }
+                    //command.ItemToWork = GetIdForLoading(); 
+                }
+                if (commandParts[1] == "reminder") 
+                {
+                }
+            }
 
             if (command != null)
             {
