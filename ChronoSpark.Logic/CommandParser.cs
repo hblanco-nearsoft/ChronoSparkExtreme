@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChronoSpark.Logic
 {
-    class CommandParser
+    public class CommandParser
     {
         readonly IEnumerable<ICommandFactory> availableCommands;
 
@@ -15,7 +15,7 @@ namespace ChronoSpark.Logic
             this.availableCommands = availableCommands;
         }
 
-        internal ICommand ParseCommand(String readCommand)
+        public ICommand ParseCommand(String readCommand)
         {
             
             var requestedCommandName = readCommand;

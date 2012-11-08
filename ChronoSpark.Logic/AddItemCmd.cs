@@ -23,27 +23,7 @@ namespace ChronoSpark.Logic
 
         public bool Execute() 
         {
-            //while (ItemToAdd.Description == null ||ItemToAdd.Description == "")
-            //{
-            //    Console.WriteLine("Add a description for the task");
-            //    ItemToAdd.Description = Console.ReadLine();
-            //}
-            
-           
-            //while (ItemToAdd.Duration == 0)
-            //{
-
-            //    int toDuration;
-            //    Console.WriteLine("Add a duration (in minutes) for the task");
-            //    String input = Console.ReadLine();
-            //    if (int.TryParse(input, out toDuration))
-            //    {
-            //        ItemToAdd.Duration = toDuration;
-            //    }
-            //    else { Console.WriteLine("The duration must be a number"); }
-            //}
-            //Console.WriteLine("Add a Client for the task");
-            //ItemToAdd.Client = Console.ReadLine();
+          
             
             Repo.Add(ItemToWork);
             Console.WriteLine("Item saved");

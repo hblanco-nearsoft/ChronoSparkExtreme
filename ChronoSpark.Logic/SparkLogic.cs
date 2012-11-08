@@ -23,96 +23,96 @@ namespace ChronoSpark.Logic
         
         //private IRavenEntity ActiveTask;
 
-        public static string ProcessCommand(string cmd)
+        public static string ProcessCommand(ICommand cmd)
         {
 
-            var commandParts = cmd.Split(' ');
-            IRavenEntity usableEntity;
+            //var commandParts = cmd.Split(' ');
+            //IRavenEntity usableEntity;
 
-            var availableCommands = GetAvailableCommands();
-            if (cmd.Length == 0)
-            {
-                PrintUsage(availableCommands);
-                return " ";
-            }
+            //var availableCommands = GetAvailableCommands();
+            //if (cmd.Length == 0)
+            //{
+            //    PrintUsage(availableCommands);
+            //    return " ";
+            //}
 
-            var parser = new CommandParser(availableCommands);
-            var command = parser.ParseCommand(commandParts[0]);
+            //var parser = new CommandParser(availableCommands);
+            //var command = parser.ParseCommand(commandParts[0]);
 
-            if (command == null) 
-            {
-                return "Unidentified Command";
-            }
+            //if (command == null) 
+            //{
+            //    return "Unidentified Command";
+            //}
 
-            if (commandParts[0] == "add")  //what happens when i receive more arguments than expected?
-            {
-                if (commandParts.Length < 2) 
-                {
-                    return "You need to specify a type of entity";
-                }
+            //if (commandParts[0] == "add")  //what happens when i receive more arguments than expected?
+            //{
+            //    if (commandParts.Length < 2) 
+            //    {
+            //        return "You need to specify a type of entity";
+            //    }
 
-                 EntityWorker entityWorker = new EntityWorker();
-                 usableEntity = entityWorker.GetItem(commandParts[1]);
-                 if (usableEntity == null)
-                 {
-                    return commandParts[1] + " is not a valid entity";
-                 }
-                 command.ItemToWork = usableEntity;
-            }
+            //     EntityWorker entityWorker = new EntityWorker();
+            //     usableEntity = entityWorker.GetItem(commandParts[1]);
+            //     if (usableEntity == null)
+            //     {
+            //        return commandParts[1] + " is not a valid entity";
+            //     }
+            //     command.ItemToWork = usableEntity;
+            //}
 
-            if (commandParts[0] == "delete") 
-            {
-                if (commandParts.Length < 2) 
-                {
-                    return "You need to specify a type of entity";
-                }
-                if (commandParts[1] == "task" )
-                {
-                    // command.ItemToWork = GetActiveTask();
-                    return "";
-                }
+            //if (commandParts[0] == "delete") 
+            //{
+            //    if (commandParts.Length < 2) 
+            //    {
+            //        return "You need to specify a type of entity";
+            //    }
+            //    if (commandParts[1] == "task" )
+            //    {
+            //        // command.ItemToWork = someObject.GetActiveTask();
+            //        return "";
+            //    }
                 
-            }
+            //}
 
-            if (commandParts[0] == "update")
-            {
-                if (commandParts.Length < 2)
-                {
-                    return "You need to specify a type of entity";
-                }
-                if (commandParts[1] == "task") 
-                {
-                    //command.ItemToWork = GetActiveTask();
-                    return "";
-                }
-                if (commandParts[1] == "Reminder") { }
-            }
+            //if (commandParts[0] == "update")
+            //{
+            //    if (commandParts.Length < 2)
+            //    {
+            //        return "You need to specify a type of entity";
+            //    }
+            //    if (commandParts[1] == "task") 
+            //    {
+            //        //command.ItemToWork = someObject.GetActiveTask();
+            //        return "";
+            //    }
+            //    if (commandParts[1] == "reminder") { }
+            //}
 
-            if (commandParts[0] == "load") 
-            {
-                if (commandParts.Length < 2) 
-                {
-                    return "You need to specify a type of entity";
-                }
-                if (commandParts[1] == "task") 
-                {
-                    if (commandParts.Length < 3) { return "An ID is needed"; }
-                    //command.ItemToWork = GetIdForLoading(); 
-                }
-                if (commandParts[1] == "reminder") 
-                {
-                }
-            }
+            //if (commandParts[0] == "load") 
+            //{
+            //    if (commandParts.Length < 2) 
+            //    {
+            //        return "You need to specify a type of entity";
+            //    }
+            //    if (commandParts[1] == "task") 
+            //    {
+            //        if (commandParts.Length < 3) { return "An ID is needed"; }
+            //        //command.ItemToWork = someObject.GetIdForLoading(); 
+            //    }
+            //    if (commandParts[1] == "reminder") 
+            //    {
+            //    }
+            //}
 
-            if (command != null)
+            if (cmd != null)
             {
-                command.Execute();
-                return "command was executed";
+                cmd.Execute();
+                return "The command was executed";
             }
             return "Unidentified command";
         } 
 
-        static IEnumerable<ICommandFactory> GetAvailableCommands()
+        public static IEnumerable<ICommandFactory> GetAvailableCommands()
          {
              Repository repo = new Repository();
              return new ICommandFactory[]
@@ -124,7 +124,7 @@ namespace ChronoSpark.Logic
              };
          }   
 
-        private static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
+        public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {
                 Console.WriteLine("List of Commands:");
                 foreach(var command in availableCommands)

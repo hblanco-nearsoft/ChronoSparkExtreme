@@ -12,7 +12,7 @@ namespace ChronoSpark.Clients.Cli
     {
      public IRavenEntity GetItem(String entityName)
         {
-
+         
             if (entityName == "task") 
             {
                 SparkTask itemToAdd = new SparkTask();
