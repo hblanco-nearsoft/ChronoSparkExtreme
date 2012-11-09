@@ -26,84 +26,6 @@ namespace ChronoSpark.Logic
         public static string ProcessCommand(ICommand cmd)
         {
 
-            //var commandParts = cmd.Split(' ');
-            //IRavenEntity usableEntity;
-
-            //var availableCommands = GetAvailableCommands();
-            //if (cmd.Length == 0)
-            //{
-            //    PrintUsage(availableCommands);
-            //    return " ";
-            //}
-
-            //var parser = new CommandParser(availableCommands);
-            //var command = parser.ParseCommand(commandParts[0]);
-
-            //if (command == null) 
-            //{
-            //    return "Unidentified Command";
-            //}
-
-            //if (commandParts[0] == "add")  //what happens when i receive more arguments than expected?
-            //{
-            //    if (commandParts.Length < 2) 
-            //    {
-            //        return "You need to specify a type of entity";
-            //    }
-
-            //     EntityWorker entityWorker = new EntityWorker();
-            //     usableEntity = entityWorker.GetItem(commandParts[1]);
-            //     if (usableEntity == null)
-            //     {
-            //        return commandParts[1] + " is not a valid entity";
-            //     }
-            //     command.ItemToWork = usableEntity;
-            //}
-
-            //if (commandParts[0] == "delete") 
-            //{
-            //    if (commandParts.Length < 2) 
-            //    {
-            //        return "You need to specify a type of entity";
-            //    }
-            //    if (commandParts[1] == "task" )
-            //    {
-            //        // command.ItemToWork = someObject.GetActiveTask();
-            //        return "";
-            //    }
-                
-            //}
-
-            //if (commandParts[0] == "update")
-            //{
-            //    if (commandParts.Length < 2)
-            //    {
-            //        return "You need to specify a type of entity";
-            //    }
-            //    if (commandParts[1] == "task") 
-            //    {
-            //        //command.ItemToWork = someObject.GetActiveTask();
-            //        return "";
-            //    }
-            //    if (commandParts[1] == "reminder") { }
-            //}
-
-            //if (commandParts[0] == "load") 
-            //{
-            //    if (commandParts.Length < 2) 
-            //    {
-            //        return "You need to specify a type of entity";
-            //    }
-            //    if (commandParts[1] == "task") 
-            //    {
-            //        if (commandParts.Length < 3) { return "An ID is needed"; }
-            //        //command.ItemToWork = someObject.GetIdForLoading(); 
-            //    }
-            //    if (commandParts[1] == "reminder") 
-            //    {
-            //    }
-            //}
-
             if (cmd != null)
             {
                 cmd.Execute();
@@ -120,9 +42,17 @@ namespace ChronoSpark.Logic
                  new AddItemCmd(repo),
                  new DeleteItemCmd(repo),
                  new UpdateItemCmd(repo),
-                 new GetByIdCmd(repo),
+                 new ListCmd(repo),
              };
-         }   
+         }
+
+        public static IEnumerable<SparkTask> ReturnList() 
+        {
+            Repository repo = new Repository();
+            ListCmd listCommand = new ListCmd(repo);
+            var listToReturn = listCommand.GetList();
+            return listToReturn;
+        }
 
         public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {

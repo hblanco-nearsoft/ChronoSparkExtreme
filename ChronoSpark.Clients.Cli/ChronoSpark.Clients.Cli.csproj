@@ -53,6 +53,7 @@
     <Compile Include="EntityPreparer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskListPrinter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

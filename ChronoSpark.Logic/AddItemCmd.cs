@@ -31,7 +31,7 @@ namespace ChronoSpark.Logic
         }
 
         public String CommandName { get { return "add"; } }
-        public String CommandDescription { get { return "add task"; } }
+        public String CommandDescription { get { return "add entity"; } }
 
         public ICommand MakeCommand() 
         {

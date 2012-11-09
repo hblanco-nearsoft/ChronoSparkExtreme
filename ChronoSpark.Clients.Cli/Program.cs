@@ -13,6 +13,7 @@ namespace ChronoSpark.Clients.Cli
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
             var exit = false;
@@ -39,8 +40,7 @@ namespace ChronoSpark.Clients.Cli
                 {
                     var commandParts = cmd.Split(' ');
                     IRavenEntity usableEntity;
-
-
+                    
                     var availableCommands = SparkLogic.GetAvailableCommands();
                     if (cmd.Length == 0)
                     {
@@ -56,7 +56,7 @@ namespace ChronoSpark.Clients.Cli
                         processed = true;
                     }
 
-                    if (commandParts[0] == "add")  //what happens when i receive more arguments than expected?
+                    if (commandParts[0] == "add")
                     {
                         if (commandParts.Length < 2)
                         {
@@ -76,6 +76,16 @@ namespace ChronoSpark.Clients.Cli
                         command.ItemToWork = usableEntity;
                         var result = SparkLogic.ProcessCommand(command);
                         Console.WriteLine(result);
+                        processed = true;
+                    }
+
+                    if (commandParts[0] == "list") 
+                    {
+                        //var result = SparkLogic.ProcessCommand(command);
+                        //Console.WriteLine(result);
+                        TaskListPrinter lister = new TaskListPrinter();
+                        var listOfTasks = SparkLogic.ReturnList();
+                        lister.ListTaks(listOfTasks);
                         processed = true;
                     }
                     

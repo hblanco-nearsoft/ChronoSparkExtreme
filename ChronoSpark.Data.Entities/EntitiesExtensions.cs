@@ -15,8 +15,16 @@ namespace ChronoSpark.Data.Entities
             {
                 return entity.Id;
             }
-            else
-            { return "There's no ID"; }
+            else { return "There's no ID"; }
+        }
+
+        public static String ElapsedTime(this SparkTask ent)
+        {
+            DateTime currentTime = DateTime.Now;
+            TimeSpan elapsedTime = currentTime - ent.StartDate;
+            ent.TimeElapsed = ent.TimeElapsed + elapsedTime;
+          //  return ent.TimeElapsed;
+            return "";
         }
 
     }

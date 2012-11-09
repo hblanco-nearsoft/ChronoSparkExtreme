@@ -11,21 +11,22 @@ namespace ChronoSpark.Data.Entities
     public enum TaskState
     {
         InProgress,
-        Suspended,
-        Finished
+        Paused,
+        Finished,
+        reported,
     }
     
     public class SparkTask : IRavenEntity      
     {
         public String Id { get; set; }
-        public String Name { get; set; }
         public String Client { get; set; }
         public String Description { get; set; }
         public DateTime StartDate { get; set; }
         public int Duration { get; set; } //In minutes
         public TaskState State { get; set; }
         public String LastEditedBy { get; set; }
-  
+        public TimeSpan TimeElapsed { get; set; }
+
         //public bool Validate()
         //{
             

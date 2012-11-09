@@ -176,6 +176,17 @@ namespace ChronoSpark.Data
             }
         }
 
+        public IEnumerable<SparkTask> GetTaskList()
+        {
+            using (var session = _docStore.OpenSession())
+            {
+                var queriedTasks = session.Query<SparkTask>();
+                var takeTwoHundred = queriedTasks.Take(200);
+                var result = takeTwoHundred.ToList();
+                return result;
+            }
+
+        }
         //public T GetByName<T>(String name, String typeOfEntity) where T : class, IRavenEntity
         //{
         //    if (name == null) { return default(T); }
@@ -191,5 +202,6 @@ namespace ChronoSpark.Data
         //        //return storedItem;
         //    }
         //}
+
     }
 }

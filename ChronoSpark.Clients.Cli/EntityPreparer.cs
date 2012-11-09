@@ -20,9 +20,13 @@ namespace ChronoSpark.Clients.Cli
                 {
                     Console.WriteLine("Add a description for the task");
                     itemToAdd.Description = Console.ReadLine();
+                    if (itemToAdd.Description == null || itemToAdd.Description == "") 
+                    {
+                        Console.WriteLine("You must add a Description");
+                    }
                 }
 
-                while (itemToAdd.Duration == 0)
+                while (itemToAdd.Duration <= 0)
                 {
 
                     int toDuration;
@@ -31,14 +35,17 @@ namespace ChronoSpark.Clients.Cli
                     if (int.TryParse(input, out toDuration))
                     {
                         itemToAdd.Duration = toDuration;
+                    }              
+                    if (itemToAdd.Duration <= 0)
+                    {
+                        Console.WriteLine("The duration must be a number greater than 0");
                     }
-                    else { Console.WriteLine("The duration must be a number"); }
                 }
                 Console.WriteLine("Add a Client for the task");
                 itemToAdd.Client = Console.ReadLine();
 
                 itemToAdd.StartDate= DateTime.Now;
-                itemToAdd.State=  TaskState.InProgress;
+                itemToAdd.State=  TaskState.Paused;
 
                 return itemToAdd; 
             }
@@ -47,15 +54,24 @@ namespace ChronoSpark.Clients.Cli
             {
                 Reminder itemToAdd = new Reminder();
 
-                while (itemToAdd.Description == null)
+                while (itemToAdd.Description == null|| itemToAdd.Description == "")
                 {
                     Console.WriteLine("Add a description for the reminder");
                     itemToAdd.Description = Console.ReadLine();
                 }
-                while (itemToAdd.Interval == 0)
+                while (itemToAdd.Interval <= 0)
                 {
                     Console.WriteLine("Add an interval (in minutes) for the reminder");
-                    itemToAdd.Interval = int.Parse(Console.ReadLine());
+                    String input = Console.ReadLine();
+                    int ToInterval;
+                    if (int.TryParse(input, out ToInterval)) 
+                    {
+                        itemToAdd.Interval = ToInterval;
+                    }
+                    if (itemToAdd.Interval <= 0)
+                    {
+                        Console.WriteLine("The Interval must be a number greater than 0");
+                    }
                 }
 
                 return itemToAdd;
