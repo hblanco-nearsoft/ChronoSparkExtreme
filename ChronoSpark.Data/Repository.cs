@@ -181,6 +181,7 @@ namespace ChronoSpark.Data
             using (var session = _docStore.OpenSession())
             {
                 var queriedTasks = session.Query<SparkTask>();
+                var taskInProgress = session.Query<SparkTask>().Where(t => t.State.Equals(TaskState.InProgress));
                 var takeTwoHundred = queriedTasks.Take(200);
                 var result = takeTwoHundred.ToList();
                 return result;

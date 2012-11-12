@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ManyConsole">
+      <HintPath>..\packages\ManyConsole.0.4.2.12\lib\ManyConsole.dll</HintPath>
+    </Reference>
+    <Reference Include="NDesk.Options">
+      <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +52,6 @@
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ListCmd.cs" />
     <Compile Include="SparkInvoker.cs" />
-    <Compile Include="EntityWorker.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />
@@ -61,6 +66,9 @@
       <Project>{2ec5c30e-e889-4b5b-9d73-95f18a12e739}</Project>
       <Name>ChronoSpark.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

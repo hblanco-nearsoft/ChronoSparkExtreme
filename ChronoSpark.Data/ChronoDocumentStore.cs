@@ -25,7 +25,7 @@ namespace ChronoSpark.Data
             this.Register<Reminder>(reminder => { if (reminder.Interval <= 0) throw new IndexOutOfRangeException("The Inverval must be longer than 0"); });
             this.Register<SparkTask>(task => {if (task.Id.IsNullOrEmpty()) throw new ArgumentNullException ("Id cannot be null"); });
             this.Register<Reminder>(reminder => { if (reminder.Id.IsNullOrEmpty()) throw new ArgumentNullException("Id cannot be null"); });
-
+            this.Register<SparkTask>(task => { if (task.Id.Equals(TaskState.InProgress)) {} });
 
             RegisterListener(this);
         }
