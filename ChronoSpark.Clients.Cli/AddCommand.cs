@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ManyConsole;
 using NDesk.Options;
+using ChronoSpark.Logic;
 using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
 
@@ -15,30 +16,26 @@ namespace ChronoSpark.Clients.Cli
         public AddCommand() 
         {
             this.IsCommand("Add", "Adds a new task or reminder to the database");
-            this.HasRequiredOption("EntityType=", "The type of entity you want to add (task or reminder)", s => { });
-            this.HasRequiredOption("Description=", "A description for the item to create", s => { });
-            this.HasOption("Client=", "The name of the client we want to register", c => { });
-
-            HasAdditionalArguments(3, "<EntityType> <Description> <Client>");
+            this.HasRequiredOption("e|EntityType=", "The type of entity you want to add (task or reminder)", e => EntityType = e);
+            this.HasRequiredOption("d|Description=", "A description for the item to create", d => Description = d);
+            this.HasRequiredOption("t|Time=", "Duration for a task or the interval of a reminder", t => Duration = t);
+            this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);
             
         }
 
         public String EntityType;
         public String Description;
         public String Duration;
-        public int duration;
         public String Client;
 
         public override int Run(string[] remainingArguments)
         {
-            EntityType  = remainingArguments[0];
-            Description = remainingArguments[1];
-            Client = remainingArguments[2];
-
-            if(EntityType == "task")
+            
+            if(EntityType.ToLower() == "task")
             {
                 SparkTask taskToAdd = new SparkTask();
                 taskToAdd.Description = Description;
+                int duration;
                 if (int.TryParse(Duration, out duration))
                 {
                     taskToAdd.Duration = duration;
@@ -46,7 +43,37 @@ namespace ChronoSpark.Clients.Cli
                 taskToAdd.Client = Client;
                 taskToAdd.StartDate = DateTime.Now;
                 taskToAdd.State = TaskState.Paused;
+
+                var availableCommands = SparkLogic.GetAvailableCommands();
+                var parser = new CommandParser(availableCommands);
+                var theCommand = parser.ParseCommand("add");
+                theCommand.ItemToWork = taskToAdd;
+                var result =SparkLogic.ProcessCommand(theCommand);
+                Console.WriteLine(result);
+                return 0;
+                
             }
+
+            if (EntityType.ToLower() == "reminder")
+            {
+                Reminder reminderToAdd = new Reminder();
+                reminderToAdd.Description = Description;
+                int interval;
+                if (int.TryParse(Duration, out interval))
+                {
+                    reminderToAdd.Interval = interval;
+                }
+
+
+                var availableCommands = SparkLogic.GetAvailableCommands();
+                var parser = new CommandParser(availableCommands);
+                var theCommand = parser.ParseCommand("add");
+                theCommand.ItemToWork = reminderToAdd;
+                var result = SparkLogic.ProcessCommand(theCommand);
+                Console.WriteLine(result);
+                return 0;
+            }
+            else { Console.WriteLine("The type of entity should be a task or reminder"); }
 
             return 0;
         }
