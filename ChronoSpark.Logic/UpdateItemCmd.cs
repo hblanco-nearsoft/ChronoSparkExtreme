@@ -11,9 +11,8 @@ namespace ChronoSpark.Logic
     public class UpdateItemCmd : ICommand, ICommandFactory  
     {
 
-       IRepository Repo;
-       public IRavenEntity ItemToWork { get; set; }
-
+        IRepository Repo;
+        public IRavenEntity ItemToWork { get; set; }
 
         public UpdateItemCmd(IRepository receivedRepository) 
         {

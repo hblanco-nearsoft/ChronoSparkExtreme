@@ -10,8 +10,8 @@ namespace ChronoSpark.Data.Entities
 {
     public enum TaskState
     {
-        InProgress,
         Paused,
+        InProgress,     
         Finished,
         reported,
     }
@@ -27,33 +27,6 @@ namespace ChronoSpark.Data.Entities
         public String LastEditedBy { get; set; }
         public TimeSpan TimeElapsed { get; set; }
 
-        //public bool Validate()
-        //{
-            
-        //    if (Id != null && Description.IsNotNullOrEmpty() && Duration > 0)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-        //public bool ValidateToAdd(){
-        //    if(Description.IsNotNullOrEmpty())
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-            
-  
-
-        //public string LoadString()
-        //{
-        //    if (Id.IsNotNullOrEmpty())
-        //    {
-        //        return Id; //What if this is Empty? What if I call this BEFORE having an ID?
-        //    }
-        //    return "there's no ID";
-        //}
+       
     }
 }

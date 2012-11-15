@@ -12,6 +12,7 @@ using Raven.Client;
 using ChronoSpark.Data.Entities;
 using Raven.Storage.Esent;
 using Raven.Storage.Managed;
+using ChronoSpark.Common;
 
 namespace ChronoSpark.Data
 {
@@ -109,13 +110,14 @@ namespace ChronoSpark.Data
         //This Method is kind of cool! good work.
         public bool Update<T>(T UpdatedItem) where T : class, IRavenEntity
         {
+            
             using (var Session = _docStore.OpenSession())
             {
 
                 if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
-                    doc.InjectFrom(UpdatedItem);
-
+                    doc.InjectFrom<InjectNotNull>(UpdatedItem);
+                    
                     try
                     {
                         Session.Store(doc);

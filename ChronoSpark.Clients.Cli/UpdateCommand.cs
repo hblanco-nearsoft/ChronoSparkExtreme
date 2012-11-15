@@ -20,7 +20,7 @@ namespace ChronoSpark.Clients.Cli
             this.HasRequiredOption("i|id=", "The Id of the item to change", i => IdToUpdate = i);
 
             this.HasOption("d|Description:", "A description for the item to create", d => Description = d);
-            this.HasOption("t|Time", "The Duration of the task or remainder interval", t => Duration = t);
+            this.HasOption("t|Time:", "Duration for a task or the interval of a reminder", t => Duration = t);
             this.HasOption("c|Client", "The Client for the Task at work", c => Client = c);
 
 
@@ -39,14 +39,21 @@ namespace ChronoSpark.Clients.Cli
                 SparkTask  taskToUpdate= new SparkTask();
                 var actualId = "SparkTasks/" + IdToUpdate;
                 taskToUpdate.Id = actualId;
-                taskToUpdate.Id = IdToUpdate;
                 taskToUpdate.Description = Description;
+                //if (!int.TryParse(Duration, out duration))
+                //{
+                //    Console.WriteLine("The duration must be an integer");
+                //    return 0;
+                //}
                 if (int.TryParse(Duration, out duration))
                 {
-                taskToUpdate.Duration = duration;
+                    if (duration <= 0)
+                    {
+                        Console.WriteLine("The duration must be greater than 0");
+                        return 0;
+                    }
+                    taskToUpdate.Duration = duration;
                 }
-                taskToUpdate.Client = Client;
-
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
                 var theCommand = parser.ParseCommand("update");
@@ -57,6 +64,32 @@ namespace ChronoSpark.Clients.Cli
             }
             if (EntityType.ToLower() == "reminder") 
             {
+                int interval;
+                Reminder reminderToUpdate = new Reminder();
+                var actualId = "Reminders/" + IdToUpdate;
+                reminderToUpdate.Id = actualId;
+                reminderToUpdate.Description = Description;
+                //if (!int.TryParse(Duration, out interval)) 
+                //{
+                //    Console.WriteLine("The duration of the interval must be an integer");
+                //    return 0;
+                //}
+                if (int.TryParse(Duration, out interval))
+                {
+                    if (interval <= 0) 
+                    {
+                        Console.WriteLine("The interval must be greater than 0");
+                        return 0;
+                    }
+                    reminderToUpdate.Interval = interval;
+                }
+                var availableCommands = SparkLogic.GetAvailableCommands();
+                var parser = new CommandParser(availableCommands);
+                var theCommand = parser.ParseCommand("update");
+                theCommand.ItemToWork = reminderToUpdate;
+                var result = SparkLogic.ProcessCommand(theCommand);
+                Console.WriteLine(result);
+                return 0;
             }
             else { Console.WriteLine("the entity should be a task or reminder"); }
             return 0;

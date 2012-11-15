@@ -18,7 +18,7 @@ namespace ChronoSpark.Clients.Cli
             this.IsCommand("Add", "Adds a new task or reminder to the database");
             this.HasRequiredOption("e|EntityType=", "The type of entity you want to add (task or reminder)", e => EntityType = e);
             this.HasRequiredOption("d|Description=", "A description for the item to create", d => Description = d);
-            this.HasRequiredOption("t|Time=", "Duration for a task or the interval of a reminder", t => Duration = t);
+            this.HasRequiredOption("t|Time=", "Duration for a task or the interval of a reminder (in minutes)", t => Duration = t);
             this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);
             
         }
@@ -38,6 +38,11 @@ namespace ChronoSpark.Clients.Cli
                 int duration;
                 if (int.TryParse(Duration, out duration))
                 {
+                    if (duration <= 0) 
+                    {
+                        Console.WriteLine("The duration must be a number grather than 0");
+                        return 0;
+                    }
                     taskToAdd.Duration = duration;
                 }
                 taskToAdd.Client = Client;
@@ -61,10 +66,13 @@ namespace ChronoSpark.Clients.Cli
                 int interval;
                 if (int.TryParse(Duration, out interval))
                 {
+                    if (interval <= 0)
+                    {
+                        Console.WriteLine("The duration must be a number grather than 0");
+                        return 0;
+                    }
                     reminderToAdd.Interval = interval;
                 }
-
-
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
                 var theCommand = parser.ParseCommand("add");

@@ -15,33 +15,6 @@ namespace ChronoSpark.Data.Entities
         public String OwnerTask { get; set; }
         
 
-        //public String LoadString() 
-        //{ 
-        //    if(Id.IsNotNullOrEmpty())
-        //    {
-        //        return Id;
-        //    }
-        //    return "There's no ID";
-        //}
-        
-        //public bool Validate()
-        //{
-           
-        //    if (Id != null && Description.IsNotNullOrEmpty() && Interval > 0)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-        //public bool ValidateToAdd() 
-        //{
-        //    if (Description.IsNotNullOrEmpty() && Interval > 0) 
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-        
+            
     }
 }

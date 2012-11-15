@@ -56,6 +56,7 @@ namespace ChronoSpark.Data
     
        public void AfterStore(string key, object entityInstance, RavenJObject metadata)
        {
+           
        }
     }
 }
