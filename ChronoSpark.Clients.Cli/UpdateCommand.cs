@@ -40,11 +40,6 @@ namespace ChronoSpark.Clients.Cli
                 var actualId = "SparkTasks/" + IdToUpdate;
                 taskToUpdate.Id = actualId;
                 taskToUpdate.Description = Description;
-                //if (!int.TryParse(Duration, out duration))
-                //{
-                //    Console.WriteLine("The duration must be an integer");
-                //    return 0;
-                //}
                 if (int.TryParse(Duration, out duration))
                 {
                     if (duration <= 0)
@@ -53,6 +48,11 @@ namespace ChronoSpark.Clients.Cli
                         return 0;
                     }
                     taskToUpdate.Duration = duration;
+                }
+                else 
+                {
+                    Console.WriteLine("The duration must be an integer");
+                    return 0;
                 }
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
@@ -82,6 +82,11 @@ namespace ChronoSpark.Clients.Cli
                         return 0;
                     }
                     reminderToUpdate.Interval = interval;
+                }
+                else
+                {
+                    Console.WriteLine("The duration must be an integer");
+                    return 0;
                 }
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);

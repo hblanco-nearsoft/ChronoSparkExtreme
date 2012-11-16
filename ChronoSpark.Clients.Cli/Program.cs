@@ -30,11 +30,37 @@ namespace ChronoSpark.Clients.Cli
                 Console.Write("ChronoSpark => ");
                 processed = false;
                 var cmd = "run-console";
-                // var result = SparkLogic.ProcessCommand(cmd);
-                //if (cmd == "exit")
-                //{
-                //    exit = true;
-                //}              
+
+                #region debug
+#if DEBUG
+                SparkTask thisTask = new SparkTask 
+                {
+                    Description = "auto Task default premium plus",
+                    Duration = 10,
+                    Client = "Client",
+                    StartDate = DateTime.Now,
+                    State = TaskState.Paused
+                };
+                var availableCommands = SparkLogic.GetAvailableCommands();
+                var parser = new CommandParser(availableCommands);
+                var theCommand = parser.ParseCommand("add");
+                theCommand.ItemToWork = thisTask;
+                var result = SparkLogic.ProcessCommand(theCommand);
+
+                Reminder thisReminder = new Reminder
+                {
+                    Description = "auto reminder default premium plus",
+                    Interval = 10
+                };
+                var availableCommands2 = SparkLogic.GetAvailableCommands();
+                var parser2 = new CommandParser(availableCommands2);
+                var theCommand2 = parser.ParseCommand("add");
+                theCommand2.ItemToWork = thisReminder;
+                var result2 = SparkLogic.ProcessCommand(theCommand2);
+
+#endif
+                #endregion  
+
                 while (!processed)
                 {
                     String[] cdmArgs = cmd.Split(' ');
@@ -44,6 +70,8 @@ namespace ChronoSpark.Clients.Cli
 
                     ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
                     processed = true;
+
+
 
                     //cmd = null;
                     //var commandParts = cmd.Split(' ');

@@ -52,6 +52,7 @@
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ListCmd.cs" />
     <Compile Include="SparkInvoker.cs" />
+    <Compile Include="TaskStateTracker.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />

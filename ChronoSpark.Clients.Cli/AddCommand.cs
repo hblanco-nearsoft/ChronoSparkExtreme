@@ -45,6 +45,11 @@ namespace ChronoSpark.Clients.Cli
                     }
                     taskToAdd.Duration = duration;
                 }
+                else
+                {
+                    Console.WriteLine("The duration must be an integer");
+                    return 0;
+                }
                 taskToAdd.Client = Client;
                 taskToAdd.StartDate = DateTime.Now;
                 taskToAdd.State = TaskState.Paused;
@@ -72,6 +77,11 @@ namespace ChronoSpark.Clients.Cli
                         return 0;
                     }
                     reminderToAdd.Interval = interval;
+                }
+                else
+                {
+                    Console.WriteLine("The duration must be an integer");
+                    return 0;
                 }
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
