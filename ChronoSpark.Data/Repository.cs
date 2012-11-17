@@ -103,7 +103,8 @@ namespace ChronoSpark.Data
                     return true;
                 }
                 catch (ArgumentNullException) { return false; }
-                catch(IndexOutOfRangeException) { return false; } 
+                catch(IndexOutOfRangeException) { return false; }
+                //catch (InvalidOperationException) { return false; }
             }  
         }
 
@@ -117,7 +118,7 @@ namespace ChronoSpark.Data
                 if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
                     doc.InjectFrom<InjectNotNull>(UpdatedItem);
-                    
+
                     try
                     {
                         Session.Store(doc);
@@ -126,6 +127,7 @@ namespace ChronoSpark.Data
                     }
                     catch (ArgumentNullException) { return false; }
                     catch (IndexOutOfRangeException) { return false; }
+                    //catch (InvalidOperationException) { return false; }
             } 
         }
 
@@ -184,12 +186,13 @@ namespace ChronoSpark.Data
             {
                 var queriedTasks = session.Query<SparkTask>();
                 var taskInProgress = session.Query<SparkTask>().Where(t => t.State.Equals(TaskState.InProgress));
-                var takeTwoHundred = queriedTasks.Take(200);
+                var takeTwoHundred = queriedTasks;
                 var result = takeTwoHundred.ToList();
                 return result;
             }
 
         }
+
         //public T GetByName<T>(String name, String typeOfEntity) where T : class, IRavenEntity
         //{
         //    if (name == null) { return default(T); }

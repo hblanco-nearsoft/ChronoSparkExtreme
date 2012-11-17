@@ -185,13 +185,13 @@ namespace UnitTestProject1
         [TestMethod]
         public void RepositoryUpdate_IsGivenInvalidItem_ReturnsFalse()
         {
-            var storedTask = new SparkTask
+            var nonExistingTask = new SparkTask
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "New Task",
                 Duration = 5
             };
-            var storedReminder = new Reminder 
+            var nonExistingReminder = new Reminder 
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = "New Reminder",
@@ -202,32 +202,8 @@ namespace UnitTestProject1
                 DataDirectory = "~/Data/Debug",
                 RunInMemory = true
             });
-            repo.Add<SparkTask>(storedTask);
-            repo.Add<Reminder>(storedReminder);
-
-            storedTask.Description = "Changed Task";
-            storedReminder.Description = "Changed Reminder";
-
-            var fakeTask = new SparkTask 
-            {
-                Id = storedTask.Id,
-                Description = ""
-            };
-
-            var fakeReminder = new Reminder
-            {
-                Id = storedReminder.Id,
-                Interval = 0
-            };
-
-            var nonExistingTask = new SparkTask { 
-                Id =Guid.NewGuid().ToString(),
-                Description = "not in the database",
-                Duration = 5
-            };
-
-            repo.Update<SparkTask>(fakeTask).ShouldBe(false);
-            repo.Update<Reminder>(fakeReminder).ShouldBe(false);
+            
+            repo.Update<Reminder>(nonExistingReminder).ShouldBe(false);
             repo.Update<SparkTask>(nonExistingTask).ShouldBe(false);
         }
 
@@ -313,6 +289,33 @@ namespace UnitTestProject1
                 Should.Throw<ArgumentNullException>(session.SaveChanges);
             }
         }
+
+        //[TestMethod]
+        //public void RepositoryAdd_IsGivenTwoTasksInProgress_ReturnsException()
+        //{
+        //    var task1 = new SparkTask
+        //    {
+        //        Description = "desc",
+        //        Duration = 5,
+        //        State = TaskState.InProgress
+        //    };
+        //    var task2 = new SparkTask
+        //    {
+        //        Description = "desc2",
+        //        Duration = 51,
+        //        State = TaskState.InProgress
+        //    };
+
+        //    var repo = new Repository(new ChronoDocumentStore()
+        //    {
+        //        DataDirectory = "~/Data/Debug",
+        //        RunInMemory = true
+        //    });
+
+
+        //    repo.Add<SparkTask>(task1).ShouldBe(true);
+        //    repo.Add<SparkTask>(task2).ShouldBe(false);    
+        //}
 
     }
 }

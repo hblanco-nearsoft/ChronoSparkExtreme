@@ -58,6 +58,7 @@ namespace ChronoSpark.Clients.Cli
                 theCommand2.ItemToWork = thisReminder;
                 var result2 = SparkLogic.ProcessCommand(theCommand2);
 
+
 #endif
                 #endregion  
 
@@ -130,6 +131,7 @@ namespace ChronoSpark.Clients.Cli
             }
 
         }
+
 
 
         static IEnumerable<ConsoleCommand> GetCommands()

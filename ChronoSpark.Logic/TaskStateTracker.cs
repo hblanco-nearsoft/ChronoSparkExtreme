@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ChronoSpark.Data.Entities;
 
+
 namespace ChronoSpark.Logic
 {
-    class TaskStateTracker
+    public class TaskStateTracker
     {
 
         SparkTask[] tasks;

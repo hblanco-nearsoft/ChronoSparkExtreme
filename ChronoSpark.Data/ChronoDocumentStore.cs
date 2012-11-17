@@ -24,7 +24,27 @@ namespace ChronoSpark.Data
             this.Register<Reminder>(reminder => { if (reminder.Interval <= 0) throw new IndexOutOfRangeException("The Inverval must be longer than 0"); });
             this.Register<SparkTask>(task => {if (task.Id.IsNullOrEmpty()) throw new ArgumentNullException ("Id cannot be null"); });
             this.Register<Reminder>(reminder => { if (reminder.Id.IsNullOrEmpty()) throw new ArgumentNullException("Id cannot be null"); });
-
+            this.Register<SparkTask>(task =>
+            {
+                if (task.State == TaskState.InProgress)
+                {
+                    IEnumerable<SparkTask> listOfTasks = ListReturner.ReturnList();
+                    //SparkTask[] arrayOfTasks = listOfTasks.Cast<SparkTask>().ToArray();
+                    int counter = 0;
+                    foreach (var t in listOfTasks)
+                    {
+                        if (t.State == TaskState.InProgress && t.Id != task.Id) { counter++; }
+                    }
+                    //for (var x = 0; x < arrayOfTasks.Length; x++)
+                    //{
+                    //    if (arrayOfTasks[x].State == TaskState.InProgress)
+                    //    {
+                    //        counter++;
+                    //    }
+                    //} 
+                    if (counter > 0) { throw new InvalidOperationException("Cannot Store more than one task in progress"); }
+                }
+            });
 
             RegisterListener(this);
         }
