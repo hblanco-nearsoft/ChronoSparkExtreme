@@ -22,7 +22,7 @@ namespace ChronoSpark.Logic
         private SparkTask VerifyOneInProgress(TaskState state) 
         {
             int counter = 0;
-            for (var x = 0; x < tasks.Length; x++)
+            for (var x = 0; x <= tasks.Length; x++)
             {
                 if (tasks[x].State == state) 
                 {
@@ -38,7 +38,7 @@ namespace ChronoSpark.Logic
         {
             get 
             {
-                    return VerifyOneInProgress(State);
+                return VerifyOneInProgress(State);
             }
         }
     }

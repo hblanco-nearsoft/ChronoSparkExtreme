@@ -21,7 +21,7 @@ namespace ChronoSpark.Logic
             wasInitialized = true;
             return true;
         }
-        
+
         //private IRavenEntity ActiveTask;
 
         public static string ProcessCommand(ICommand cmd)

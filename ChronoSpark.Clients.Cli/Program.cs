@@ -10,20 +10,27 @@ using Raven.Storage.Managed;
 using ChronoSpark.Data;
 using ManyConsole;
 
+using System.Threading;
+
 namespace ChronoSpark.Clients.Cli
 {
     class Program
     {
         
+        
         static void Main(string[] args)
         {
-            var exit = false;
             var processed = false;
             Console.Write("Initializing ChronoSpark Time Manager...");
             SparkLogic.Initialize();
             Console.WriteLine("DONE!");
 
-            Console.WriteLine("Enter 'exit' to terminate. ");
+            //Console.WriteLine("Enter 'exit' to terminate. ");
+            Timers thetimer = new Timers();
+            Thread theThread = new Thread(new ThreadStart(thetimer.testingthreads));
+            theThread.IsBackground = true;  
+            theThread.Start();
+
 
             while (!processed)//!exit
             {
@@ -71,8 +78,6 @@ namespace ChronoSpark.Clients.Cli
 
                     ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
                     processed = true;
-
-
 
                     //cmd = null;
                     //var commandParts = cmd.Split(' ');

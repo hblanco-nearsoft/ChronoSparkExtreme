@@ -185,29 +185,21 @@ namespace ChronoSpark.Data
             using (var session = _docStore.OpenSession())
             {
                 var queriedTasks = session.Query<SparkTask>();
-                var taskInProgress = session.Query<SparkTask>().Where(t => t.State.Equals(TaskState.InProgress));
-                var takeTwoHundred = queriedTasks;
-                var result = takeTwoHundred.ToList();
+                //var taskInProgress = session.Query<SparkTask>().Where(t => t.State.Equals(TaskState.InProgress));
+                var result = queriedTasks.ToList();
                 return result;
             }
 
         }
 
-        //public T GetByName<T>(String name, String typeOfEntity) where T : class, IRavenEntity
+        //public IEnumerable<SparkTask> GetByStartDate(DateTime startDate) 
         //{
-        //    if (name == null) { return default(T); }
-        //    string myStr = String.Empty;
         //    using (var session = _docStore.OpenSession())
         //    {
-        //        if (typeOfEntity == "task")
-        //        {
-        //            var queriedTasks = session.Query<SparkTask>().Where(c => c.Description == name);
-        //        }
-        //        var queriedReminders = session.Query<Reminder>().Where(c => c.Description == name);
-                
-        //        //return storedItem;
-        //    }
+        //        var queriedTasks = session.Query<SparkTask>().Where(t => t.StartDate.Equals(startDate));
+        //        var result = queriedTasks.ToList();
+        //        return result;
+        //    } 
         //}
-
     }
 }

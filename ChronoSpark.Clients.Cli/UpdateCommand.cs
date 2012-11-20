@@ -49,11 +49,6 @@ namespace ChronoSpark.Clients.Cli
                     }
                     taskToUpdate.Duration = duration;
                 }
-                else 
-                {
-                    Console.WriteLine("The duration must be an integer");
-                    return 0;
-                }
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
                 var theCommand = parser.ParseCommand("update");
@@ -82,11 +77,6 @@ namespace ChronoSpark.Clients.Cli
                         return 0;
                     }
                     reminderToUpdate.Interval = interval;
-                }
-                else
-                {
-                    Console.WriteLine("The duration must be an integer");
-                    return 0;
                 }
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
