@@ -8,6 +8,7 @@ using NDesk.Options;
 using ChronoSpark.Logic;
 using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
+using System.Threading;
 
 namespace ChronoSpark.Clients.Cli
 {
@@ -21,13 +22,16 @@ namespace ChronoSpark.Clients.Cli
 
         String ReminderId;
 
-        public override int Run(String[] RemainingArguments) 
+        public override int Run(String[] RemainingArguments)
         {
-            //Reminder queryEntity = new Reminder();
-            //queryEntity.Id = "Reminders/" + ReminderId;  
-            //Reminder actualEntity = SparkLogic.ReturnReminder(queryEntity);
-            //ReminderTrigger trigger = new ReminderTrigger();
-            //trigger.ActivateReminder(actualEntity);
+            Reminder reminderTofetch = new Reminder();
+            var actualId = "Reminders/" + ReminderId;
+            reminderTofetch.Id = actualId;
+
+            var reminderToSet= SparkLogic.fetch(reminderTofetch);
+
+            //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(reminderToSet); });
+
             return 0;
         }
     }

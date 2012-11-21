@@ -10,14 +10,13 @@ using Raven.Storage.Managed;
 using ChronoSpark.Data;
 using ManyConsole;
 
+
 using System.Threading;
 
 namespace ChronoSpark.Clients.Cli
 {
     class Program
-    {
-        
-        
+    {   
         static void Main(string[] args)
         {
             var processed = false;
@@ -26,10 +25,12 @@ namespace ChronoSpark.Clients.Cli
             Console.WriteLine("DONE!");
 
             //Console.WriteLine("Enter 'exit' to terminate. ");
-            Timers thetimer = new Timers();
-            Thread theThread = new Thread(new ThreadStart(thetimer.testingthreads));
-            theThread.IsBackground = true;  
-            theThread.Start();
+            Reminder thisOtherReminder = new Reminder
+                {
+                    Description = "auto reminder default premium plus deluxe",
+                    Interval = 1
+                };
+            ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisOtherReminder); });
 
 
             while (!processed)//!exit
@@ -79,59 +80,6 @@ namespace ChronoSpark.Clients.Cli
                     ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
                     processed = true;
 
-                    //cmd = null;
-                    //var commandParts = cmd.Split(' ');
-                    //IRavenEntity usableEntity;
-
-                    //var availableCommands = SparkLogic.GetAvailableCommands();
-                    //if (cmd.Length == 0)
-                    //{
-                    //    SparkLogic.PrintUsage(availableCommands);
-                    //}
-
-                    //var parser = new CommandParser(availableCommands);
-                    //var command = parser.ParseCommand(commandParts[0]);
-
-                    //if (command == null)
-                    //{
-                    //    Console.WriteLine("Unidentified Command");
-                    //    processed = true;
-                    //}
-
-                    //if (commandParts[0] == "add")
-                    //{
-                    //    if (commandParts.Length < 2)
-                    //    {
-                    //        Console.WriteLine("You need to specify a type of entity");
-                    //        processed = true;
-                    //        break;
-                    //    }
-
-                    //    EntityPreparer entityPreparer = new EntityPreparer();
-                    //    usableEntity = entityPreparer.GetItem(commandParts[1]);
-                    //    if (usableEntity == null)
-                    //    {
-                    //        Console.WriteLine(commandParts[1] + " is not a valid entity");
-                    //        processed = true;
-                    //        break;
-                    //    }
-                    //    command.ItemToWork = usableEntity;
-                    //    var result = SparkLogic.ProcessCommand(command);
-                    //    Console.WriteLine(result);
-                    //    processed = true;
-                    //}
-
-                    //if (commandParts[0] == "list")
-                    //{
-                    //    //var result = SparkLogic.ProcessCommand(command);
-                    //    //Console.WriteLine(result);
-                    //    TaskListPrinter lister = new TaskListPrinter();
-                    //    var listOfTasks = SparkLogic.ReturnList();
-                    //    lister.ListTaks(listOfTasks);
-                    //    processed = true;
-                    //}
-
-                    //exit = true;
                 }
             }
 
@@ -144,4 +92,5 @@ namespace ChronoSpark.Clients.Cli
             return ConsoleCommandDispatcher.FindCommandsInSameAssemblyAs(typeof(Program));
         }
     }
+
 }

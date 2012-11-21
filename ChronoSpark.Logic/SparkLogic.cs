@@ -63,5 +63,11 @@ namespace ChronoSpark.Logic
             }
 
 
+        public static IRavenEntity fetch(IRavenEntity entity)
+        {
+            Repository repo = new Repository();
+            var entityToReturn = repo.GetById(entity);
+            return entityToReturn;
+        }
     }
 }

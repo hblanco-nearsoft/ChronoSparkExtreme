@@ -51,9 +51,11 @@
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ListCmd.cs" />
+    <Compile Include="ReminderControl.cs" />
+    <Compile Include="ReminderListener.cs" />
     <Compile Include="SparkInvoker.cs" />
     <Compile Include="TaskStateTracker.cs" />
-    <Compile Include="Timers.cs" />
+    <Compile Include="ReminderEventArgs.cs" />
     <Compile Include="UpdateItemCmd.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />

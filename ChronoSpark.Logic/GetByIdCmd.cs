@@ -21,6 +21,8 @@ namespace ChronoSpark.Logic
 
         }
 
+
+
         public bool SetEntity(IRavenEntity receivedEntity)
         {
             ItemToWork = receivedEntity;
