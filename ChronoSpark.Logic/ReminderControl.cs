@@ -12,11 +12,11 @@ namespace ChronoSpark.Logic
     {
         public static event ReminderHandler EventReminder;
 
-        public static void ActivateReminder(Reminder theReminder)
+        public static void ActivateReminder(Reminder theReminder, SparkTask TheTask)
         {
             ReminderListener listener = new ReminderListener();
             EventReminder += new ReminderHandler(listener.ActivateReminder);
-            GetReminded(theReminder.Interval);
+            GetReminded(theReminder, TheTask);
         }
 
         public static void OnEventReminder(ReminderEventArgs args) 
@@ -24,22 +24,25 @@ namespace ChronoSpark.Logic
             if (EventReminder != null) { EventReminder(new object(), args); }
         }
 
-        public static void GetReminded(int interval) 
+        public static void GetReminded(Reminder theReminder, SparkTask theTask) 
         {
             while (true)
             {
-                var theTime = DateTime.Now;
-                theTime.AddMinutes(interval);
+                var nowTime = DateTime.Now;
+                //var sleepInterval = interval * 60 * 1000;
+                var theInterval = theReminder.Interval;
+                var theTime = nowTime.AddMinutes(theInterval);
                 var reminded = false;
                 while (!reminded)
-                {
-                    if (theTime == DateTime.Now)
+                { 
+                    if (DateTime.Compare(theTime, DateTime.Now) == 0)
                     {
-                        ReminderEventArgs i = new ReminderEventArgs(1);
-                        Thread.Sleep(5000);
+                        ReminderEventArgs i = new ReminderEventArgs(theReminder,theTask);
+                        //Thread.Sleep(sleepInterval);
                         OnEventReminder(i);
                         reminded = true;
                     }
+                    if (DateTime.Compare(theTime, DateTime.Now) > 0) { reminded = true; }
                 }
             }
         }

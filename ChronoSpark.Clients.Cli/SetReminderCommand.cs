@@ -16,22 +16,31 @@ namespace ChronoSpark.Clients.Cli
     {
         public SetReminderCommand() 
         {
-            this.IsCommand("reminder", "sets the reminder to activate");
-            this.HasRequiredOption("r|ReminderId","The id of the reminder to activate", i => ReminderId = i);
+            this.IsCommand("activate", "sets the reminder to activate");
+            this.HasRequiredOption("r|Reminder=","The id of the reminder to activate", r => ReminderId = r);
+            this.HasRequiredOption("t|Task=", "The id of the task to activate", t => TaskId = t);
         }
 
-        String ReminderId;
+        public String ReminderId;
+        public String TaskId;
 
         public override int Run(String[] RemainingArguments)
         {
-            Reminder reminderTofetch = new Reminder();
-            var actualId = "Reminders/" + ReminderId;
-            reminderTofetch.Id = actualId;
+            IRavenEntity reminderToFetch = new Reminder();
+            IRavenEntity taskToFetch = new SparkTask();
+            var actualReminderId = "Reminders/" + ReminderId;
+            var actualTaskId = "SparkTasks/" + TaskId;
+            reminderToFetch.Id = actualReminderId;
+            taskToFetch.Id = actualTaskId;
 
-            var reminderToSet= SparkLogic.fetch(reminderTofetch);
+            Reminder reminderToSet= SparkLogic.fetch(reminderToFetch) as Reminder;
+           
+            SparkTask taskToSet = SparkLogic.fetch(taskToFetch) as SparkTask;
 
-            //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(reminderToSet); });
-
+            if (taskToSet != null && reminderToSet != null)
+            {
+                ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(reminderToSet, taskToSet); });
+            }
             return 0;
         }
     }

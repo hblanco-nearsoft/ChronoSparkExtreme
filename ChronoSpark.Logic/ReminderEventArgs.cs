@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
@@ -11,11 +12,13 @@ namespace ChronoSpark.Logic
     public class ReminderEventArgs : EventArgs
     {
 
-            public readonly int TheInterval;
+            public readonly SparkTask TheTask;
+            public readonly Reminder TheReminder;       
 
-            public ReminderEventArgs(int interval)
+            public ReminderEventArgs(Reminder reminder, SparkTask task)
             {
-                TheInterval = interval;
+                TheTask = task;
+                TheReminder = reminder;
             }
 
     }

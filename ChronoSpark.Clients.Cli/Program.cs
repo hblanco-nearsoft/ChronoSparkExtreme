@@ -25,12 +25,8 @@ namespace ChronoSpark.Clients.Cli
             Console.WriteLine("DONE!");
 
             //Console.WriteLine("Enter 'exit' to terminate. ");
-            Reminder thisOtherReminder = new Reminder
-                {
-                    Description = "auto reminder default premium plus deluxe",
-                    Interval = 1
-                };
-            ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisOtherReminder); });
+
+             
 
 
             while (!processed)//!exit
@@ -58,7 +54,7 @@ namespace ChronoSpark.Clients.Cli
                 Reminder thisReminder = new Reminder
                 {
                     Description = "auto reminder default premium plus",
-                    Interval = 10
+                    Interval = 1
                 };
                 var availableCommands2 = SparkLogic.GetAvailableCommands();
                 var parser2 = new CommandParser(availableCommands2);
@@ -66,7 +62,7 @@ namespace ChronoSpark.Clients.Cli
                 theCommand2.ItemToWork = thisReminder;
                 var result2 = SparkLogic.ProcessCommand(theCommand2);
 
-
+                //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
 #endif
                 #endregion  
 
@@ -79,18 +75,13 @@ namespace ChronoSpark.Clients.Cli
 
                     ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
                     processed = true;
-
                 }
             }
-
         }
-
-
 
         static IEnumerable<ConsoleCommand> GetCommands()
         {
             return ConsoleCommandDispatcher.FindCommandsInSameAssemblyAs(typeof(Program));
         }
     }
-
 }
