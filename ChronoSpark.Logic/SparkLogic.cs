@@ -19,6 +19,7 @@ namespace ChronoSpark.Logic
 
             Repository.RavenInitialize();
             wasInitialized = true;
+            DefaultReminders.AddDefaultReminders();
             return true;
         }
 
@@ -55,11 +56,20 @@ namespace ChronoSpark.Logic
             return listToReturn;
         }
 
+        public static IEnumerable<SparkTask> ReturnList2()
+        {
+            Repository repo = new Repository();
+            ListCmd listCommand = new ListCmd(repo);
+            var listToReturn = listCommand.GetList();
+            return listToReturn;
+        }
+
+
         public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {
                 Console.WriteLine("List of Commands:");
                 foreach(var command in availableCommands)
-                    Console.WriteLine("  {0}", command.CommandDescription);
+                    Console.WriteLine("{0}", command.CommandDescription);
             }
 
 

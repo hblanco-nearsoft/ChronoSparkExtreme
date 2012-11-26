@@ -35,14 +35,18 @@ namespace ChronoSpark.Logic
                 var reminded = false;
                 while (!reminded)
                 { 
-                    if (DateTime.Compare(theTime, DateTime.Now) == 0)
+                    if (DateTime.Compare(theTime, DateTime.Now)== 0)
                     {
                         ReminderEventArgs i = new ReminderEventArgs(theReminder,theTask);
                         //Thread.Sleep(sleepInterval);
                         OnEventReminder(i);
                         reminded = true;
                     }
-                    if (DateTime.Compare(theTime, DateTime.Now) > 0) { reminded = true; }
+                    if (DateTime.Compare(theTime, DateTime.Now) < 0) {
+                        //ReminderEventArgs i = new ReminderEventArgs(theReminder, theTask);
+                        ////Thread.Sleep(sleepInterval);
+                        //OnEventReminder(i);                      
+                        reminded = true; }
                 }
             }
         }

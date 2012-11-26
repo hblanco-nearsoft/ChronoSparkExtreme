@@ -10,7 +10,7 @@ namespace ChronoSpark.Logic
     {
         public void ActivateReminder(object obj, ReminderEventArgs args)
         {
-            Console.WriteLine("{0} minutes have passed in the task: {1}", args.TheReminder.Interval, args.TheTask.Description);
+            Console.WriteLine("{0} minutes have passed in the task: {1}", args.TheReminder.Interval, args.TheReminder.Description);
         }
     }
 }

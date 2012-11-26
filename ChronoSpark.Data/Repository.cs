@@ -191,7 +191,6 @@ namespace ChronoSpark.Data
             }
 
         }
-
         //public IEnumerable<SparkTask> GetByStartDate(DateTime startDate) 
         //{
         //    using (var session = _docStore.OpenSession())

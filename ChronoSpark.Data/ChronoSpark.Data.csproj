@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChronoDocumentStore.cs" />
+    <Compile Include="DefaultReminders.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ListReturner.cs" />
     <Compile Include="Repository.cs" />

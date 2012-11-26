@@ -11,10 +11,7 @@ namespace ChronoSpark.Data.Entities
     {
         public String Id { get; set; }
         public String Description { get; set; }
-        public int Interval { get; set; } // in minutes
-        public String OwnerTask { get; set; }
-        
-
-            
+        public int Interval { get; set; } // in minutes     
+           
     }
 }

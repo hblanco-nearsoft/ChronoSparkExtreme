@@ -53,7 +53,7 @@ namespace ChronoSpark.Clients.Cli
 
                 Reminder thisReminder = new Reminder
                 {
-                    Description = "auto reminder default premium plus",
+                    Description = "reminder 1",
                     Interval = 1
                 };
                 var availableCommands2 = SparkLogic.GetAvailableCommands();
@@ -61,6 +61,17 @@ namespace ChronoSpark.Clients.Cli
                 var theCommand2 = parser.ParseCommand("add");
                 theCommand2.ItemToWork = thisReminder;
                 var result2 = SparkLogic.ProcessCommand(theCommand2);
+
+                Reminder thisReminder2 = new Reminder
+                {
+                    Description = "reminder 2",
+                    Interval = 1
+                };
+                var availableCommands12 = SparkLogic.GetAvailableCommands();
+                var parser12 = new CommandParser(availableCommands12);
+                var theCommand12 = parser.ParseCommand("add");
+                theCommand12.ItemToWork = thisReminder2; 
+                var result12 = SparkLogic.ProcessCommand(theCommand12);
 
                 //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
 #endif
