@@ -11,6 +11,37 @@ namespace ChronoSpark.Data
     {
         public static bool AddDefaultReminders() 
         {
+
+            #region debug
+#if DEBUG
+            SparkTask thisTask = new SparkTask
+            {
+                Description = "auto Task default premium plus",
+                Duration = 10,
+                Client = "Client",
+                StartDate = DateTime.Now,
+                State = TaskState.Paused
+            };
+            
+
+            Reminder thisReminder = new Reminder
+            {
+                Description = "reminder 1",
+                Interval = 1
+            };
+           
+
+            Reminder thisReminder2 = new Reminder
+            {
+                Description = "reminder 2",
+                Interval = 1
+            };
+            
+
+            //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
+#endif
+            #endregion  
+
             Repository repo = new Repository();
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
@@ -42,6 +73,14 @@ namespace ChronoSpark.Data
                 Description = "End of the Day",
                 Interval = 24
             };
+
+            #region debug
+#if DEBUG
+            repo.Add(thisTask);
+            repo.Add(thisReminder);
+            repo.Add(thisReminder2);
+#endif
+            #endregion
 
             repo.Add(DefaultReminderNoOtherActive);
             repo.Add(DefaultHourlyReminder);

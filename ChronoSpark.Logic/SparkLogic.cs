@@ -56,15 +56,6 @@ namespace ChronoSpark.Logic
             return listToReturn;
         }
 
-        public static IEnumerable<SparkTask> ReturnList2()
-        {
-            Repository repo = new Repository();
-            ListCmd listCommand = new ListCmd(repo);
-            var listToReturn = listCommand.GetList();
-            return listToReturn;
-        }
-
-
         public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
             {
                 Console.WriteLine("List of Commands:");

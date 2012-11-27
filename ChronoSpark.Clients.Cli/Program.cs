@@ -35,47 +35,6 @@ namespace ChronoSpark.Clients.Cli
                 processed = false;
                 var cmd = "run-console";
 
-                #region debug
-#if DEBUG
-                SparkTask thisTask = new SparkTask 
-                {
-                    Description = "auto Task default premium plus",
-                    Duration = 10,
-                    Client = "Client",
-                    StartDate = DateTime.Now,
-                    State = TaskState.Paused
-                };
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("add");
-                theCommand.ItemToWork = thisTask;
-                var result = SparkLogic.ProcessCommand(theCommand);
-
-                Reminder thisReminder = new Reminder
-                {
-                    Description = "reminder 1",
-                    Interval = 1
-                };
-                var availableCommands2 = SparkLogic.GetAvailableCommands();
-                var parser2 = new CommandParser(availableCommands2);
-                var theCommand2 = parser.ParseCommand("add");
-                theCommand2.ItemToWork = thisReminder;
-                var result2 = SparkLogic.ProcessCommand(theCommand2);
-
-                Reminder thisReminder2 = new Reminder
-                {
-                    Description = "reminder 2",
-                    Interval = 1
-                };
-                var availableCommands12 = SparkLogic.GetAvailableCommands();
-                var parser12 = new CommandParser(availableCommands12);
-                var theCommand12 = parser.ParseCommand("add");
-                theCommand12.ItemToWork = thisReminder2; 
-                var result12 = SparkLogic.ProcessCommand(theCommand12);
-
-                //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
-#endif
-                #endregion  
 
                 while (!processed)
                 {

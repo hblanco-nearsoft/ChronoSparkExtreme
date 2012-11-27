@@ -47,5 +47,7 @@ namespace ChronoSpark.Logic.Tests
 
             result.ShouldBe("Unidentified command");
         }
+
+
     }
 }
