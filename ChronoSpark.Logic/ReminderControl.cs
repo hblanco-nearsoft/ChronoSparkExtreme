@@ -16,7 +16,7 @@ namespace ChronoSpark.Logic
         {
             add 
             {
-                if (_EventReminder == null || !_EventReminder.GetInvocationList().Contains(value)) 
+                if (_EventReminder == null || _EventReminder.GetInvocationList().Contains(value)) 
                 {
                     _EventReminder += value;
                 }
@@ -28,7 +28,7 @@ namespace ChronoSpark.Logic
         public void ActivateReminder(Reminder theReminder, SparkTask TheTask)
         {
             ReminderListener listener = new ReminderListener();
-            _EventReminder += new ReminderHandler(listener.ActivateReminder);
+            EventReminder += new ReminderHandler(listener.ActivateReminder);
             GetReminded(theReminder, TheTask);
         }
 
