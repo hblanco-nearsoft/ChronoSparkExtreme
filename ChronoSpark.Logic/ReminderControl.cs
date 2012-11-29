@@ -42,7 +42,7 @@ namespace ChronoSpark.Logic
             while (true)
             {
 
-                var intervalToWait = theReminder.Interval  * 1000;// * 60;
+                var intervalToWait = theReminder.Interval * 1000;
                 Thread.Sleep(intervalToWait);
                 ReminderEventArgs eventArgs = new ReminderEventArgs(theReminder, theTask);
                 OnEventReminder(eventArgs);

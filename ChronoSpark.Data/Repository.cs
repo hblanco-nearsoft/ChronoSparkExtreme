@@ -191,7 +191,17 @@ namespace ChronoSpark.Data
             }
 
         }
-        //public IEnumerable<SparkTask> GetByStartDate(DateTime startDate) 
+
+        public IEnumerable<SparkTask> GetActiveTask()
+        {
+            using (var session = _docStore.OpenSession())
+            {
+                var activeTask = session.Query<SparkTask>().Where(t=> t.State == TaskState.InProgress);
+                var result = activeTask.ToList();
+                return result;
+            }
+        }
+         //public IEnumerable<SparkTask> GetByStartDate(DateTime startDate) 
         //{
         //    using (var session = _docStore.OpenSession())
         //    {

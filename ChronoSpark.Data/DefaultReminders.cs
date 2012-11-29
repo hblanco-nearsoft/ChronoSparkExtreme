@@ -20,7 +20,7 @@ namespace ChronoSpark.Data
                 Duration = 10,
                 Client = "Client",
                 StartDate = DateTime.Now,
-                State = TaskState.Paused
+                State = TaskState.InProgress
             };
             
 
@@ -34,7 +34,7 @@ namespace ChronoSpark.Data
             Reminder thisReminder2 = new Reminder
             {
                 Description = "reminder 2",
-                Interval = 1
+                Interval = 3
             };
             
 
@@ -45,33 +45,39 @@ namespace ChronoSpark.Data
             Repository repo = new Repository();
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
-                Description = "There is no active task.",
-                Interval = 30
+                Description = "There is no active task. Would you like to start one?",
+                Interval = 120,
+                Type = ReminderType.System
             };
             Reminder DefaultHourlyReminder = new Reminder
             {
-                Description = "An hour has passed.",
-                Interval = 60
+                Description = "An hour has passed. Are you still working in the same task?",
+                Interval = 60,
+                Type = ReminderType.System
             };
             Reminder StartOfWeek = new Reminder
             {
                 Description = "Start of the week.",
-                Interval = 7
+                Interval = 7,
+                Type = ReminderType.System
             };
             Reminder EndOfWeek = new Reminder
             {
                 Description = "The end of week.",
-                Interval = 7
+                Interval = 7,
+                Type = ReminderType.System
             };
             Reminder StartOfDay = new Reminder
             {
                 Description = "Start of The day",
-                Interval = 24
+                Interval = 8,
+                Type = ReminderType.System
             };
             Reminder EndOfDay = new Reminder
             {
                 Description = "End of the Day",
-                Interval = 24
+                Interval = 8,
+                Type = ReminderType.System
             };
 
             #region debug

@@ -35,17 +35,17 @@ namespace ChronoSpark.Clients.Cli
                 processed = false;
                 var cmd = "run-console";
 
+                DefaultRemindersController defaultController = new DefaultRemindersController();
+                defaultController.ActivateDefaultReminders();
 
-                while (!processed)
-                {
-                    String[] cdmArgs = cmd.Split(' ');
-                    var commands = GetCommands();
-                    ConsoleModeCommand consoleRunner = new ConsoleModeCommand(GetCommands);
-                    commands = commands.Concat(new[] { consoleRunner });
+                String[] cdmArgs = cmd.Split(' ');
+                var commands = GetCommands();
+                ConsoleModeCommand consoleRunner = new ConsoleModeCommand(GetCommands);
+                commands = commands.Concat(new[] { consoleRunner });
 
-                    ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
-                    processed = true;
-                }
+                ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
+                processed = true;
+                
             }
         }
 

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AddItemCmd.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="DefaultRemindersController.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
