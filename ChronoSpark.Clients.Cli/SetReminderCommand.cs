@@ -40,7 +40,7 @@ namespace ChronoSpark.Clients.Cli
             if (taskToSet != null && reminderToSet != null)
             {
                 ReminderControl reminderControl = new ReminderControl();
-                ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminder(reminderToSet, taskToSet); });
+               // ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminders(reminderToSet, taskToSet); });
             }
             return 0;
         }

@@ -47,11 +47,12 @@
   <ItemGroup>
     <Compile Include="AddItemCmd.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="ListReminderCmd.cs" />
     <Compile Include="DefaultRemindersController.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="GetByIdCmd.cs" />
     <Compile Include="ICommandFactory.cs" />
-    <Compile Include="ListCmd.cs" />
+    <Compile Include="ListTaskCmd.cs" />
     <Compile Include="ReminderControl.cs" />
     <Compile Include="ReminderListener.cs" />
     <Compile Include="SparkInvoker.cs" />

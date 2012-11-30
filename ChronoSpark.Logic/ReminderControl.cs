@@ -25,11 +25,11 @@ namespace ChronoSpark.Logic
             remove { _EventReminder -= value; }
         }
 
-        public void ActivateReminder(Reminder theReminder, SparkTask TheTask)
+        public void ActivateReminders(IEnumerable<Reminder> receivedListOfReminders)
         {
             ReminderListener listener = new ReminderListener();
             EventReminder += new ReminderHandler(listener.ActivateReminder);
-            GetReminded(theReminder, TheTask);
+            GetReminded(receivedListOfReminders);
         }
 
         public static void OnEventReminder(ReminderEventArgs args) 
@@ -37,29 +37,28 @@ namespace ChronoSpark.Logic
             if (_EventReminder != null) { _EventReminder(new object(), args); }
         }
 
-        public static void GetReminded(Reminder theReminder, SparkTask theTask) 
+        public static void GetReminded(IEnumerable<Reminder> listOfReminders) 
         {
+            int minutes = 0;
             while (true)
             {
+                Thread.Sleep(60000);
+                minutes++;
 
-                var intervalToWait = theReminder.Interval * 1000;
-                Thread.Sleep(intervalToWait);
-                ReminderEventArgs eventArgs = new ReminderEventArgs(theReminder, theTask);
-                OnEventReminder(eventArgs);
-                //var nowTime = DateTime.Now;
-                //var theInterval = theReminder.Interval;
-                //var theTime = nowTime.AddMinutes(theInterval);
-                //var reminded = false;
-                //while (!reminded)
-                //{ 
-                //    if (DateTime.Compare(theTime, DateTime.Now)== 0)
-                //    {
-                //        ReminderEventArgs i = new ReminderEventArgs(theReminder,theTask);
-                //        OnEventReminder(i);
-                //        reminded = true;
-                //    }
-                //    if (DateTime.Compare(theTime, DateTime.Now) < 0) {reminded = true; }
-                //}
+                foreach (Reminder r in listOfReminders)
+                {
+
+                    if (minutes % r.Interval == 0)
+                    {
+                        ReminderEventArgs eventArgs = new ReminderEventArgs(r);
+                        OnEventReminder(eventArgs);
+                    }
+                }
+                //var intervalToWait = theReminder.Interval * 1000;
+                //Thread.Sleep(intervalToWait);
+                //ReminderEventArgs eventArgs = new ReminderEventArgs(theReminder, theTask);
+                //OnEventReminder(eventArgs);
+
             }
         }
     }

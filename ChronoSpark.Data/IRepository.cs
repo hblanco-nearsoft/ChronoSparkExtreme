@@ -16,5 +16,6 @@ namespace ChronoSpark.Data
         bool Delete<T>(T task) where T : class, IRavenEntity;
         T GetById<T>(T item) where T : class, IRavenEntity;
         IEnumerable<SparkTask> GetTaskList();
+        IEnumerable<Reminder> GetReminderList();
     }
 }

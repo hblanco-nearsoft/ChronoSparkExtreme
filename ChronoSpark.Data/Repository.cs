@@ -189,7 +189,16 @@ namespace ChronoSpark.Data
                 var result = queriedTasks.ToList();
                 return result;
             }
+        }
 
+        public IEnumerable<Reminder> GetReminderList() 
+        {
+            using (var session = _docStore.OpenSession())
+            {
+                var queriedReminders = session.Query<Reminder>().Where(t => t.Type == (ReminderType.System));
+                var result = queriedReminders.ToList();
+                return result;
+            }
         }
 
         public IEnumerable<SparkTask> GetActiveTask()

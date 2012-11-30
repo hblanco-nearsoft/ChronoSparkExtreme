@@ -289,33 +289,5 @@ namespace UnitTestProject1
                 Should.Throw<ArgumentNullException>(session.SaveChanges);
             }
         }
-
-        //[TestMethod]
-        //public void RepositoryAdd_IsGivenTwoTasksInProgress_ReturnsException()
-        //{
-        //    var task1 = new SparkTask
-        //    {
-        //        Description = "desc",
-        //        Duration = 5,
-        //        State = TaskState.InProgress
-        //    };
-        //    var task2 = new SparkTask
-        //    {
-        //        Description = "desc2",
-        //        Duration = 51,
-        //        State = TaskState.InProgress
-        //    };
-
-        //    var repo = new Repository(new ChronoDocumentStore()
-        //    {
-        //        DataDirectory = "~/Data/Debug",
-        //        RunInMemory = true
-        //    });
-
-
-        //    repo.Add<SparkTask>(task1).ShouldBe(true);
-        //    repo.Add<SparkTask>(task2).ShouldBe(false);    
-        //}
-
     }
 }

@@ -44,14 +44,23 @@ namespace ChronoSpark.Logic
                  new AddItemCmd(repo),
                  new DeleteItemCmd(repo),
                  new UpdateItemCmd(repo),
-                 new ListCmd(repo),
+                 new ListTaskCmd(repo),
+                 new ListReminderCmd(repo)
              };
          }
 
-        public static IEnumerable<SparkTask> ReturnList() 
+        public static IEnumerable<SparkTask> ReturnTaskList() 
         {
             Repository repo = new Repository();
-            ListCmd listCommand = new ListCmd(repo);
+            ListTaskCmd listCommand = new ListTaskCmd(repo);
+            var listToReturn = listCommand.GetList();
+            return listToReturn;
+        }
+
+        public static IEnumerable<Reminder> ReturnReminderList() 
+        {
+            Repository repo = new Repository();
+            ListReminderCmd listCommand = new ListReminderCmd(repo);
             var listToReturn = listCommand.GetList();
             return listToReturn;
         }

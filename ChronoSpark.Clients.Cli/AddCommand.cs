@@ -57,7 +57,7 @@ namespace ChronoSpark.Clients.Cli
                 var availableCommands = SparkLogic.GetAvailableCommands();
                 var parser = new CommandParser(availableCommands);
                 var theCommand = parser.ParseCommand("add");
-                var theQuery = SparkLogic.ReturnList();
+                var theQuery = SparkLogic.ReturnTaskList();
                 TaskStateTracker tracker = new TaskStateTracker(theQuery);
                 
                 theCommand.ItemToWork = taskToAdd;

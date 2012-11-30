@@ -35,8 +35,9 @@ namespace ChronoSpark.Clients.Cli
                 processed = false;
                 var cmd = "run-console";
 
-                DefaultRemindersController defaultController = new DefaultRemindersController();
-                defaultController.ActivateDefaultReminders();
+                ReminderControl defaultController = new ReminderControl();
+                var listOfReminders = SparkLogic.ReturnReminderList();
+                ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(listOfReminders); });
 
                 String[] cdmArgs = cmd.Split(' ');
                 var commands = GetCommands();

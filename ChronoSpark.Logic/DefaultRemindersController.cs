@@ -18,27 +18,27 @@ namespace ChronoSpark.Logic
             var activeTask = repo.GetActiveTask();
 
 
-            if (activeTask.Count() == 0)
-            {
-                IRavenEntity reminderToFetch = new Reminder();
-                var actualReminderId = "Reminders/1"; 
-                reminderToFetch.Id = actualReminderId;
-                Reminder reminderToSet = SparkLogic.fetch(reminderToFetch) as Reminder;
+            //if (activeTask.Count() == 0)
+            //{
+            //    IRavenEntity reminderToFetch = new Reminder();
+            //    var actualReminderId = "Reminders/1"; 
+            //    reminderToFetch.Id = actualReminderId;
+            //    Reminder reminderToSet = SparkLogic.fetch(reminderToFetch) as Reminder;
 
-                ReminderControl reminderControl = new ReminderControl();
-                ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminder(reminderToSet, new SparkTask()); });
-            }
-            if (activeTask.Count() == 1) 
-            {
-                IRavenEntity reminderToFetch = new Reminder();
-                var actualReminderId = "Reminders/2";
-                reminderToFetch.Id = actualReminderId;
-                Reminder reminderToSet = SparkLogic.fetch(reminderToFetch) as Reminder;
+            //    ReminderControl reminderControl = new ReminderControl();
+            //    ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminders(reminderToSet, new SparkTask()); });
+            //}
+            //if (activeTask.Count() == 1) 
+            //{
+            //    IRavenEntity reminderToFetch = new Reminder();
+            //    var actualReminderId = "Reminders/2";
+            //    reminderToFetch.Id = actualReminderId;
+            //    Reminder reminderToSet = SparkLogic.fetch(reminderToFetch) as Reminder;
 
-                ReminderControl reminderControl = new ReminderControl();
-                ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminder(reminderToSet, new SparkTask()); });
+            //    ReminderControl reminderControl = new ReminderControl();
+            //    ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminders(reminderToSet, new SparkTask()); });
          
-            }
+            //}
 
             return true;
         }
