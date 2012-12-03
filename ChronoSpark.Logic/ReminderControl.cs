@@ -39,16 +39,19 @@ namespace ChronoSpark.Logic
 
         public static void GetReminded(IEnumerable<Reminder> listOfReminders) 
         {
-            int minutes = 0;
+           // int minutes = 0;
+            var starTime = DateTime.Now;
+
             while (true)
             {
-                Thread.Sleep(60000);
-                minutes++;
+                Thread.Sleep(60005);
+              //  minutes++;
+                var timeElapsed = DateTime.Now - starTime;
 
                 foreach (Reminder r in listOfReminders)
                 {
 
-                    if (minutes % r.Interval == 0)
+                    if (timeElapsed.Minutes % r.Interval == 0)
                     {
                         ReminderEventArgs eventArgs = new ReminderEventArgs(r);
                         OnEventReminder(eventArgs);

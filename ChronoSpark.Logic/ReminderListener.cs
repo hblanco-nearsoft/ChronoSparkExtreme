@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
@@ -10,7 +11,18 @@ namespace ChronoSpark.Logic
     {
         public void ActivateReminder(object obj, ReminderEventArgs args)
         {
-            Console.WriteLine("{0} minutes have passed in the Reminder: {1}", args.TheReminder.Interval, args.TheReminder.Description);
+
+            IRepository repo = new Repository(); ;
+            var activeTask = repo.GetActiveTask();
+
+            if (args.TheReminder.Id == "reminders/1" && activeTask.Count() > 0)
+            {
+                Console.WriteLine("{0} minutes have passed in the Reminder: {1}", args.TheReminder.Interval, args.TheReminder.Description);
+            }
+            if (args.TheReminder.Id == "reminders/2" && activeTask.Count() == 0)
+            {
+                Console.WriteLine("this is the different reminder");
+            }
         }
     }
 }

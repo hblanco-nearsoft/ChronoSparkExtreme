@@ -17,5 +17,7 @@ namespace ChronoSpark.Data
         T GetById<T>(T item) where T : class, IRavenEntity;
         IEnumerable<SparkTask> GetTaskList();
         IEnumerable<Reminder> GetReminderList();
+        IEnumerable<SparkTask> GetActiveTask();
+      
     }
 }

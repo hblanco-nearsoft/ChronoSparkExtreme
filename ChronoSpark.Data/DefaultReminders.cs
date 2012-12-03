@@ -26,15 +26,17 @@ namespace ChronoSpark.Data
 
             Reminder thisReminder = new Reminder
             {
-                Description = "reminder 1",
-                Interval = 1
+                Description = "test reminder",
+                Interval = 1,
+                Type = ReminderType.System
             };
            
 
             Reminder thisReminder2 = new Reminder
             {
                 Description = "reminder 2",
-                Interval = 3
+                Interval = 1,
+                Type = ReminderType.System
             };
             
 
