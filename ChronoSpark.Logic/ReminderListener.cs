@@ -12,17 +12,20 @@ namespace ChronoSpark.Logic
         public void ActivateReminder(object obj, ReminderEventArgs args)
         {
 
-            IRepository repo = new Repository(); ;
+            IRepository repo = new Repository();
             var activeTask = repo.GetActiveTask();
 
-            if (args.TheReminder.Id == "reminders/1" && activeTask.Count() > 0)
+            if (args.TheReminder.Id == "reminders/1" && activeTask.Count() == 0)
+            {
+                Console.WriteLine("There's currently no active task. Would you like to start one?");
+                
+            }
+            if (args.TheReminder.Id == "reminders/2" && activeTask.Count() > 0)
             {
                 Console.WriteLine("{0} minutes have passed in the Reminder: {1}", args.TheReminder.Interval, args.TheReminder.Description);
             }
-            if (args.TheReminder.Id == "reminders/2" && activeTask.Count() == 0)
-            {
-                Console.WriteLine("this is the different reminder");
-            }
+
+
         }
     }
 }

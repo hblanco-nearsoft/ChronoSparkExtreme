@@ -20,7 +20,7 @@ namespace ChronoSpark.Data
                 Duration = 10,
                 Client = "Client",
                 StartDate = DateTime.Now,
-                State = TaskState.InProgress
+                State = TaskState.Paused
             };
             
 
@@ -47,13 +47,13 @@ namespace ChronoSpark.Data
             Repository repo = new Repository();
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
-                Description = "There is no active task. Would you like to start one?",
+                Description = "There is no active task.",
                 Interval = 120,
                 Type = ReminderType.System
             };
             Reminder DefaultHourlyReminder = new Reminder
             {
-                Description = "An hour has passed. Are you still working in the same task?",
+                Description = "An hour has passed in the task.",
                 Interval = 60,
                 Type = ReminderType.System
             };

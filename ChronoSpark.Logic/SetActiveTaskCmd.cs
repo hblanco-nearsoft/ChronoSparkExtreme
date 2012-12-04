@@ -10,7 +10,8 @@ namespace ChronoSpark.Logic
 {
     public class SetActiveTaskCmd
     {
-        IRepository repo;
+        IRepository repo = new Repository();
+
 
         public bool ActivateTask(SparkTask receivedTask) 
         {
@@ -24,9 +25,13 @@ namespace ChronoSpark.Logic
                 repo.Update(receivedTask);
                 return true;
             }
-            if (theTask != null) 
+            if (theTask != null) //this should prompt a response
             {
-
+                theTask.State = TaskState.Paused;
+                repo.Update(theTask);
+                receivedTask.State = TaskState.InProgress;
+                repo.Update(receivedTask);
+                return true;
             }
             return false;
         }

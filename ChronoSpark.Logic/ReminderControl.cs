@@ -50,18 +50,12 @@ namespace ChronoSpark.Logic
 
                 foreach (Reminder r in listOfReminders)
                 {
-
                     if (timeElapsed.Minutes % r.Interval == 0)
                     {
                         ReminderEventArgs eventArgs = new ReminderEventArgs(r);
                         OnEventReminder(eventArgs);
                     }
                 }
-                //var intervalToWait = theReminder.Interval * 1000;
-                //Thread.Sleep(intervalToWait);
-                //ReminderEventArgs eventArgs = new ReminderEventArgs(theReminder, theTask);
-                //OnEventReminder(eventArgs);
-
             }
         }
     }
