@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Raven.Storage.Esent;
 using Raven.Storage.Managed;
-using ChronoSpark.Data;
 using ManyConsole;
 
 
@@ -26,9 +25,6 @@ namespace ChronoSpark.Clients.Cli
 
             //Console.WriteLine("Enter 'exit' to terminate. ");
 
-             
-
-
             while (!processed)//!exit
             {
                 Console.Write("ChronoSpark => ");
@@ -37,6 +33,12 @@ namespace ChronoSpark.Clients.Cli
 
                 ReminderControl defaultController = new ReminderControl();
                 var listOfReminders = SparkLogic.ReturnReminderList();
+                NoActiveTaskListener noActiveTaskListener = new NoActiveTaskListener();
+                IntervalPassedListener intervalPassedListener = new IntervalPassedListener();
+
+                noActiveTaskListener.Suscribe(defaultController);
+                intervalPassedListener.Suscribe(defaultController);
+
                 ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(listOfReminders); });
 
                 String[] cdmArgs = cmd.Split(' ');

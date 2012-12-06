@@ -19,12 +19,12 @@ namespace ChronoSpark.Logic
             tasks = query.Cast<SparkTask>().ToArray();
         }
 
-        public SparkTask VerifyOneInProgress(TaskState state) 
+        public SparkTask VerifyOneInProgress() 
         {
             int counter = 0;
             for (var x = 0; x <= tasks.Length; x++)
             {
-                if (tasks[x].State == state) 
+                if (tasks[x].State == TaskState.InProgress) 
                 {
                     counter++; 
                     TheTask = tasks[x];

@@ -7,7 +7,6 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public delegate void ReminderHandler(object obj, ReminderEventArgs remArgs);
 
     public class ReminderEventArgs : EventArgs
     {
