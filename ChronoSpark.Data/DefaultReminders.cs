@@ -20,7 +20,7 @@ namespace ChronoSpark.Data
                 Duration = 10,
                 Client = "Client",
                 StartDate = DateTime.Now,
-                State = TaskState.InProgress
+                State = TaskState.Paused
             };
             
 

@@ -15,7 +15,20 @@ namespace ChronoSpark.Logic
 
         public static ReminderHandler _eventNoActiveTask;
         public static ReminderHandler _eventIntervalPassed;
+        public static ReminderHandler _eventMinutePassed;
 
+        public event ReminderHandler EventMinutePassed 
+        {
+            add 
+            {
+                if (_eventMinutePassed == null || !_eventMinutePassed.GetInvocationList().Contains(value)) 
+                {
+                    _eventMinutePassed += value;
+                }
+            }
+            remove { _eventMinutePassed -= value; } 
+        }
+        
         public event ReminderHandler EventNoActiveTask
         {
             add 
@@ -42,12 +55,7 @@ namespace ChronoSpark.Logic
             remove { _eventIntervalPassed -= value; }
         }
 
-        public void ActivateReminders(IEnumerable<Reminder> receivedListOfReminders)
-        {
-            //ReminderListener listener = new ReminderListener();
-            //EventReminder += new ReminderHandler(listener.ActivateReminder);
-            GetReminded(receivedListOfReminders);
-        }
+
 
         public  void OnEventNoActiveTask(ReminderEventArgs args) 
         {
@@ -59,7 +67,12 @@ namespace ChronoSpark.Logic
             if (_eventIntervalPassed != null) { _eventIntervalPassed(this, args); }
         }
 
-        public static void GetReminded(IEnumerable<Reminder> listOfReminders) 
+        public void OnEventMinutePassed(ReminderEventArgs args)
+        {
+            if (_eventMinutePassed != null) { _eventMinutePassed(this, args); }
+        }
+
+        public void ActivateReminders(IEnumerable<Reminder> listOfReminders) 
         {
            // int minutes = 0;
             var starTime = DateTime.Now;
@@ -67,12 +80,17 @@ namespace ChronoSpark.Logic
  
             while (true)
             {
+                Thread.Sleep(60005);
               //  minutes++;
                 var timeElapsed = DateTime.Now - starTime;
                 var activeTasks = repo.GetActiveTask();
 
                 foreach (Reminder r in listOfReminders)
                 {
+                    foreach (SparkTask activeTask in activeTasks) 
+                    {
+                        activeTask.TimeElapsed = activeTask.TimeElapsed.Add(timeElapsed);
+                    }
                     ReminderEventArgs eventArgs = new ReminderEventArgs(r);
                     ReminderControl reminderControl = new ReminderControl();
                     if (timeElapsed.Minutes % r.Interval == 0 && activeTasks.Count() == 0 && r.Id == "reminders/1")
@@ -85,6 +103,7 @@ namespace ChronoSpark.Logic
                     }
 
                 }
+
             }
         }
     }

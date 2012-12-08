@@ -16,7 +16,7 @@ namespace ChronoSpark.Clients.Cli
     {
         public SetReminderCommand() 
         {
-            this.IsCommand("activate", "sets the reminder to activate");
+            this.IsCommand("set", "sets the reminder to activate");
             this.HasRequiredOption("r|Reminder=","The id of the reminder to activate", r => ReminderId = r);
             this.HasRequiredOption("t|Task=", "The id of the task to activate", t => TaskId = t);
         }

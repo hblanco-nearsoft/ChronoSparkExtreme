@@ -54,7 +54,6 @@
     <Compile Include="ListTaskCmd.cs" />
     <Compile Include="ReminderControl.cs" />
     <Compile Include="TaskStateControl.cs" />
-    <Compile Include="SparkInvoker.cs" />
     <Compile Include="TaskStateTracker.cs" />
     <Compile Include="ReminderEventArgs.cs" />
     <Compile Include="UpdateItemCmd.cs" />

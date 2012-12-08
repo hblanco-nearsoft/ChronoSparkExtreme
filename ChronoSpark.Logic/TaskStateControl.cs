@@ -18,6 +18,7 @@ namespace ChronoSpark.Logic
             if (activeTask.Count() == 0)
             {
                 taskToActivate.State = TaskState.InProgress;
+                repo.Update(taskToActivate);
                 return true;
             }
             else
@@ -40,27 +41,23 @@ namespace ChronoSpark.Logic
                 {
                     t.State = TaskState.Paused;
                     repo.Update(t);
+                    repo.Update(t);
                 }
                 return "The active task has been paused";
             }
-
         }
 
         public String FinishTask() 
         {
             var activeTask = repo.GetActiveTask();
-            String description;
             if (activeTask.Count() == 0)
             {
-
                 return "There is no Active Task";
             }
             else 
             {
                 return "The task has been finished";
             }
-
-
         }
     }
 }
