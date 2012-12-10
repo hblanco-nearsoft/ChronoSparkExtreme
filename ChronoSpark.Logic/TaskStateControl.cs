@@ -15,7 +15,7 @@ namespace ChronoSpark.Logic
         public bool SetActiveTask(SparkTask taskToActivate)
         {
             var activeTask = repo.GetActiveTask();
-            if (activeTask.Count() == 0)
+            if (activeTask == null)
             {
                 taskToActivate.State = TaskState.InProgress;
                 repo.Update(taskToActivate);
@@ -30,19 +30,17 @@ namespace ChronoSpark.Logic
         public String PauseTask() 
         {
             var activeTask = repo.GetActiveTask();
-            if (activeTask.Count() == 0)
+            if (activeTask == null)
             {
 
                 return "There is no Active Task";
             }
             else 
             {
-                foreach (SparkTask t in activeTask) 
-                {
-                    t.State = TaskState.Paused;
-                    repo.Update(t);
-                    repo.Update(t);
-                }
+
+                activeTask.State = TaskState.Paused;
+                repo.Update(activeTask);
+
                 return "The active task has been paused";
             }
         }
@@ -50,12 +48,13 @@ namespace ChronoSpark.Logic
         public String FinishTask() 
         {
             var activeTask = repo.GetActiveTask();
-            if (activeTask.Count() == 0)
+            if (activeTask == null)
             {
                 return "There is no Active Task";
             }
             else 
             {
+                activeTask.State = TaskState.Finished;
                 return "The task has been finished";
             }
         }

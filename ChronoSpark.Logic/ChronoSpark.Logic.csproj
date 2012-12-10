@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveTaskProcess.cs" />
     <Compile Include="AddItemCmd.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="ListReminderCmd.cs" />

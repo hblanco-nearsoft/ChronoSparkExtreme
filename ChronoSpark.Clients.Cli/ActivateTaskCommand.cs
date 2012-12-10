@@ -12,9 +12,9 @@ using ChronoSpark.Data;
 
 namespace ChronoSpark.Clients.Cli
 {
-    class SetActiveTaskCommand : ConsoleCommand
+    class ActivateTaskCommand : ConsoleCommand
     {
-        public SetActiveTaskCommand()
+        public ActivateTaskCommand()
         {
             this.IsCommand("activate", "sets the task to activate");
             this.HasRequiredOption("t|Task=", "The id of the task to activate", t => TaskId = t);
@@ -30,19 +30,22 @@ namespace ChronoSpark.Clients.Cli
             taskToFetch.Id = actualTaskId;
             SparkTask taskToSet = SparkLogic.fetch(taskToFetch) as SparkTask;
             TaskStateControl taskStateControl = new TaskStateControl();
+            ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
             var result = taskStateControl.SetActiveTask(taskToSet);
+
+
             if (result == true) { Console.WriteLine("The task was activated"); }
             if (taskToSet != null && result == false)
             {
-                Console.WriteLine();
                 taskStateControl.PauseTask();
                 taskStateControl.SetActiveTask(taskToSet);
-                Console.WriteLine("The Task was activate. The previous task was put on pause");
+                Console.WriteLine("The Task was activated. The previous task was put on pause");
             }
             if (taskToSet == null) 
             {
                 Console.WriteLine("The task specified doesn't exist");
             }
+            taskProcessor.SetStartTime();
             return 0;
         }
     }

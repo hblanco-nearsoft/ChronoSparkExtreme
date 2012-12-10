@@ -65,7 +65,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NoActiveTaskListener.cs" />
-    <Compile Include="SetActiveTaskCommand.cs" />
+    <Compile Include="ActivateTaskCommand.cs" />
     <Compile Include="SetReminderCommand.cs" />
     <Compile Include="TaskListPrinter.cs" />
     <Compile Include="UpdateCommand.cs" />

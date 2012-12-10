@@ -20,14 +20,17 @@ namespace ChronoSpark.Clients.Cli
         {
             TaskStateControl taskStateControl = new TaskStateControl();
             SparkLogic sparkLogic = new SparkLogic();
-            var activeTasks = sparkLogic.ReturnActiveTask();
-            if (activeTasks.Count() == 0) 
+            var activeTask = sparkLogic.ReturnActiveTask();
+
+            if (activeTask == null) 
             {
                 Console.WriteLine("There are no active tasks");
                 return 0;
             }
             taskStateControl.PauseTask();
             Console.WriteLine("The task has been paused.");
+            ReminderControl.ShouldResetStartTime = true;
+
             return 0;
         }
     }

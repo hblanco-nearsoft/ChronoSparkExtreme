@@ -65,11 +65,11 @@ namespace ChronoSpark.Logic
             return listToReturn;
         }
 
-        public IEnumerable<SparkTask> ReturnActiveTask() 
+        public SparkTask ReturnActiveTask() 
         {
             Repository repo = new Repository();
-            var activeTasksToReturn = repo.GetActiveTask();
-            return activeTasksToReturn;
+            var activeTaskToReturn = repo.GetActiveTask();
+            return activeTaskToReturn;
         }
 
         public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
