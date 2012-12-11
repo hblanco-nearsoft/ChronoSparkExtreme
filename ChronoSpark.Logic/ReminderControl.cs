@@ -96,7 +96,7 @@ namespace ChronoSpark.Logic
 
                 if (activeTask != null)
                 {
-                    taskProcessor.AddElapsedTime(activeTask);
+                    taskProcessor.AddElapsedTime();
                 }
 
                 foreach (Reminder r in listOfReminders)

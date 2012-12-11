@@ -12,14 +12,13 @@ namespace ChronoSpark.Logic
     {
         private static DateTime StartTime;
         private IRepository repo = new Repository();
-
         public void SetStartTime() 
         {
             StartTime = DateTime.Now;
         }
-        public void AddElapsedTime(SparkTask activeTask) 
+        public void AddElapsedTime() 
         {
-            
+            var activeTask = repo.GetActiveTask();
             var elapsedTime = DateTime.Now - StartTime;
             StartTime = DateTime.Now;
             activeTask.TimeElapsed = activeTask.TimeElapsed.Add(elapsedTime);

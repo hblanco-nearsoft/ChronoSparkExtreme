@@ -8,34 +8,20 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public class AddItemCmd : ICommand, ICommandFactory
-    {
-        //should the command receive the entity or just the arguments and for it inside?
-        //how should i pass the repo? Should i do that in the first place?
-        IRepository Repo;
+    public class AddItemCmd     {
+
         public IRavenEntity ItemToWork { set; get; }
-        public AddItemCmd(IRepository receivedRepository)
-        {
+        private IRepository repo = new Repository();
 
-            Repo = receivedRepository;
-                 
+        public String AddItem() 
+        {
+            if (repo.Add(ItemToWork))
+            {
+                Console.WriteLine("Item saved");
+                return "The task has been saved";
+            }
+            return "The task could not be saved.";
         }
 
-        public bool Execute() 
-        {
-          
-            
-            Repo.Add(ItemToWork);
-            Console.WriteLine("Item saved");
-            return true;
-        }
-
-        public String CommandName { get { return "add"; } }
-        public String CommandDescription { get { return "add entity"; } }
-
-        public ICommand MakeCommand() 
-        {
-            return new AddItemCmd(Repo);
-        }
     }
 }

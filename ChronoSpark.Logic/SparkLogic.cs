@@ -36,18 +36,18 @@ namespace ChronoSpark.Logic
             return "Unidentified command";
         } 
 
-        public static IEnumerable<ICommandFactory> GetAvailableCommands()
-         {
-             Repository repo = new Repository();
-             return new ICommandFactory[]
-             {
-                 new AddItemCmd(repo),
-                 new DeleteItemCmd(repo),
-                 new UpdateItemCmd(repo),
-                 new ListTaskCmd(repo),
-                 new ListReminderCmd(repo)
-             };
-         }
+        //public static IEnumerable<ICommandFactory> GetAvailableCommands()
+        // {
+        //     Repository repo = new Repository();
+        //     return new ICommandFactory[]
+        //     {
+        //         new AddItemCmd(repo),
+        //         new DeleteItemCmd(repo),
+        //         new UpdateItemCmd(repo),
+        //         new ListTaskCmd(repo),
+        //         new ListReminderCmd(repo)
+        //     };
+        // }
 
         public static IEnumerable<SparkTask> ReturnTaskList() 
         {
@@ -72,12 +72,12 @@ namespace ChronoSpark.Logic
             return activeTaskToReturn;
         }
 
-        public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
-            {
-                Console.WriteLine("List of Commands:");
-                foreach(var command in availableCommands)
-                    Console.WriteLine("{0}", command.CommandDescription);
-            }
+        //public static void PrintUsage(IEnumerable<ICommandFactory> availableCommands)
+        //    {
+        //        Console.WriteLine("List of Commands:");
+        //        foreach(var command in availableCommands)
+        //            Console.WriteLine("{0}", command.CommandDescription);
+        //    }
 
 
         public static IRavenEntity fetch(IRavenEntity entity)

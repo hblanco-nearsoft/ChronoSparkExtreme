@@ -49,11 +49,11 @@ namespace ChronoSpark.Clients.Cli
                     }
                     taskToUpdate.Duration = duration;
                 }
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("update");
-                theCommand.ItemToWork = taskToUpdate;
-                var result = SparkLogic.ProcessCommand(theCommand);
+
+                UpdateItemCmd updateItemCmd = new UpdateItemCmd();
+                updateItemCmd.ItemToWork = taskToUpdate;
+
+                var result = updateItemCmd.UpdateItem();
                 Console.WriteLine(result);
                 return 0;
             }
@@ -78,11 +78,10 @@ namespace ChronoSpark.Clients.Cli
                     }
                     reminderToUpdate.Interval = interval;
                 }
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("update");
-                theCommand.ItemToWork = reminderToUpdate;
-                var result = SparkLogic.ProcessCommand(theCommand);
+                UpdateItemCmd updateItemCmd = new UpdateItemCmd();
+                updateItemCmd.ItemToWork = reminderToUpdate;
+
+                var result = updateItemCmd.UpdateItem();
                 Console.WriteLine(result);
                 return 0;
             }

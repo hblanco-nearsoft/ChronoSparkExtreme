@@ -32,28 +32,29 @@ namespace ChronoSpark.Clients.Cli
                 var actualId = "SparkTasks/" + IdToDelete;
                 taskToDelete.Id = actualId;
 
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("delete");
-                theCommand.ItemToWork = taskToDelete;
-                var result = SparkLogic.ProcessCommand(theCommand);
+                DeleteItemCmd deleteItemCmd = new DeleteItemCmd();
+                deleteItemCmd.ItemToWork = taskToDelete;
+
+                var result = deleteItemCmd.DeleteItem();
+
                 Console.WriteLine(result);
                 return 0;
             }
 
             if(EntityType.ToLower() == "reminder")
             {
-                SparkTask taskToDelete = new SparkTask();
+                SparkTask reminderToDelete = new SparkTask();
                 var actualId = "Reminders/" + IdToDelete;
-                taskToDelete.Id = actualId;
+                reminderToDelete.Id = actualId;
 
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("delete");
-                theCommand.ItemToWork = taskToDelete;
-                var result = SparkLogic.ProcessCommand(theCommand);
+                DeleteItemCmd deleteItemCmd = new DeleteItemCmd();
+                deleteItemCmd.ItemToWork = reminderToDelete;
+
+                var result = deleteItemCmd.DeleteItem();
+
                 Console.WriteLine(result);
                 return 0;
+
             }
             else { Console.WriteLine("The type of entity should be a task or reminder"); }
             return 0;

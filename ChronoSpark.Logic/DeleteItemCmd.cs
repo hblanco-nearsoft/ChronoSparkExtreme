@@ -9,38 +9,20 @@ using ChronoSpark.Data;
 
 namespace ChronoSpark.Logic
 {
-    public class DeleteItemCmd : ICommand, ICommandFactory
+    public class DeleteItemCmd
     {
 
-        IRepository Repo;
+        IRepository Repo = new Repository();
         public IRavenEntity ItemToWork {get; set;}
 
-        public DeleteItemCmd(IRepository receivedRepository) 
+        public String DeleteItem() 
         {
-
-            Repo = receivedRepository;
-
+            if (Repo.Delete(ItemToWork))
+            {
+                return "The item has been deleted";
+            }
+            return "The item could not be deleted";
         }
 
-        public bool SetEntity(IRavenEntity receivedEntity)
-        {
-            ItemToWork = receivedEntity;
-            return true;
-        }
-
-
-        public bool Execute() 
-        {
-            Repo.Delete(ItemToWork);
-            return true;
-        }
-
-        public String CommandName { get { return "delete"; } }
-        public String CommandDescription { get { return "delete rules"; } }
-
-        public ICommand MakeCommand()
-        {
-            return new DeleteItemCmd(Repo);
-        }
     }
 }

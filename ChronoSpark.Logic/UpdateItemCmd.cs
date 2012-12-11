@@ -8,34 +8,16 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public class UpdateItemCmd : ICommand, ICommandFactory  
+    public class UpdateItemCmd
     {
 
-        IRepository Repo;
+        private IRepository repo = new Repository();
         public IRavenEntity ItemToWork { get; set; }
 
-        public UpdateItemCmd(IRepository receivedRepository) 
+        public String UpdateItem()
         {
-
-            Repo = receivedRepository; 
-
-        }
-
-
-        public bool Execute()
-        {
-
-            Repo.Update(ItemToWork);
-            return true;
-
-        }
-
-        public String CommandName { get { return "update"; } }
-        public String CommandDescription { get { return "update itemtosave"; } }
-
-        public ICommand MakeCommand()
-        {
-            return new UpdateItemCmd(Repo);
+            if (repo.Update(ItemToWork)) { return "The item has been updated."; }
+            return "The item could not be updated.";
         }
     }
 }

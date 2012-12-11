@@ -54,16 +54,13 @@ namespace ChronoSpark.Clients.Cli
                 taskToAdd.StartDate = DateTime.Now;
                 taskToAdd.State = TaskState.Paused;
 
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("add");
-                var theQuery = SparkLogic.ReturnTaskList();
-                TaskStateTracker tracker = new TaskStateTracker(theQuery);
+
+                AddItemCmd addItemCmd = new AddItemCmd();
                 
-                theCommand.ItemToWork = taskToAdd;
+                addItemCmd.ItemToWork = taskToAdd;
 
 
-                var result =SparkLogic.ProcessCommand(theCommand);
+                var result = addItemCmd.AddItem();
                 Console.WriteLine(result);
                 return 0;
                 
@@ -88,11 +85,12 @@ namespace ChronoSpark.Clients.Cli
                     Console.WriteLine("The duration must be an integer");
                     return 0;
                 }
-                var availableCommands = SparkLogic.GetAvailableCommands();
-                var parser = new CommandParser(availableCommands);
-                var theCommand = parser.ParseCommand("add");
-                theCommand.ItemToWork = reminderToAdd;
-                var result = SparkLogic.ProcessCommand(theCommand);
+                AddItemCmd addItemCmd = new AddItemCmd();
+
+                addItemCmd.ItemToWork = reminderToAdd;
+
+
+                var result = addItemCmd.AddItem();
                 Console.WriteLine(result);
                 return 0;
             }
