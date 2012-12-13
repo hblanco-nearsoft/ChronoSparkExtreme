@@ -4,6 +4,7 @@ using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
 using ChronoSpark.Logic;
 using Shouldly;
+using System.Collections.Generic;
 
 namespace ChronoSpark.Logic.Tests
 {
@@ -32,22 +33,27 @@ namespace ChronoSpark.Logic.Tests
 
         //}
 
+        //[TestMethod]
+        //public void ProcessCommand_ReceiveNullCommand_ReturnsInvalid() 
+        //{
+
+        //    var repo = new Repository(new ChronoDocumentStore()
+        //    {
+        //        DataDirectory = "~/Data/Debug",
+        //        RunInMemory = true
+        //    });
+
+
+        //    var result = SparkLogic.ProcessCommand(null);
+
+        //    result.ShouldBe("Unidentified command");
+        //}
+
         [TestMethod]
-        public void ProcessCommand_ReceiveNullCommand_ReturnsInvalid() 
+        public void ReturnTaskList_ThereIsAListToReturn_RetrunsTheList() 
         {
-
-            var repo = new Repository(new ChronoDocumentStore()
-            {
-                DataDirectory = "~/Data/Debug",
-                RunInMemory = true
-            });
-
-
-            var result = SparkLogic.ProcessCommand(null);
-
-            result.ShouldBe("Unidentified command");
+            var taskList = SparkLogic.ReturnTaskList();
         }
-
 
     }
 }

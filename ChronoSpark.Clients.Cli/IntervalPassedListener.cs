@@ -18,7 +18,7 @@ namespace ChronoSpark.Clients.Cli
 
         public void NotifyIntervalPassed(object obj, ReminderEventArgs args)
         {
-            Console.WriteLine("{0} minutes have passed, are you still working in the same task?", args.TheReminder.Interval);
+            Console.WriteLine("{0} minutes have passed in the task: {1}, are you still working in the same task?", args.TheReminder.Interval, args.TheTask.Description);
         }
     }
 }

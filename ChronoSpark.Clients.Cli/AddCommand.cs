@@ -19,8 +19,7 @@ namespace ChronoSpark.Clients.Cli
             this.HasRequiredOption("e|EntityType=", "The type of entity you want to add (task or reminder)", e => EntityType = e);
             this.HasRequiredOption("d|Description=", "A description for the item to create", d => Description = d);
             this.HasRequiredOption("t|Time=", "Duration for a task or the interval of a reminder (in minutes)", t => Duration = t);
-            this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);
-            
+            this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);          
         }
 
         public String EntityType;
@@ -58,12 +57,10 @@ namespace ChronoSpark.Clients.Cli
                 AddItemCmd addItemCmd = new AddItemCmd();
                 
                 addItemCmd.ItemToWork = taskToAdd;
-
-
+                
                 var result = addItemCmd.AddItem();
                 Console.WriteLine(result);
-                return 0;
-                
+                return 0;                
             }
 
             if (EntityType.ToLower() == "reminder")

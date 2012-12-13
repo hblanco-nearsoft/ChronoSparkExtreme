@@ -25,16 +25,16 @@ namespace ChronoSpark.Logic
 
         //private IRavenEntity ActiveTask;
 
-        public static string ProcessCommand(ICommand cmd)
-        {
+        //public static string ProcessCommand(ICommand cmd)
+        //{
 
-            if (cmd != null)
-            {
-                cmd.Execute();
-                return "The command was executed";
-            }
-            return "Unidentified command";
-        } 
+        //    if (cmd != null)
+        //    {
+        //        cmd.Execute();
+        //        return "The command was executed";
+        //    }
+        //    return "Unidentified command";
+        //} 
 
         //public static IEnumerable<ICommandFactory> GetAvailableCommands()
         // {

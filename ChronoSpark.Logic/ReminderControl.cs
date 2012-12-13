@@ -102,7 +102,7 @@ namespace ChronoSpark.Logic
                 foreach (Reminder r in listOfReminders)
                 {
 
-                    ReminderEventArgs eventArgs = new ReminderEventArgs(r);
+                    ReminderEventArgs eventArgs = new ReminderEventArgs(r,activeTask);
                     ReminderControl reminderControl = new ReminderControl();
                     if (timeElapsed.Minutes % r.Interval == 0 && activeTask == null && r.Id == "reminders/1")
                     {
