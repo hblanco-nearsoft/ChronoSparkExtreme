@@ -17,9 +17,9 @@ using ChronoSpark.Common;
 namespace ChronoSpark.Data
 {
     /*  General Comments
-     *     Try to use descriptive names, like, if you are retrieving an document from the db, don't call it
+     *     Try to use descriptive names, like, if you are retrieving a document from the db, don't call it
      *     "task", that's the most generic name ever, called descriptibly: storedDocument, toDeleteTask, etc.,
-     *     the idea is that your code can be EASILY, like a sentence.
+     *     the idea is that your code can be EASILY read, like a sentence.
      *     
      * Oct. 15. Good Work! We are almost there with the data layer, need some unit testing though.
      */

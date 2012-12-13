@@ -23,6 +23,5 @@ namespace ChronoSpark.Logic
             }
             return "The item could not be deleted";
         }
-
     }
 }

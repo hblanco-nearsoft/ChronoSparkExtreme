@@ -8,33 +8,21 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public class ListReminderCmd : ICommand, ICommandFactory
+    public class ListReminderCmd
     {
 
         IRepository repo;
         public ListReminderCmd(IRepository receivedRepo) 
         {
-           repo = receivedRepo;
+            repo = receivedRepo;
         }
         public IRavenEntity ItemToWork { get; set; }
-        public bool Execute() 
-        {
-            var listOfReminders = repo.GetReminderList();
-            return true;
-        }
+
 
         public IEnumerable<Reminder> GetList() 
         {
             var listOfReminders = repo.GetReminderList();
             return listOfReminders;
-        }
-
-        public String CommandName { get { return "list"; } }
-        public String CommandDescription { get { return "list"; } }
-
-        public ICommand MakeCommand() 
-        {
-            return new ListTaskCmd(repo);
         }
     }
 }

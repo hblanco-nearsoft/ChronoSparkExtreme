@@ -28,8 +28,7 @@ namespace ChronoSpark.Clients.Cli
                 return 0;
             }
             taskStateControl.PauseTask();
-            Console.WriteLine("The task has been paused.");
-            ReminderControl.ShouldResetStartTime = true;
+            Console.WriteLine("The task has been paused.");      
 
             return 0;
         }

@@ -8,13 +8,13 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public class ListTaskCmd : ICommand, ICommandFactory
+    public class ListTaskCmd
     {
 
         IRepository repo;
         public ListTaskCmd(IRepository receivedRepo) 
         {
-           repo = receivedRepo;
+            repo = receivedRepo;
         }
         public IRavenEntity ItemToWork { get; set; }
         public bool Execute() 
@@ -29,12 +29,5 @@ namespace ChronoSpark.Logic
             return listOfTasks;
         }
 
-        public String CommandName { get { return "list"; } }
-        public String CommandDescription { get { return "list"; } }
-
-        public ICommand MakeCommand() 
-        {
-            return new ListTaskCmd(repo);
-        }
     }
 }

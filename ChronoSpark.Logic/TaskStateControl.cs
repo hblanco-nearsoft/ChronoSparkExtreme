@@ -15,7 +15,7 @@ namespace ChronoSpark.Logic
         public bool SetActiveTask(SparkTask taskToActivate)
         {
             var activeTask = repo.GetActiveTask();
-            if (activeTask == null)
+            if (activeTask == null || activeTask.State != TaskState.InProgress)
             {
                 taskToActivate.State = TaskState.InProgress;
                 repo.Update(taskToActivate);
@@ -40,7 +40,6 @@ namespace ChronoSpark.Logic
 
                 activeTask.State = TaskState.Paused;
                 repo.Update(activeTask);
-
                 return "The active task has been paused";
             }
         }

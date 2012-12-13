@@ -45,6 +45,7 @@ namespace ChronoSpark.Clients.Cli
             {
                 Console.WriteLine("The task specified doesn't exist");
             }
+            ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
             return 0;
         }

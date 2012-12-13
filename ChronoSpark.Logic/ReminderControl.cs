@@ -73,25 +73,20 @@ namespace ChronoSpark.Logic
         }
 
 
-        public static Boolean ShouldResetStartTime = false;
+        public static DateTime StartTime;
         public void ActivateReminders(IEnumerable<Reminder> listOfReminders) 
         {   
            // int minutes = 0;
             
             IRepository repo = new Repository();
-            var startTime = DateTime.Now;
+            StartTime = DateTime.Now;
             ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
 
             while (true)
             {
-                 if (ShouldResetStartTime)
-                {
-                    startTime = DateTime.Now;
-                    ShouldResetStartTime = false;
-                }
-                Thread.Sleep(60005);
+                Thread.Sleep(60000);
 
-                var timeElapsed = DateTime.Now - startTime;
+                var timeElapsed = DateTime.Now - StartTime;
                 var activeTask = repo.GetActiveTask();
 
                 if (activeTask != null)
@@ -102,18 +97,19 @@ namespace ChronoSpark.Logic
                 foreach (Reminder r in listOfReminders)
                 {
 
-                    ReminderEventArgs eventArgs = new ReminderEventArgs(r,activeTask);
+                    ReminderEventArgs eventArgs = new ReminderEventArgs(r, activeTask);
                     ReminderControl reminderControl = new ReminderControl();
-                    if (timeElapsed.Minutes % r.Interval == 0 && activeTask == null && r.Id == "reminders/1")
+                    if (timeElapsed.Minutes >= 1)
                     {
-                        reminderControl.OnEventNoActiveTask(eventArgs);
+                        if (timeElapsed.Minutes % r.Interval == 0 && activeTask == null && r.Id == "reminders/1")
+                        {
+                            reminderControl.OnEventNoActiveTask(eventArgs);
+                        }
+                        if (timeElapsed.Minutes % r.Interval == 0 && activeTask != null && r.Id == "reminders/2")
+                        {
+                            reminderControl.OnEventIntervalPassed(eventArgs);
+                        }
                     }
-                    if (timeElapsed.Minutes % r.Interval == 0 && activeTask != null && r.Id == "reminders/2")
-                    {
-                        reminderControl.OnEventIntervalPassed(eventArgs);
-                    }
-
-
                 }
             }
         }

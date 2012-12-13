@@ -8,7 +8,8 @@ using ChronoSpark.Data.Entities;
 
 namespace ChronoSpark.Logic
 {
-    public class AddItemCmd     {
+    public class AddItemCmd    
+    {
 
         public IRavenEntity ItemToWork { set; get; }
         private IRepository repo = new Repository();

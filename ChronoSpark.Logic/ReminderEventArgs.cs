@@ -14,11 +14,10 @@ namespace ChronoSpark.Logic
         public readonly Reminder TheReminder;
         public readonly SparkTask TheTask;
 
-            public ReminderEventArgs(Reminder receivedReminder, SparkTask receivedTask)
-            {
-                TheReminder = receivedReminder;
-                TheTask = receivedTask;
-            }
-
+        public ReminderEventArgs(Reminder receivedReminder, SparkTask receivedTask)
+        {
+            TheReminder = receivedReminder;
+            TheTask = receivedTask;
+        }
     }
 }

@@ -23,8 +23,6 @@ namespace ChronoSpark.Logic
             StartTime = DateTime.Now;
             activeTask.TimeElapsed = activeTask.TimeElapsed.Add(elapsedTime);
             repo.Update(activeTask);
-
         }
-
     }
 }

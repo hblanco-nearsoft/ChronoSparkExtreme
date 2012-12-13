@@ -47,18 +47,13 @@
   <ItemGroup>
     <Compile Include="ActiveTaskProcess.cs" />
     <Compile Include="AddItemCmd.cs" />
-    <Compile Include="CommandParser.cs" />
     <Compile Include="ListReminderCmd.cs" />
     <Compile Include="DeleteItemCmd.cs" />
-    <Compile Include="GetByIdCmd.cs" />
-    <Compile Include="ICommandFactory.cs" />
     <Compile Include="ListTaskCmd.cs" />
     <Compile Include="ReminderControl.cs" />
     <Compile Include="TaskStateControl.cs" />
-    <Compile Include="TaskStateTracker.cs" />
     <Compile Include="ReminderEventArgs.cs" />
     <Compile Include="UpdateItemCmd.cs" />
-    <Compile Include="ICommand.cs" />
     <Compile Include="SparkLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

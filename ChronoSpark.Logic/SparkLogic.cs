@@ -79,7 +79,6 @@ namespace ChronoSpark.Logic
         //            Console.WriteLine("{0}", command.CommandDescription);
         //    }
 
-
         public static IRavenEntity fetch(IRavenEntity entity)
         {
             Repository repo = new Repository();
