@@ -27,20 +27,14 @@ namespace ChronoSpark.Clients.Cli
         public override int Run(String[] RemainingArguments)
         {
             IRavenEntity reminderToFetch = new Reminder();
-            IRavenEntity taskToFetch = new SparkTask();
             var actualReminderId = "Reminders/" + ReminderId;
-            var actualTaskId = "SparkTasks/" + TaskId;
             reminderToFetch.Id = actualReminderId;
-            taskToFetch.Id = actualTaskId;
 
             Reminder reminderToSet= SparkLogic.fetch(reminderToFetch) as Reminder;
            
-            SparkTask taskToSet = SparkLogic.fetch(taskToFetch) as SparkTask;
-
-            if (taskToSet != null && reminderToSet != null)
+            if (reminderToSet != null)
             {
                 ReminderControl reminderControl = new ReminderControl();
-               // ThreadPool.QueueUserWorkItem(delegate { reminderControl.ActivateReminders(reminderToSet, taskToSet); });
             }
             return 0;
         }

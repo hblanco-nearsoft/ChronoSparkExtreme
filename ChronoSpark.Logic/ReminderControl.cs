@@ -15,20 +15,7 @@ namespace ChronoSpark.Logic
 
         public static ReminderHandler _eventNoActiveTask;
         public static ReminderHandler _eventIntervalPassed;
-        public static ReminderHandler _eventMinutePassed;
-
-        public event ReminderHandler EventMinutePassed 
-        {
-            add 
-            {
-                if (_eventMinutePassed == null || !_eventMinutePassed.GetInvocationList().Contains(value)) 
-                {
-                    _eventMinutePassed += value;
-                }
-            }
-            remove { _eventMinutePassed -= value; } 
-        }
-        
+       
         public event ReminderHandler EventNoActiveTask
         {
             add 
@@ -54,9 +41,7 @@ namespace ChronoSpark.Logic
 
             remove { _eventIntervalPassed -= value; }
         }
-
-
-
+                
         public  void OnEventNoActiveTask(ReminderEventArgs args) 
         {
             if (_eventNoActiveTask != null) { _eventNoActiveTask(this, args); }
@@ -66,12 +51,6 @@ namespace ChronoSpark.Logic
         {
             if (_eventIntervalPassed != null) { _eventIntervalPassed(this, args); }
         }
-
-        public void OnEventMinutePassed(ReminderEventArgs args)
-        {
-            if (_eventMinutePassed != null) { _eventMinutePassed(this, args); }
-        }
-
 
         public static DateTime StartTime;
         public void ActivateReminders(IEnumerable<Reminder> listOfReminders) 

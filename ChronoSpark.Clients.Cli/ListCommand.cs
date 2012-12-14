@@ -17,8 +17,7 @@ namespace ChronoSpark.Clients.Cli
         }
 
         public override int Run(string[] remainingArguments)
-        {
-            SparkLogic.ReturnTaskList();
+        {            
             TaskListPrinter lister = new TaskListPrinter();
             var listOfTasks = SparkLogic.ReturnTaskList();
             lister.ListTaks(listOfTasks);

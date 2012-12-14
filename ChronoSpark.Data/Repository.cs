@@ -214,14 +214,16 @@ namespace ChronoSpark.Data
                 return null;
             }
         }
-         //public IEnumerable<SparkTask> GetByStartDate(DateTime startDate) 
-        //{
-        //    using (var session = _docStore.OpenSession())
-        //    {
-        //        var queriedTasks = session.Query<SparkTask>().Where(t => t.StartDate.Equals(startDate));
-        //        var result = queriedTasks.ToList();
-        //        return result;
-        //    } 
-        //}
+
+        public IEnumerable<SparkTask> GetByStartDate(DateTime startDate, DateTime endDate)
+        {
+            using (var session = _docStore.OpenSession())
+            {
+                var queriedTasks = session.Query<SparkTask>().Where(t => t.StartDate.Day >= startDate.Day && t.StartDate < endDate);
+                var result = queriedTasks.ToList();
+                return result;
+            }
+        }
+
     }
 }

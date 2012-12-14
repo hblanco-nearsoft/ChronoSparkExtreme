@@ -83,7 +83,8 @@ namespace ChronoSpark.Logic
         {
             Repository repo = new Repository();
             var entityToReturn = repo.GetById(entity);
-            return entityToReturn;
+            if (entityToReturn != null) { return entityToReturn; }
+            else { return null; }
         }
     }
 }

@@ -28,11 +28,22 @@ namespace ChronoSpark.Clients.Cli
             IRavenEntity taskToFetch = new SparkTask();
             var actualTaskId = "SparkTasks/" + TaskId;
             taskToFetch.Id = actualTaskId;
+            if (TaskId == null) 
+            {
+                Console.WriteLine("Please specify an Id for the task to activate");
+                return 0;
+            }
             SparkTask taskToSet = SparkLogic.fetch(taskToFetch) as SparkTask;
             TaskStateControl taskStateControl = new TaskStateControl();
             ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
-            var result = taskStateControl.SetActiveTask(taskToSet);
 
+            if (taskToSet == null)
+            {
+                Console.WriteLine("The task specified doesn't exist");
+                return 0;
+            }
+
+            var result = taskStateControl.SetActiveTask(taskToSet);
 
             if (result == true) { Console.WriteLine("The task was activated"); }
             if (taskToSet != null && result == false)
@@ -41,10 +52,7 @@ namespace ChronoSpark.Clients.Cli
                 taskStateControl.SetActiveTask(taskToSet);
                 Console.WriteLine("The Task was activated. The previous task was put on pause");
             }
-            if (taskToSet == null) 
-            {
-                Console.WriteLine("The task specified doesn't exist");
-            }
+
             ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
             return 0;

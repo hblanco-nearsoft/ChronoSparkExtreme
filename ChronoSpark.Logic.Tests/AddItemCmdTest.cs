@@ -7,11 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ChronoSpark.Logic.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class AddItemCmdTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AddItem_IsGivenValidItem_ItemIsSaved()
         {
+
         }
     }
 }

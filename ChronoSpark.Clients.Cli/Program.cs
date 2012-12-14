@@ -45,7 +45,6 @@ namespace ChronoSpark.Clients.Cli
                 var commands = GetCommands();
                 ConsoleModeCommand consoleRunner = new ConsoleModeCommand(GetCommands);
                 commands = commands.Concat(new[] { consoleRunner });
-
                 ConsoleCommandDispatcher.DispatchCommand(commands, cdmArgs, Console.Out);
                 processed = true;
                 

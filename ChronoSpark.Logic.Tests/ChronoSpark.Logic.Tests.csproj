@@ -125,7 +125,7 @@
   <ItemGroup>
     <Compile Include="SparkLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="AddItemCmdTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChronoSpark.Data.Entities\ChronoSpark.Data.Entities.csproj">
