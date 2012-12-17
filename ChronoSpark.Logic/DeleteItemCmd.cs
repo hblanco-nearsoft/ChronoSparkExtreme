@@ -21,7 +21,7 @@ namespace ChronoSpark.Logic
             {
                 return "The item has been deleted";
             }
-            return "The item could not be deleted";
+            return "The item could not be deleted, make sure the item exists";
         }
     }
 }

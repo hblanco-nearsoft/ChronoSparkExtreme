@@ -18,13 +18,14 @@ namespace ChronoSpark.Data.Entities
             else { return "There's no ID"; }
         }
 
-        public static String ElapsedTime(this SparkTask ent)
+        public static TimeSpan GetElapsedTime(this SparkTask taskToGetTimeFrom)
         {
             DateTime currentTime = DateTime.Now;
-            TimeSpan elapsedTime = currentTime - ent.StartDate;
-            ent.TimeElapsed = ent.TimeElapsed + elapsedTime;
-          //  return ent.TimeElapsed;
-            return "";
+            TimeSpan elapsedTime = currentTime - taskToGetTimeFrom.StartDate;
+            taskToGetTimeFrom.TimeElapsed = taskToGetTimeFrom.TimeElapsed.Add(elapsedTime);
+            taskToGetTimeFrom.StartDate = DateTime.Now;
+          //  return ent.TimeElapsed; 
+            return taskToGetTimeFrom.TimeElapsed;
         }
 
     }

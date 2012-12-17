@@ -11,10 +11,11 @@ namespace ChronoSpark.Logic
 {
     public class ReminderControl
     {
-        public delegate void ReminderHandler(object obj, ReminderEventArgs remArgs);
+        public delegate void ReminderHandler(object obj, ReminderEventArgs reminderArgs);
 
         public static ReminderHandler _eventNoActiveTask;
         public static ReminderHandler _eventIntervalPassed;
+        public static ReminderHandler _eventHaveToReportWeek;
        
         public event ReminderHandler EventNoActiveTask
         {
@@ -41,6 +42,23 @@ namespace ChronoSpark.Logic
 
             remove { _eventIntervalPassed -= value; }
         }
+
+        public event ReminderHandler EventHaveToReportWeek 
+        {
+            add
+            {
+                if (_eventHaveToReportWeek == null || !_eventHaveToReportWeek.GetInvocationList().Contains(value))
+                {
+                    _eventHaveToReportWeek += value;
+                }
+            }
+            remove { _eventHaveToReportWeek -= value; }
+        }
+
+        public void OnEventHaveToReport(ReminderEventArgs args) 
+        {
+            if (_eventHaveToReportWeek != null) { _eventHaveToReportWeek(this, args); }
+        }
                 
         public  void OnEventNoActiveTask(ReminderEventArgs args) 
         {
@@ -60,6 +78,7 @@ namespace ChronoSpark.Logic
             IRepository repo = new Repository();
             StartTime = DateTime.Now;
             ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+            ReportWeekReminder reportWeekReminder = new ReportWeekReminder();
 
             while (true)
             {
@@ -73,18 +92,21 @@ namespace ChronoSpark.Logic
                     taskProcessor.AddElapsedTime();
                 }
 
-                foreach (Reminder r in listOfReminders)
+                reportWeekReminder.RemindEndOfWeek();
+                reportWeekReminder.RemindStartOfWeek();
+
+                foreach (Reminder reminder in listOfReminders)
                 {
 
-                    ReminderEventArgs eventArgs = new ReminderEventArgs(r, activeTask);
+                    ReminderEventArgs eventArgs = new ReminderEventArgs(reminder, activeTask);
                     ReminderControl reminderControl = new ReminderControl();
                     if (timeElapsed.Minutes >= 1)
                     {
-                        if (timeElapsed.Minutes % r.Interval == 0 && activeTask == null && r.Id == "reminders/1")
+                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask == null && reminder.Id == "reminders/1")
                         {
                             reminderControl.OnEventNoActiveTask(eventArgs);
                         }
-                        if (timeElapsed.Minutes % r.Interval == 0 && activeTask != null && r.Id == "reminders/2")
+                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask != null && reminder.Id == "reminders/2")
                         {
                             reminderControl.OnEventIntervalPassed(eventArgs);
                         }

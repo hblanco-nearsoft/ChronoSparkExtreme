@@ -25,7 +25,6 @@ namespace ChronoSpark.Data.Entities
         public TaskState State { get; set; }
         public String LastEditedBy { get; set; }
         public TimeSpan TimeElapsed { get; set; }
-
        
     }
 }

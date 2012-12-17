@@ -18,6 +18,6 @@ namespace ChronoSpark.Data
         IEnumerable<SparkTask> GetTaskList();
         IEnumerable<Reminder> GetReminderList();
         SparkTask GetActiveTask();
-        IEnumerable<SparkTask> GetByStartDate(DateTime startDate, DateTime endDate);
+        IEnumerable<SparkTask> GetByStartDate(DateTime periodStartDate, DateTime endDate);
     }
 }

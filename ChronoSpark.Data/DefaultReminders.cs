@@ -22,6 +22,16 @@ namespace ChronoSpark.Data
                 StartDate = DateTime.Now,
                 State = TaskState.Paused
             };
+
+            SparkTask theOtherTask = new SparkTask
+            {
+                Description = "Say Whaaaa",
+                Duration = 5,
+                Client = "El Cliento",
+                StartDate = DateTime.Now,
+                State = TaskState.Paused,
+                TimeElapsed = new TimeSpan(37, 0, 0)
+            };
             
 
             Reminder thisReminder = new Reminder
@@ -87,6 +97,7 @@ namespace ChronoSpark.Data
             repo.Add(thisTask);
             repo.Add(thisReminder);
             repo.Add(thisReminder2);
+            repo.Add(theOtherTask);
 #endif
             #endregion
 

@@ -47,7 +47,8 @@
   <ItemGroup>
     <Compile Include="ActiveTaskProcess.cs" />
     <Compile Include="AddItemCmd.cs" />
-    <Compile Include="EndOfWeekReminder.cs" />
+    <Compile Include="DailyReminders.cs" />
+    <Compile Include="ReportWeekReminder.cs" />
     <Compile Include="ListReminderCmd.cs" />
     <Compile Include="DeleteItemCmd.cs" />
     <Compile Include="ListTaskCmd.cs" />
