@@ -35,9 +35,12 @@ namespace ChronoSpark.Clients.Cli
                 var listOfReminders = SparkLogic.ReturnReminderList();
                 NoActiveTaskListener noActiveTaskListener = new NoActiveTaskListener();
                 IntervalPassedListener intervalPassedListener = new IntervalPassedListener();
+                TimeToReportListener timeToReportListener = new TimeToReportListener();
 
                 noActiveTaskListener.Suscribe(defaultController);
                 intervalPassedListener.Suscribe(defaultController);
+                timeToReportListener.Suscribe(defaultController);
+                
 
                 ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(listOfReminders); });
 

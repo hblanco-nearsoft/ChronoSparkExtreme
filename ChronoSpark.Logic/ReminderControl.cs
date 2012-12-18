@@ -92,9 +92,6 @@ namespace ChronoSpark.Logic
                     taskProcessor.AddElapsedTime();
                 }
 
-                reportWeekReminder.RemindEndOfWeek();
-                reportWeekReminder.RemindStartOfWeek();
-
                 foreach (Reminder reminder in listOfReminders)
                 {
 
@@ -109,7 +106,9 @@ namespace ChronoSpark.Logic
                         if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask != null && reminder.Id == "reminders/2")
                         {
                             reminderControl.OnEventIntervalPassed(eventArgs);
-                        }
+                        }                        
+                        if (reminder.Id == "reminders/8") { reportWeekReminder.RemindEndOfWeek(reminder); }
+                        if (reminder.Id == "reminders/5") { reportWeekReminder.RemindStartOfWeek(reminder); }
                     }
                 }
             }

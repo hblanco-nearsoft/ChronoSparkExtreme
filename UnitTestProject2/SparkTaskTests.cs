@@ -22,13 +22,7 @@ namespace ChronoSpark.Data.Entities.Tests
         public void TaskLoadString_TaskDoesntHaveId_ReturnsNoSuchId()
         {
             var noIdTask = new SparkTask();
-
             noIdTask.LoadString().ShouldBe("There's no ID");
-        }
-
-       
+        }      
     }
-
-
-    
 }

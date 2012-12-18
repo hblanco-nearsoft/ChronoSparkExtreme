@@ -17,7 +17,8 @@ namespace ChronoSpark.Data.Entities
     {
         public String Id { get; set; }
         public String Description { get; set; }
-        public int Interval { get; set; } // in minutes     
+        public int Interval { get; set; } // in minutes
         public ReminderType Type { get; set; }
+        public DateTime TimeOfActivation { get; set; }
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="ActivateTaskCommand.cs" />
     <Compile Include="SetReminderCommand.cs" />
     <Compile Include="TaskListPrinter.cs" />
+    <Compile Include="TimeToReportListener.cs" />
     <Compile Include="UpdateCommand.cs" />
   </ItemGroup>
   <ItemGroup>

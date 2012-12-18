@@ -25,12 +25,12 @@ namespace ChronoSpark.Data
 
             SparkTask theOtherTask = new SparkTask
             {
-                Description = "Say Whaaaa",
+                Description = "task number 2",
                 Duration = 5,
                 Client = "El Cliento",
                 StartDate = DateTime.Now,
                 State = TaskState.Paused,
-                TimeElapsed = new TimeSpan(37, 0, 0)
+                TimeElapsed = new TimeSpan(36, 0, 0)
             };
             
 
@@ -54,6 +54,14 @@ namespace ChronoSpark.Data
 #endif
             #endregion  
 
+            DateTime EntranceTime = DateTime.Now;
+            TimeSpan ts = new TimeSpan(9, 0, 0);
+            EntranceTime = EntranceTime.Date + ts;
+
+            DateTime ExitTime = DateTime.Now;
+            TimeSpan ts2 = new TimeSpan(15, 0, 0);
+            ExitTime = ExitTime.Date + ts2;
+
             Repository repo = new Repository();
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
@@ -67,16 +75,19 @@ namespace ChronoSpark.Data
                 Interval = 60,
                 Type = ReminderType.System
             };
+
             Reminder StartOfWeek = new Reminder
             {
                 Description = "Start of the week.",
                 Interval = 7,
+                TimeOfActivation = EntranceTime,
                 Type = ReminderType.System
             };
             Reminder EndOfWeek = new Reminder
             {
                 Description = "The end of week.",
                 Interval = 7,
+                TimeOfActivation = ExitTime,
                 Type = ReminderType.System
             };
             Reminder StartOfDay = new Reminder

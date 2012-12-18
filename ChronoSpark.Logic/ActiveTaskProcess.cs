@@ -19,8 +19,9 @@ namespace ChronoSpark.Logic
         public bool AddElapsedTime() 
         {
             var activeTask = repo.GetActiveTask();
-            var elapsedTime = DateTime.Now - StartTime;
-            StartTime = DateTime.Now;
+            var startTime = activeTask.StartDate;
+            var elapsedTime = DateTime.Now - startTime;
+            startTime = DateTime.Now;
             activeTask.TimeElapsed = activeTask.TimeElapsed.Add(elapsedTime);
             if (repo.Update(activeTask) == true) { return true; }
             else { return false; }

@@ -11,12 +11,12 @@ namespace ChronoSpark.Logic
     class ReportWeekReminder
     {
         ReminderControl reminderControl = new ReminderControl();
-        public void RemindEndOfWeek() 
+        public void RemindEndOfWeek(Reminder endOfWeekReminder) 
         {
             var dateToday = DateTime.Now;
             TimeSpan accumulatedTime = new TimeSpan(0,0,0);
-
-            if(dateToday.ToString("ddd") == "Fri" && dateToday.ToString("h tt") == "4 PM") //should get the hour from a reminder!
+            
+            if(dateToday.ToString("ddd") == "Tue" && dateToday.Hour == endOfWeekReminder.TimeOfActivation.Hour ) //should get the hour from a reminder!
             {
                 IRepository repo = new Repository();
                 var startOfWeekTime = dateToday.AddDays(-4);
@@ -25,21 +25,23 @@ namespace ChronoSpark.Logic
 
                 foreach(SparkTask task in list)
                 {
-                    accumulatedTime = accumulatedTime.Add(task.TimeElapsed);
+                    if (task.State != TaskState.reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
                 }
 
                 if (accumulatedTime >= new TimeSpan(36, 0, 0)) 
                 {
-                    //call report prompt.
+                    ReminderEventArgs args = new ReminderEventArgs(endOfWeekReminder, new SparkTask()); //should be the reminder im using send the task can stay like this.
+                    reminderControl.OnEventHaveToReport(args);
+                    //event!
                 }
             }
         }
 
-        public void RemindStartOfWeek() 
+        public void RemindStartOfWeek(Reminder startOfWeekReminder) 
         {
             var dateToday = DateTime.Now;
             TimeSpan accumulatedTime = new TimeSpan(0, 0, 0);
-            if (dateToday.ToString("ddd") == "Mon" && dateToday.ToString("h tt") == "4 PM") //should get the hour from a reminder!
+            if (dateToday.ToString("ddd") == "Mon" && dateToday.Hour == startOfWeekReminder.TimeOfActivation.Hour ) //should get the hour from a reminder!dateToday.ToString("h tt") == "4 PM"
             {
                 IRepository repo = new Repository();
                 var startOfWeekTime = dateToday.AddDays(-7);
@@ -49,16 +51,12 @@ namespace ChronoSpark.Logic
 
                 foreach (SparkTask task in list)
                 {
-                    if(task.State != TaskState.reported)
-                    {
-                    accumulatedTime = accumulatedTime.Add(task.TimeElapsed);
-                    }
+                    if(task.State != TaskState.reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
                 }
 
                 if (accumulatedTime >= new TimeSpan(36, 0, 0))
                 {
-                    Console.WriteLine("say nanananana");
-                    ReminderEventArgs args = new ReminderEventArgs(new Reminder(), new SparkTask()); //should be the reminder im using send the task can stay like this.
+                    ReminderEventArgs args = new ReminderEventArgs(startOfWeekReminder, new SparkTask()); //should be the reminder im using send the task can stay like this.
                     reminderControl.OnEventHaveToReport(args);
                 }
             }

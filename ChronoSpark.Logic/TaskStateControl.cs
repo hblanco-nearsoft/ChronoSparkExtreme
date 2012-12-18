@@ -18,6 +18,7 @@ namespace ChronoSpark.Logic
             if (activeTask == null || activeTask.State != TaskState.InProgress)
             {
                 taskToActivate.State = TaskState.InProgress;
+                taskToActivate.StartDate = DateTime.Now;
                 repo.Update(taskToActivate);
                 return true;
             }

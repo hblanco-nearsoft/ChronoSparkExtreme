@@ -10,50 +10,42 @@ namespace ChronoSpark.Logic.Tests
 {
     [TestClass]
     public class SparkLogicTests
-    {   
+    {
         //[TestMethod]
-        //public void ProcessCommand_ReceivesValidCommand_ReturnsProcessed()
+        //public void Fetch_IsGivenValidExistingEntityToFetch_ReturnTheEntity()
         //{
-        //    var repo = new Repository(new ChronoDocumentStore()
+        //    SparkTask theTask = new SparkTask()
         //    {
-        //        DataDirectory = "~/Data/Debug",
-        //        RunInMemory = true
-        //    });
-
-        //    ICommand theCommand = new AddItemCmd(repo);
-        //    IRavenEntity entity = new SparkTask{
-        //    Description = "task",
-        //    Duration = 5
+        //        Description = "dddd",
+        //        Duration = 5,
+        //        State = TaskState.Paused,
+        //        Id = "theid"
         //    };
-
-        //    theCommand.ItemToWork = entity;
-        //    var result = SparkLogic.ProcessCommand(theCommand);
-
-        //    result.ShouldBe("The command was executed");
-
+        //    IRepository repo = new Repository();
+        //    repo.Add(theTask);
+        //    var returnedTask = SparkLogic.fetch(theTask);
+        //    returnedTask.Id.ShouldBe(theTask.Id);
         //}
 
         //[TestMethod]
-        //public void ProcessCommand_ReceiveNullCommand_ReturnsInvalid() 
+        //public void Fetch_IsGivenValidNonExistingEntityToFetch_ReturnsNull()
         //{
-
-        //    var repo = new Repository(new ChronoDocumentStore()
+        //    SparkTask theTask = new SparkTask()
         //    {
-        //        DataDirectory = "~/Data/Debug",
-        //        RunInMemory = true
-        //    });
-
-
-        //    var result = SparkLogic.ProcessCommand(null);
-
-        //    result.ShouldBe("Unidentified command");
+        //        Description = "dddd",
+        //        Duration = 5,
+        //        State = TaskState.Paused,
+        //        Id = "theid"
+        //    };
+        //    var returnedTask = SparkLogic.fetch(theTask);
+        //    returnedTask.ShouldBe(null);
         //}
 
-        [TestMethod]
-        public void ReturnTaskList_ThereIsAListToReturn_RetrunsTheList() 
-        {
-            var taskList = SparkLogic.ReturnTaskList();
-        }
+        //[TestMethod]
+        //public void ReturnTaskList_ThereIsAListToReturn_RetrunsTheList()
+        //{
+        //    var taskList = SparkLogic.ReturnTaskList();
+        //}
 
     }
 }

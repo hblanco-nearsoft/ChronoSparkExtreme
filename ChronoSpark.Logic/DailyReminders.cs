@@ -13,7 +13,6 @@ namespace ChronoSpark.Logic
         public void RemindStartOfDay()
         {
             var dateToday = DateTime.Now;
-            TimeSpan accumulatedTime = new TimeSpan(0, 0, 0);
             if (dateToday.ToString("h tt") == "9 AM") //should get the hour from a reminder!
             {
                 //do something
@@ -23,7 +22,6 @@ namespace ChronoSpark.Logic
         public void RemindEndOfDay() 
         {
             var dateToday = DateTime.Now;
-            TimeSpan accumulatedTime = new TimeSpan(0, 0, 0);
             if (dateToday.ToString("h tt") == "4 PM") //should get the hour from a reminder!
             {
                 //do something
