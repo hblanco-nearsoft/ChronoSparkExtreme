@@ -23,7 +23,7 @@ namespace ChronoSpark.Clients.Cli
             this.HasOption("d|Description:", "A description for the item to create", d => Description = d);
             this.HasOption("t|Time:", "Duration for a task or the interval of a reminder", t => Duration = t);
             this.HasOption("c|Client:", "The Client for the Task at work", c => Client = c);
-            this.HasOption("h|Hour:", "Hour at which the reminder will activate in format:hh:mm using 24 hours", h => HourOfActivation = h);
+            this.HasOption("h|Hour:", "Hour at which the reminder will activate in format: hh:mm using 24 hours", h => HourOfActivation = h);
 
         }
         public String Client;
@@ -84,17 +84,14 @@ namespace ChronoSpark.Clients.Cli
                     reminderToUpdate.Interval = interval;
                 }
 
-
-
-
                 String pattern = @"((?<hour>\d{2})\:(?<minutes>\d{2}))";
                 var regex = new Regex(pattern, RegexOptions.IgnoreCase);
                 var match = regex.Match(HourOfActivation);
                 int hour, minutes;
 
-                if (!int.TryParse(match.Groups["hour"].Value, out hour) || !int.TryParse(match.Groups["minutes"].Value, out minutes))
+                if (!match.Success)
                 {
-                    Console.WriteLine("The hour has to be numbers");
+                    Console.WriteLine("The hour format should be hh:mm unsing 24 hours format.");
                     return 0;
                 }
 
@@ -102,7 +99,7 @@ namespace ChronoSpark.Clients.Cli
                 {
                     if (hour < 00 || hour > 23) 
                     { 
-                        Console.WriteLine("The hours must be between 00 and 23");
+                        Console.WriteLine("The hours must be between 00 and 23.");
                         return 0;
                     }
                 }
@@ -110,7 +107,7 @@ namespace ChronoSpark.Clients.Cli
                 {
                     if (minutes < 00 || minutes > 59)
                     {
-                        Console.WriteLine("minutes must be between 00 and 59");
+                        Console.WriteLine("minutes must be between 00 and 59.");
                         return 0;
                     }
                 }
@@ -128,7 +125,7 @@ namespace ChronoSpark.Clients.Cli
                 Console.WriteLine(result);
                 return 0;
             }
-            else { Console.WriteLine("the entity should be a task or reminder"); }
+            else { Console.WriteLine("the entity should be a task or reminder."); }
             return 0;
         }
     }

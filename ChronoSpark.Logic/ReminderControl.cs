@@ -71,7 +71,7 @@ namespace ChronoSpark.Logic
         }
 
         public static DateTime StartTime;
-        public void ActivateReminders(IEnumerable<Reminder> listOfReminders) 
+        public void ActivateReminders() 
         {   
            // int minutes = 0;
             
@@ -82,7 +82,9 @@ namespace ChronoSpark.Logic
 
             while (true)
             {
+                
                 Thread.Sleep(60000);
+                var listOfReminders = SparkLogic.ReturnReminderList();
 
                 var timeElapsed = DateTime.Now - StartTime;
                 var activeTask = repo.GetActiveTask();
@@ -94,7 +96,7 @@ namespace ChronoSpark.Logic
 
                 foreach (Reminder reminder in listOfReminders)
                 {
-
+                    
                     ReminderEventArgs eventArgs = new ReminderEventArgs(reminder, activeTask);
                     ReminderControl reminderControl = new ReminderControl();
                     if (timeElapsed.Minutes >= 1)

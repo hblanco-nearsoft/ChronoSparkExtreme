@@ -53,7 +53,7 @@ namespace ChronoSpark.Clients.Cli
                 Console.WriteLine("The Task was activated. The previous task was put on pause");
             }
 
-            ReminderControl.StartTime = DateTime.Now;
+            ReminderControl.StartTime = DateTime.Now;            
             taskProcessor.SetStartTime();
             return 0;
         }

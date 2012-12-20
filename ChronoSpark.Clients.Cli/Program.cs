@@ -1,5 +1,4 @@
 ﻿using ChronoSpark.Logic;
-using ChronoSpark.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +31,6 @@ namespace ChronoSpark.Clients.Cli
                 var cmd = "run-console";
 
                 ReminderControl defaultController = new ReminderControl();
-                var listOfReminders = SparkLogic.ReturnReminderList();
                 NoActiveTaskListener noActiveTaskListener = new NoActiveTaskListener();
                 IntervalPassedListener intervalPassedListener = new IntervalPassedListener();
                 TimeToReportListener timeToReportListener = new TimeToReportListener();
@@ -41,8 +39,7 @@ namespace ChronoSpark.Clients.Cli
                 intervalPassedListener.Suscribe(defaultController);
                 timeToReportListener.Suscribe(defaultController);
                 
-
-                ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(listOfReminders); });
+                ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
 
                 String[] cdmArgs = cmd.Split(' ');
                 var commands = GetCommands();

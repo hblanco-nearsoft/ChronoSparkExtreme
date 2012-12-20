@@ -11,6 +11,8 @@ namespace ChronoSpark.Logic.Tests
     [TestClass]
     public class SparkLogicTests
     {
+        
+
         //[TestMethod]
         //public void Fetch_IsGivenValidExistingEntityToFetch_ReturnTheEntity()
         //{
@@ -22,9 +24,12 @@ namespace ChronoSpark.Logic.Tests
         //        Id = "theid"
         //    };
         //    IRepository repo = new Repository();
+        //    Repository.RavenInitialize();
         //    repo.Add(theTask);
+            
         //    var returnedTask = SparkLogic.fetch(theTask);
-        //    returnedTask.Id.ShouldBe(theTask.Id);
+
+        //    returnedTask.ShouldBeSameAs(theTask);
         //}
 
         //[TestMethod]
@@ -38,6 +43,7 @@ namespace ChronoSpark.Logic.Tests
         //        Id = "theid"
         //    };
         //    var returnedTask = SparkLogic.fetch(theTask);
+
         //    returnedTask.ShouldBe(null);
         //}
 
