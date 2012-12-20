@@ -15,8 +15,11 @@ namespace ChronoSpark.Clients.Cli
             {
                 var parts = sparkTask.Id.Split('/');
                 var idNumber = parts[1];
-                var timeToDisplay = sparkTask.TimeElapsed.ToString(@"hh\:mm\:ss");
-                Console.WriteLine("  {0} : {1:hh\\:mm\\:ss} : {2}", idNumber, sparkTask.TimeElapsed, sparkTask.Description);
+                var hours = sparkTask.TimeElapsed.TotalHours.ToString();
+                var minutes = sparkTask.TimeElapsed.Minutes;
+                var seconds = sparkTask.TimeElapsed.Seconds;
+                var toDisplay = hours + ":" + minutes + ":" + seconds;
+                Console.WriteLine("  {0} : {1} : {2}", idNumber, toDisplay, sparkTask.Description);
             }
             return true;
         }

@@ -8,6 +8,7 @@ using NDesk.Options;
 using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
 using ChronoSpark.Logic;
+using System.Text.RegularExpressions;
 
 namespace ChronoSpark.Clients.Cli
 {
@@ -21,8 +22,8 @@ namespace ChronoSpark.Clients.Cli
 
             this.HasOption("d|Description:", "A description for the item to create", d => Description = d);
             this.HasOption("t|Time:", "Duration for a task or the interval of a reminder", t => Duration = t);
-            this.HasOption("c|Client", "The Client for the Task at work", c => Client = c);
-
+            this.HasOption("c|Client:", "The Client for the Task at work", c => Client = c);
+            this.HasOption("h|Hour:", "Hour at which the reminder will activate in format:hh:mm using 24 hours", h => HourOfActivation = h);
 
         }
         public String Client;
@@ -30,15 +31,18 @@ namespace ChronoSpark.Clients.Cli
         public String Description;
         public String EntityType;
         public String IdToUpdate;
+        public String HourOfActivation;
 
         public override int Run(string[] remainingArguments)
         {
             if(EntityType.ToLower() == "task") 
             {
                 int duration;
-                SparkTask  taskToUpdate= new SparkTask();
+                SparkTask  taskToFetch= new SparkTask();
                 var actualId = "SparkTasks/" + IdToUpdate;
-                taskToUpdate.Id = actualId;
+                taskToFetch.Id = actualId;
+                var taskToUpdate = SparkLogic.fetch(taskToFetch) as SparkTask;
+
                 taskToUpdate.Description = Description;
                 if (int.TryParse(Duration, out duration))
                 {
@@ -60,9 +64,10 @@ namespace ChronoSpark.Clients.Cli
             if (EntityType.ToLower() == "reminder") 
             {
                 int interval;
-                Reminder reminderToUpdate = new Reminder();
+                Reminder reminderToFetch = new Reminder();
                 var actualId = "Reminders/" + IdToUpdate;
-                reminderToUpdate.Id = actualId;
+                reminderToFetch.Id = actualId;
+                var reminderToUpdate = SparkLogic.fetch(reminderToFetch) as Reminder;
                 reminderToUpdate.Description = Description;
                 //if (!int.TryParse(Duration, out interval)) 
                 //{
@@ -78,6 +83,44 @@ namespace ChronoSpark.Clients.Cli
                     }
                     reminderToUpdate.Interval = interval;
                 }
+
+
+
+
+                String pattern = @"((?<hour>\d{2})\:(?<minutes>\d{2}))";
+                var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+                var match = regex.Match(HourOfActivation);
+                int hour, minutes;
+
+                if (!int.TryParse(match.Groups["hour"].Value, out hour) || !int.TryParse(match.Groups["minutes"].Value, out minutes))
+                {
+                    Console.WriteLine("The hour has to be numbers");
+                    return 0;
+                }
+
+                if (int.TryParse(match.Groups["hour"].Value, out hour)) 
+                {
+                    if (hour < 00 || hour > 23) 
+                    { 
+                        Console.WriteLine("The hours must be between 00 and 23");
+                        return 0;
+                    }
+                }
+                if (int.TryParse(match.Groups["minutes"].Value, out minutes)) 
+                {
+                    if (minutes < 00 || minutes > 59)
+                    {
+                        Console.WriteLine("minutes must be between 00 and 59");
+                        return 0;
+                    }
+                }
+
+                DateTime ActivationTime = DateTime.Now;
+                TimeSpan ts = new TimeSpan(hour, minutes, 0);
+                ActivationTime = ActivationTime.Date + ts;
+
+                reminderToUpdate.TimeOfActivation = ActivationTime;
+
                 UpdateItemCmd updateItemCmd = new UpdateItemCmd();
                 updateItemCmd.ItemToWork = reminderToUpdate;
 

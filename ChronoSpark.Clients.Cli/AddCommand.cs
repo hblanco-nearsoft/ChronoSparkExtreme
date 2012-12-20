@@ -8,6 +8,7 @@ using NDesk.Options;
 using ChronoSpark.Logic;
 using ChronoSpark.Data;
 using ChronoSpark.Data.Entities;
+using System.Text.RegularExpressions;
 
 namespace ChronoSpark.Clients.Cli
 {
@@ -19,13 +20,15 @@ namespace ChronoSpark.Clients.Cli
             this.HasRequiredOption("e|EntityType=", "The type of entity you want to add (task or reminder)", e => EntityType = e);
             this.HasRequiredOption("d|Description=", "A description for the item to create", d => Description = d);
             this.HasRequiredOption("t|Time=", "Duration for a task or the interval of a reminder (in minutes)", t => Duration = t);
-            this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);          
+            this.HasOption("c|Client=", "The name of the client for the task", c => Client = c);
+            this.HasOption("h|Hour=", "The hour at wich the reminder would activate", h => TimeOfActivation = h);
         }
 
         public String EntityType;
         public String Description;
         public String Duration;
         public String Client;
+        public String TimeOfActivation;
 
         public override int Run(string[] remainingArguments)
         {
@@ -82,6 +85,43 @@ namespace ChronoSpark.Clients.Cli
                     Console.WriteLine("The duration must be an integer");
                     return 0;
                 }
+
+
+
+                String pattern = @"((?<hour>\d{2})\:(?<minutes>\d{2}))";
+                var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+                var match = regex.Match(TimeOfActivation);
+                int hour, minutes;
+
+                if (!int.TryParse(match.Groups["hour"].Value, out hour) || !int.TryParse(match.Groups["minutes"].Value, out minutes))
+                {
+                    Console.WriteLine("The hour has to be numbers");
+                    return 0;
+                }
+
+                if (int.TryParse(match.Groups["hour"].Value, out hour))
+                {
+                    if (hour < 00 && hour > 23)
+                    {
+                        Console.WriteLine("The hours must be between 00 and 23");
+                        return 0;
+                    }
+                }
+                if (int.TryParse(match.Groups["minutes"].Value, out minutes))
+                {
+                    if (minutes < 00 && minutes > 59)
+                    {
+                        Console.WriteLine("minutes must be between 00 and 59");
+                        return 0;
+                    }
+                }
+
+                DateTime ActivationTime = DateTime.Now;
+                TimeSpan ts = new TimeSpan(hour, minutes, 0);
+                ActivationTime = ActivationTime.Date + ts;
+
+                reminderToAdd.TimeOfActivation = ActivationTime;
+
                 AddItemCmd addItemCmd = new AddItemCmd();
 
                 addItemCmd.ItemToWork = reminderToAdd;

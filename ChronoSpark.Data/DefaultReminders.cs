@@ -27,7 +27,7 @@ namespace ChronoSpark.Data
             {
                 Description = "task number 2",
                 Duration = 5,
-                Client = "El Cliento",
+                Client = "Client number 2",
                 StartDate = DateTime.Now,
                 State = TaskState.Paused,
                 TimeElapsed = new TimeSpan(36, 0, 0)
