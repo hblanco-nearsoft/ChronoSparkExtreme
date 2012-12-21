@@ -19,6 +19,7 @@ namespace ChronoSpark.Service
 
         protected override void OnStart(string[] args)
         {
+            eventLog1.WriteEntry("my service started"); 
         }
 
         protected override void OnStop()

@@ -9,6 +9,17 @@ namespace ChronoSpark.Data.Entities
 {
     public enum ReminderType
     {
+        Custom,
+        StartOfWeek,
+        EndOfWeek,
+        NoActiveTask,
+        DefaultHourly,
+        StartOfDay,
+        EndOfDay
+    }
+
+    public enum ReminderSource 
+    {
         User,
         System
     }
@@ -19,6 +30,7 @@ namespace ChronoSpark.Data.Entities
         public String Description { get; set; }
         public int Interval { get; set; } // in minutes
         public ReminderType Type { get; set; }
+        public ReminderSource Source { get; set; }
         public DateTime TimeOfActivation { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace ChronoSpark.Logic
         {
             var dateToday = DateTime.Now;
             TimeSpan accumulatedTime = new TimeSpan(0,0,0);
-            
-            if(dateToday.ToString("ddd") == "Thu" && dateToday.Hour == endOfWeekReminder.TimeOfActivation.Hour ) 
+
+            if (dateToday.ToString("ddd") == "Mon" && dateToday.Hour == endOfWeekReminder.TimeOfActivation.Hour && dateToday.Minute == endOfWeekReminder.TimeOfActivation.Minute) 
             {
                 IRepository repo = new Repository();
                 var startOfWeekTime = dateToday.AddDays(-4);
@@ -43,7 +43,7 @@ namespace ChronoSpark.Logic
         {
             var dateToday = DateTime.Now;
             TimeSpan accumulatedTime = new TimeSpan(0, 0, 0);
-            if (dateToday.ToString("ddd") == "Mon" && dateToday.Hour == startOfWeekReminder.TimeOfActivation.Hour ) //should get the hour from a reminder!dateToday.ToString("h tt") == "4 PM"
+            if (dateToday.ToString("ddd") == "Mon" && dateToday.Hour == startOfWeekReminder.TimeOfActivation.Hour && dateToday.Minute == startOfWeekReminder.TimeOfActivation.Minute ) //should get the hour from a reminder!dateToday.ToString("h tt") == "4 PM"
             {
                 IRepository repo = new Repository();
                 var startOfWeekTime = dateToday.AddDays(-7);

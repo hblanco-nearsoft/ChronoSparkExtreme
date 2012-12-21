@@ -195,7 +195,7 @@ namespace ChronoSpark.Data
         {
             using (var session = _docStore.OpenSession())
             {
-                var queriedReminders = session.Query<Reminder>().Where(t => t.Type == (ReminderType.System));
+                var queriedReminders = session.Query<Reminder>().Where(t => t.Source == (ReminderSource.System));
                 var result = queriedReminders.ToList();
                 return result;
             }

@@ -16,6 +16,7 @@ namespace ChronoSpark.Logic
         public static ReminderHandler _eventNoActiveTask;
         public static ReminderHandler _eventIntervalPassed;
         public static ReminderHandler _eventHaveToReportWeek;
+        public static ReminderHandler _eventItIsTimeOfActivation;
        
         public event ReminderHandler EventNoActiveTask
         {
@@ -55,6 +56,18 @@ namespace ChronoSpark.Logic
             remove { _eventHaveToReportWeek -= value; }
         }
 
+        public event ReminderHandler EventItIsTimeOfActivation
+        {
+            add 
+            {
+                if (_eventItIsTimeOfActivation == null || !_eventItIsTimeOfActivation.GetInvocationList().Contains(value)) 
+                {
+                    _eventItIsTimeOfActivation += value;
+                }
+            }
+            remove { _eventItIsTimeOfActivation -= value; }
+        }
+
         public void OnEventHaveToReport(ReminderEventArgs args) 
         {
             if (_eventHaveToReportWeek != null) { _eventHaveToReportWeek(this, args); }
@@ -70,6 +83,11 @@ namespace ChronoSpark.Logic
             if (_eventIntervalPassed != null) { _eventIntervalPassed(this, args); }
         }
 
+        public void OnEventItIsTimeOfActivation(ReminderEventArgs args)
+        {
+            if (_eventItIsTimeOfActivation != null) { _eventItIsTimeOfActivation(this, args); }
+        }
+
         public static DateTime StartTime;
         public void ActivateReminders() 
         {   
@@ -79,6 +97,7 @@ namespace ChronoSpark.Logic
             StartTime = DateTime.Now;
             ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
             ReportWeekReminder reportWeekReminder = new ReportWeekReminder();
+            DailyReminders dailyReminders = new DailyReminders();
 
             while (true)
             {
@@ -99,18 +118,22 @@ namespace ChronoSpark.Logic
                     
                     ReminderEventArgs eventArgs = new ReminderEventArgs(reminder, activeTask);
                     ReminderControl reminderControl = new ReminderControl();
+
+
                     if (timeElapsed.Minutes >= 1)
                     {
-                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask == null && reminder.Id == "reminders/1")
+                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask == null && reminder.Type == ReminderType.NoActiveTask)
                         {
                             reminderControl.OnEventNoActiveTask(eventArgs);
                         }
-                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask != null && reminder.Id == "reminders/2")
+                        if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask != null && reminder.Type == ReminderType.DefaultHourly)
                         {
                             reminderControl.OnEventIntervalPassed(eventArgs);
                         }                        
-                        if (reminder.Id == "reminders/8") { reportWeekReminder.RemindEndOfWeek(reminder); }
-                        if (reminder.Id == "reminders/5") { reportWeekReminder.RemindStartOfWeek(reminder); }
+                        if (reminder.Type==ReminderType.EndOfWeek) { reportWeekReminder.RemindEndOfWeek(reminder); }
+                        if (reminder.Type==ReminderType.StartOfWeek) { reportWeekReminder.RemindStartOfWeek(reminder); }
+                        if (reminder.Type == ReminderType.StartOfDay) { dailyReminders.RemindStartOfDay(reminder); }
+                        if (reminder.Type == ReminderType.EndOfDay) { dailyReminders.RemindEndOfDay(reminder); }
                     }
                 }
             }
