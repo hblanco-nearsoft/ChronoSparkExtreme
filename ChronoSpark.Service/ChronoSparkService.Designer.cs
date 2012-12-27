@@ -1,6 +1,6 @@
 ﻿namespace ChronoSpark.Service
 {
-    partial class Service1
+    partial class ChronoSparkService
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,9 +31,13 @@
             this.eventLog1 = new System.Diagnostics.EventLog();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             // 
-            // Service1
+            // eventLog1
             // 
-            this.ServiceName = "Service1";
+            this.eventLog1.EntryWritten += new System.Diagnostics.EntryWrittenEventHandler(this.eventLog1_EntryWritten);
+            // 
+            // ChronoSpark
+            // 
+            this.ServiceName = "ChronoSparkExtreme";
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
 
         }

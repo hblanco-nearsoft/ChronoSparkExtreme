@@ -50,7 +50,10 @@ namespace ChronoSpark.Data
             _docStore = new ChronoDocumentStore()
             {
                 ConnectionStringName = "RavenDB",
+
+#if DEBUG
                 RunInMemory = true
+#endif
                 //UseEmbeddedHttpServer = true
             };
             
@@ -58,12 +61,10 @@ namespace ChronoSpark.Data
           
             return true;
         }
-
-
-    
+                    
         public bool Initialize()
         {
-            _docStore = new EmbeddableDocumentStore()
+            _docStore = new ChronoDocumentStore()
             {
                 ConnectionStringName = "RavenDB",
                 UseEmbeddedHttpServer = true
@@ -73,7 +74,7 @@ namespace ChronoSpark.Data
              * we need to find a way to make this call only ONCE in the whole
              * app life cycle.
              * */
-            DocStore.Initialize(); 
+            _docStore.Initialize(); 
             return true;
         }
 

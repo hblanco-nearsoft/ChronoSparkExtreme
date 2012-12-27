@@ -121,6 +121,8 @@ namespace ChronoSpark.Clients.Cli
                 ActivationTime = ActivationTime.Date + ts;
 
                 reminderToAdd.TimeOfActivation = ActivationTime;
+                reminderToAdd.Type = ReminderType.Custom;
+                reminderToAdd.Source = ReminderSource.User;
 
                 AddItemCmd addItemCmd = new AddItemCmd();
 
