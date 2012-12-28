@@ -29,10 +29,10 @@ namespace ChronoSpark.Service
         protected override void OnStart(string[] args)
         {
 
-            SparkLogic.Initialize();
+            //ThreadPool.QueueUserWorkItem(delegate { SparkLogic.Initialize(); });
             ReminderControl defaultController = new ReminderControl();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
-            
+
             eventLog1.WriteEntry("The Service has started");
         }
 

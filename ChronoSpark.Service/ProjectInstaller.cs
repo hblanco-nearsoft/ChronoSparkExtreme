@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Configuration.Install;
 using System.Linq;
 using System.Threading.Tasks;
+using ChronoSpark.Logic;
 
 namespace ChronoSpark.Service
 {
@@ -18,12 +19,10 @@ namespace ChronoSpark.Service
 
         private void serviceInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
-
         }
 
         private void serviceProcessInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
-
         }
     }
 }
