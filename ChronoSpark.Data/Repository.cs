@@ -50,10 +50,9 @@ namespace ChronoSpark.Data
             _docStore = new ChronoDocumentStore()
             {
                 ConnectionStringName = "RavenDB",
-
 #if DEBUG
                 RunInMemory = true
-#endif
+#endif       
                 //UseEmbeddedHttpServer = true
             };
             

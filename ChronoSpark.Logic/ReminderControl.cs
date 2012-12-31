@@ -91,8 +91,8 @@ namespace ChronoSpark.Logic
         public static DateTime StartTime;
         public void ActivateReminders() 
         {   
-           // int minutes = 0;
             
+
             IRepository repo = new Repository();
             StartTime = DateTime.Now;
             ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
@@ -103,6 +103,7 @@ namespace ChronoSpark.Logic
             {
                 
                 Thread.Sleep(60000);
+                SparkLogic.Initialize();
                 var listOfReminders = SparkLogic.ReturnReminderList();
 
                 var timeElapsed = DateTime.Now - StartTime;

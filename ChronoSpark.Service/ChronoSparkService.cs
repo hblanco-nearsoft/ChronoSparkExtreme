@@ -29,7 +29,6 @@ namespace ChronoSpark.Service
         protected override void OnStart(string[] args)
         {
 
-            //ThreadPool.QueueUserWorkItem(delegate { SparkLogic.Initialize(); });
             ReminderControl defaultController = new ReminderControl();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
 
@@ -38,7 +37,7 @@ namespace ChronoSpark.Service
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("The Service has ended");
+            eventLog1.WriteEntry("The Service has stopped");
         }
 
         private void eventLog1_EntryWritten(object sender, EntryWrittenEventArgs e)

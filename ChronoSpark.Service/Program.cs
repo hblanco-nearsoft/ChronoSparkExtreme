@@ -15,14 +15,7 @@ namespace ChronoSpark.Service
         /// The main entry point for the application.
         /// </summary>
         static void Main()
-        {
-            ReminderControl defaultController = new ReminderControl();
-            ThreadPool.QueueUserWorkItem(delegate 
-            {
-                SparkLogic.Initialize();
-                defaultController.ActivateReminders(); 
-            });
-
+        {           
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
