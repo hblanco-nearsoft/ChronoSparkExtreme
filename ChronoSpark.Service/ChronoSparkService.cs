@@ -30,8 +30,9 @@ namespace ChronoSpark.Service
         {
 
             ReminderControl defaultController = new ReminderControl();
+            ServiceListener serviceListener = new ServiceListener();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
-
+            ThreadPool.QueueUserWorkItem(delegate { serviceListener.ActivateListener(); });
             eventLog1.WriteEntry("The Service has started");
         }
 
