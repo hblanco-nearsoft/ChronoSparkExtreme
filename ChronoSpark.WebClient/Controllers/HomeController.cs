@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ChronoSpark.WebClient.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -15,6 +16,7 @@ namespace ChronoSpark.WebClient.Controllers
             return View();
         }
 
+        
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
@@ -25,6 +27,14 @@ namespace ChronoSpark.WebClient.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        [Authorize(Roles= "Administrator")]
+        public ActionResult Admin() 
+        {
+            ViewBag.Message = "Admin Authorized only";
 
             return View();
         }
