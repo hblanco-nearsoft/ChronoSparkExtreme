@@ -88,6 +88,10 @@
       <Project>{ecca1bff-8379-4853-ba5b-d485d48dcf93}</Project>
       <Name>ChronoSpark.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChronoSpark.WebClient\ChronoSpark.WebClient.csproj">
+      <Project>{807b9659-3d59-42a8-9297-e30939849c07}</Project>
+      <Name>ChronoSpark.WebClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

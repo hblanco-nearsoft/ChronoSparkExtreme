@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChronoSpark.Logic;
 using System.Threading;
+using ChronoSpark.WebClient;
 
 namespace ChronoSpark.Service
 {
@@ -28,7 +29,7 @@ namespace ChronoSpark.Service
 
         protected override void OnStart(string[] args)
         {
-
+            
             ReminderControl defaultController = new ReminderControl();
             ServiceListener serviceListener = new ServiceListener();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });

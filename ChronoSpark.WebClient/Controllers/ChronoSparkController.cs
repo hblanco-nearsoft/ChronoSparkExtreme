@@ -15,6 +15,5 @@ namespace ChronoSpark.WebClient.Controllers
         {
             return View();
         }
-
     }
 }
