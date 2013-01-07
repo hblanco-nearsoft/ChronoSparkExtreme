@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Raven.Storage.Esent;
 using Raven.Storage.Managed;
 using ManyConsole;
-
+using ChronoSpark.Service;
 
 using System.Threading;
 
@@ -21,8 +21,6 @@ namespace ChronoSpark.Clients.Cli
             Console.Write("Initializing ChronoSpark Time Manager...");
             SparkLogic.Initialize();
             Console.WriteLine("DONE!");
-
-            //Console.WriteLine("Enter 'exit' to terminate. ");
 
             while (!processed)//!exit
             {

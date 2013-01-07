@@ -84,6 +84,10 @@
       <Project>{ecca1bff-8379-4853-ba5b-d485d48dcf93}</Project>
       <Name>ChronoSpark.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChronoSpark.Service\ChronoSpark.Service.csproj">
+      <Project>{e06f40ca-639c-4ea8-89df-216e8ce27813}</Project>
+      <Name>ChronoSpark.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
