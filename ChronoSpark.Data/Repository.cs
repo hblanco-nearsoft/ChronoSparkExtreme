@@ -115,10 +115,10 @@ namespace ChronoSpark.Data
             using (var Session = _docStore.OpenSession())
             {
 
-                if (Session.Advanced.DatabaseCommands.Head(UpdatedItem.Id) == null) { return false; }
+                if (DocStore.DatabaseCommands.Head(UpdatedItem.Id)== null) { return false; }
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
                     doc.InjectFrom<InjectNotNull>(UpdatedItem);
-
+               
                     try
                     {
                         Session.Store(doc);
@@ -140,7 +140,7 @@ namespace ChronoSpark.Data
                  *     we decide so, we would need to also delete it.
                  */
 
-                    if (session.Advanced.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
+                    if (DocStore.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
                     var doc = session.Load<T>(toDeleteItem.LoadString());
                     try
                     {
@@ -174,7 +174,7 @@ namespace ChronoSpark.Data
             string myStr = String.Empty;
             using (var session = _docStore.OpenSession())
             {
-                if (session.Advanced.DatabaseCommands.Head(item.Id) == null) { return default(T); }
+                if (DocStore.DatabaseCommands.Head(item.Id) == null) { return default(T); }
                 var storedItem = session.Load<T>(item.LoadString());
                 return storedItem;
             }
