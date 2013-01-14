@@ -7,20 +7,31 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using RazorEngine;
-
+using System.Web.Mvc;
+using ChronoSpark.Data.Entities;
+using ChronoSpark.Logic;
+using System.Collections.Generic;
+using RazorEngine.Templating;
 
 namespace ChronoSpark.Service
 {
 
     public class HomeController : ApiController
     {
-
-        public HttpContent SayHello()
+        [System.Web.Http.HttpGet]
+        public HttpContent Index()
         {
-            string template = "Hello @Model.Name! Welcome to Web API and Razor!";
-            string result = Razor.Parse(template, new { Name = "World" });
+            var model = new { Name = "World", Email = "someone@somewhere.com" };
+            string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
+            return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+        }
+        
+        [System.Web.Http.HttpGet]
+        public String Something()
+        {
+            var userName = User.Identity.Name;
+            return userName;
 
-            return new StringContent(result, System.Text.Encoding.UTF8, "text/html"); 
         }
     }
 }

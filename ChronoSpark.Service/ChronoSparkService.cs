@@ -12,6 +12,11 @@ using System.Threading;
 using System.Web.Http;
 using System.Web.Http.SelfHost;
 using System.Net.Http;
+using RazorEngine;
+using RazorEngine.Templating;
+using System.IO;
+using System.Reflection;
+using RazorEngine.Configuration;
 
 namespace ChronoSpark.Service
 {
@@ -25,15 +30,26 @@ namespace ChronoSpark.Service
         {
             InitializeComponent();
 
-            _config = new HttpSelfHostConfiguration(ServiceAddress);
+            _config = new NtlmSelfHostConfiguration(ServiceAddress);
+            
+            _config.Routes.MapHttpRoute("Default",
+                "chronospark/{controller}/{action}",
+                new {controller = "home", action = "something", id = RouteParameter.Optional });
 
-            _config.Routes.MapHttpRoute("DefaultApi",
-                "api/{controller}/{id}",
-                new { id = RouteParameter.Optional });
+            string viewPathTemplate = "ChronoSpark.Service.Views.{0}";
+            TemplateServiceConfiguration templateConfig = new TemplateServiceConfiguration();
+            templateConfig.Resolver = new DelegateTemplateResolver(name =>
+            {
+                string resourcePath = string.Format(viewPathTemplate, name);
+                var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath);
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            });
 
-            _config.Routes.MapHttpRoute(
-            "Default", "{controller}/{id}",
-            new { id = RouteParameter.Optional , action = "SayHello" }); 
+            Razor.SetTemplateService(new TemplateService(templateConfig));
+
 
             if (!System.Diagnostics.EventLog.SourceExists("MySource"))
             {
@@ -53,7 +69,7 @@ namespace ChronoSpark.Service
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
             ThreadPool.QueueUserWorkItem(delegate { serviceListener.ActivateListener(); });
 
-            _server = new HttpSelfHostServer(_config);
+            _server = new HttpSelfHostServer(_config);            
             _server.OpenAsync();        
 
             eventLog1.WriteEntry("The Service has started");
