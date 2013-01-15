@@ -101,7 +101,7 @@ namespace ChronoSpark.Clients.Cli
 
                 if (int.TryParse(match.Groups["hour"].Value, out hour))
                 {
-                    if (hour < 00 && hour > 23)
+                    if (hour < 00 || hour > 23)
                     {
                         Console.WriteLine("The hours must be between 00 and 23");
                         return 0;
@@ -109,7 +109,7 @@ namespace ChronoSpark.Clients.Cli
                 }
                 if (int.TryParse(match.Groups["minutes"].Value, out minutes))
                 {
-                    if (minutes < 00 && minutes > 59)
+                    if (minutes < 00 || minutes > 59)
                     {
                         Console.WriteLine("minutes must be between 00 and 59");
                         return 0;

@@ -10,8 +10,8 @@ using RazorEngine;
 using System.Web.Mvc;
 using ChronoSpark.Data.Entities;
 using ChronoSpark.Logic;
-using System.Collections.Generic;
 using RazorEngine.Templating;
+using ChronoSpark.Data;
 
 namespace ChronoSpark.Service
 {
@@ -26,12 +26,29 @@ namespace ChronoSpark.Service
             return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
         }
         
+        [System.Web.Http.Authorize]
         [System.Web.Http.HttpGet]
         public String Something()
         {
             var userName = User.Identity.Name;
             return userName;
-
         }
+
+        public IEnumerable<SparkTask> AllTasks() 
+        {
+            var tasks = SparkLogic.ReturnTaskList();
+
+            return tasks;
+        }
+
+
+        public SparkTask TaskByID(String id)
+        {
+            IRavenEntity entityToFetch = new SparkTask {Id = "SparkTasks/" + id};
+
+            var task = SparkLogic.fetch(entityToFetch) as SparkTask;
+
+            return task;
+        }   
     }
 }
