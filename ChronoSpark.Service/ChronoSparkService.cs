@@ -65,11 +65,8 @@ namespace ChronoSpark.Service
         protected override void OnStart(string[] args)
         {
             ReminderControl defaultController = new ReminderControl();
-            ServiceListener serviceListener = new ServiceListener();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
-            ThreadPool.QueueUserWorkItem(delegate { serviceListener.ActivateListener(); });
-
-            _server = new HttpSelfHostServer(_config);            
+             _server = new HttpSelfHostServer(_config);            
             _server.OpenAsync();        
 
             eventLog1.WriteEntry("The Service has started");

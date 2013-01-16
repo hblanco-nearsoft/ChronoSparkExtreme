@@ -103,7 +103,6 @@
     <Compile Include="HomeController.cs" />
     <Compile Include="NtlmSelfHostConfiguration.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="ServiceListener.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -130,6 +129,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <EmbeddedResource Include="Views\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
@@ -153,9 +153,7 @@
       <Name>ChronoSpark.WebClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
