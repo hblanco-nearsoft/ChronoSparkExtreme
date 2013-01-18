@@ -73,6 +73,7 @@ namespace ChronoSpark.Service
 
         protected override void OnStart(string[] args)
         {
+            SparkLogic.Initialize();
             ReminderControl defaultController = new ReminderControl();
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
              _server = new HttpSelfHostServer(_config);            

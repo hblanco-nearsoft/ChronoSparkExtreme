@@ -1,0 +1,19 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>Hello </title>
+    </head>
+    <body>
+        <table>
+            @{
+                foreach(var item in Model)
+                {
+                    <tr>
+                    <td>@item.Description</td>
+                    <td>@item.TimeElapsed</td>
+                    </tr>
+                }
+            }
+        </table>
+    </body>
+</html>

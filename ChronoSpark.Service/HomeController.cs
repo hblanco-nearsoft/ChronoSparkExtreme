@@ -19,16 +19,20 @@ namespace ChronoSpark.Service
 
     public class HomeController : ApiController
     {
+
+        ResponseFormatter Formatter = new ResponseFormatter();
+
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Index()
         {
             var model = new { Name = "World", Email = "someone@somewhere.com" };
-            string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
+            //string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             //return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
-
+            string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
-            res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            Formatter.FormatRespnse(res,result);
+            //res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+            //res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             return res;
         }
         
@@ -40,11 +44,14 @@ namespace ChronoSpark.Service
             return userName;
         }
 
-        public IEnumerable<SparkTask> AllTasks() 
+        public HttpResponseMessage GetAllTasks() 
         {
             var tasks = SparkLogic.ReturnTaskList();
-
-            return tasks;
+            string result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
+            
+            var res = Request.CreateResponse(HttpStatusCode.OK);
+            Formatter.FormatRespnse(res, result);
+            return res;
         }
 
 
