@@ -12,6 +12,7 @@ using ChronoSpark.Data.Entities;
 using ChronoSpark.Logic;
 using RazorEngine.Templating;
 using ChronoSpark.Data;
+using System.Net.Http.Headers;
 
 namespace ChronoSpark.Service
 {
@@ -19,11 +20,16 @@ namespace ChronoSpark.Service
     public class HomeController : ApiController
     {
         [System.Web.Http.HttpGet]
-        public HttpContent Index()
+        public HttpResponseMessage Index()
         {
             var model = new { Name = "World", Email = "someone@somewhere.com" };
             string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
-            return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+            //return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+
+            var res = Request.CreateResponse(HttpStatusCode.OK);
+            res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+            res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return res;
         }
         
         [System.Web.Http.Authorize]

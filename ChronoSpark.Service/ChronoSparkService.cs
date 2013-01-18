@@ -32,9 +32,18 @@ namespace ChronoSpark.Service
 
             _config = new NtlmSelfHostConfiguration(ServiceAddress);
             
-            _config.Routes.MapHttpRoute("Default",
+            _config.Routes.MapHttpRoute("DefaultApi",
                 "chronospark/{controller}/{action}",
                 new {controller = "home", action = "something", id = RouteParameter.Optional });
+
+            _config.Routes.MapHttpRoute(
+            "Default", "{controller}/{action}",
+            new { controller = "Home", action = "Index" }); 
+            //_config.Routes.MapHttpRoute("Other",
+            //    "/{controller}/{action}",
+            //    new { controller = "home", action = "something", id = RouteParameter.Optional });
+
+
 
             string viewPathTemplate = "ChronoSpark.Service.Views.{0}";
             TemplateServiceConfiguration templateConfig = new TemplateServiceConfiguration();
