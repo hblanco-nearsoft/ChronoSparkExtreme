@@ -21,7 +21,6 @@ namespace ChronoSpark.Service
         {          
             res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-
             return res;
         }
       

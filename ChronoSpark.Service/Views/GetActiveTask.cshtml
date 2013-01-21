@@ -5,30 +5,33 @@
     </head>
     <body>
         <table>
-            <tr>
-                <td>Id</td>
-                <td>Description</td>
-                <td>Time Elapsed</td>
-            </tr>
+
             @{
-                foreach(var item in Model)
-                {
-                    var parts = item.Id.Split('/');
+
+                if(Model != null){
+                    var parts = Model.Id.Split('/');
                     var idNumber = parts[1];
-                    var hours = item.TimeElapsed.TotalHours;
+                    var hours = Model.TimeElapsed.TotalHours;
                     var hoursInteger = (int)hours;
                     var hoursToPrint = hoursInteger.ToString();
-                    var minutes = item.TimeElapsed.Minutes;
-                    var seconds = item.TimeElapsed.Seconds;
+                    var minutes = Model.TimeElapsed.Minutes;
+                    var seconds = Model.TimeElapsed.Seconds;
                     var toDisplay = hoursToPrint + ":" + minutes + ":" + seconds;
                     
                     <tr>
+                    <td>Id</td>
+                    <td>Description</td>
+                    <td>Time Elapsed</td>
+                    </tr>
+                    
+                    <tr>
                     <td>@idNumber</td>
-                    <td>@item.Description</td>
+                    <td>@Model.Description</td>
                     <td>@toDisplay</td>
                     </tr>
                 }
-            }
+                else{ <tr>No active task ound.</tr> }
+              }
         </table>
     </body>
 </html>
