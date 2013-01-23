@@ -13,6 +13,9 @@ using ChronoSpark.Logic;
 using RazorEngine.Templating;
 using ChronoSpark.Data;
 using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
+
+
 namespace ChronoSpark.Service
 {
     public class TaskController : ApiController
@@ -29,10 +32,18 @@ namespace ChronoSpark.Service
         }
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTask()
-        { 
-            SparkTask taskModel = new SparkTask();
-            String result = Razor.Resolve("AddTask.cshtml", taskModel).Run(new ExecuteContext());
+        public HttpResponseMessage AddTask(FormDataCollection formData)
+        {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            AddItemCmd addCmd = new AddItemCmd();
+
+
+            var taskToSave = builder.BuildTask(formData);
+            addCmd.ItemToWork = taskToSave;
+            addCmd.AddItem();
+
+            var tasks = SparkLogic.ReturnTaskList();
+            String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
             var res = Request.CreateResponse(HttpStatusCode.OK);
             Formatter.FormatRespnse(res, result);
             return res;

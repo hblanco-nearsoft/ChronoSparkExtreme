@@ -1,10 +1,43 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+
+<script>
+
+    function isNumber(n) {
+        return !isNaN(parseInt(n)) && isFinite(n);
+    }
+
+
+    function validateForm() {
+        var description = document.forms["addForm"]["task_name"].value;
+        var duration = document.forms["addForm"]["task_duration"].value;
+        if (description == null || description == "")
+        {
+            alert("Description must be filled out");
+            return false;
+        }
+        if (duration == null || duration == "") {
+            alert("Duration must be filled out");
+            return false;
+        }
+        if (!isNumber(duration))
+        {
+            alert("Duration must be a number");
+            return false;
+        }
+        if (duration <= 0)
+        {
+            alert("Duration must be hgiher than 0");
+            return false;
+        }
+    }
+</script>
+
     <head>
         <title>Hello </title>
     </head>
     <body>
-        <form method="post" id="task-form" action="/task/addtask">
+        <form method="post" name="addForm" id="task-form" action="/task/addtask" onsubmit="return validateForm()">
           <h2>Add task</h2>
           Description: <input type="text" class="input-big" name="task_name" value="" />
           Duration:    <input type="text" class="input-big" name="task_duration" value="" />
