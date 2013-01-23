@@ -28,23 +28,14 @@ namespace ChronoSpark.Service
             return task;
         }
 
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         public HttpResponseMessage AddTask()
-        {
+        { 
             SparkTask taskModel = new SparkTask();
             String result = Razor.Resolve("AddTask.cshtml", taskModel).Run(new ExecuteContext());
             var res = Request.CreateResponse(HttpStatusCode.OK);
             Formatter.FormatRespnse(res, result);
             return res;
-        }
-
-        [System.Web.Http.HttpPost]
-        public RedirectResult AddTask(SparkTask task) 
-        {
-            SparkTask taskModel = new SparkTask();
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            RedirectResult result = new RedirectResult("Localhost:8080/ChronoSpark/Task/Addtask");
-            return result;
         }
 
         [System.Web.Http.HttpGet]

@@ -1,17 +1,4 @@
 ﻿@model ChronoSpark.Data.Entities.SparkTask
-@{
-   var result = "";
-   if(IsPost)
-   {
-       var num1 = Request["text1"];
-       var num2 = Request["text2"];
-   }
-   else
-   {
-      result = "This was the first request for this page.";
-   }
-}
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,5 +13,6 @@
       <input type="text" name="text2" />
     </p>
     <p><input type="submit" value="Add" /></p>
+</form>
 </body>
 </html>

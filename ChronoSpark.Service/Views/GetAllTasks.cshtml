@@ -4,7 +4,15 @@
         <title>Hello </title>
     </head>
     <body>
-        <table>
+        <form method="post" id="task-form" action="/task/addtask">
+          <h2>Add task</h2>
+          Description: <input type="text" class="input-big" name="task_name" value="" />
+          Duration:    <input type="text" class="input-big" name="task_duration" value="" />
+          Client:      <input type="text" class="input-big" name="task_client" value="" />
+          <input type="submit" name="send" value="Add" class="addtask-btn"/>
+        </form>
+        <h2>Tasks</h2>
+        <table>            
             <tr>
                 <td>Id</td>
                 <td>Description</td>
@@ -26,6 +34,13 @@
                     <td>@idNumber</td>
                     <td>@item.Description</td>
                     <td>@toDisplay</td>
+                    <td>   
+                        <ul class="actions">
+                            <li class="edit-btn"><a href="#"></a></li>
+                        </ul>
+
+                    </td>
+
                     </tr>
                 }
             }
