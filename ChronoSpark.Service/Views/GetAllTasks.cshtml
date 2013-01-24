@@ -7,7 +7,6 @@
         return !isNaN(parseInt(n)) && isFinite(n);
     }
 
-
     function validateForm() {
         var description = document.forms["addForm"]["task_name"].value;
         var duration = document.forms["addForm"]["task_duration"].value;
@@ -67,13 +66,20 @@
                     <td>@idNumber</td>
                     <td>@item.Description</td>
                     <td>@toDisplay</td>
+                        
                     <td>   
-                        <ul class="actions">
-                            <li class="edit-btn"><a href="#"></a></li>
-                        </ul>
-
+                        <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
+                            <input type="hidden" class="id" name="task_id" value=@item.Id />
+                            <ul class="actions">
+                                <li class="edit-btn">
+                                    <a href="#">
+                                        <input type="submit" name="edit" value="edit" class="edittask-btn"/>
+                                    </a>
+                                </li>
+                                <li class="finish-btn"><a href ="#"></a></li>
+                            </ul>
+                        </form>
                     </td>
-
                     </tr>
                 }
             }

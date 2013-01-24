@@ -12,7 +12,7 @@ namespace ChronoSpark.Data.Entities
         Paused,
         InProgress,     
         Finished,
-        reported,
+        Reported,
     }
     
     public class SparkTask : IRavenEntity      

@@ -33,12 +33,10 @@ namespace ChronoSpark.Logic
             var activeTask = repo.GetActiveTask();
             if (activeTask == null)
             {
-
                 return "There is no Active Task";
             }
             else 
             {
-
                 activeTask.State = TaskState.Paused;
                 repo.Update(activeTask);
                 return "The active task has been paused";
@@ -57,6 +55,20 @@ namespace ChronoSpark.Logic
                 activeTask.State = TaskState.Finished;
                 return "The task has been finished";
             }
+        }
+
+        public String SetAsReported()        
+        {
+            var taskList = SparkLogic.ReturnNotReportedList();
+            if (taskList.Count() == 0) 
+            {
+                return "There are no tasks to report";
+            }
+            foreach (SparkTask task in taskList) 
+            {
+                task.State = TaskState.Reported;
+            }
+            return "The tasks have been reported";
         }
     }
 }

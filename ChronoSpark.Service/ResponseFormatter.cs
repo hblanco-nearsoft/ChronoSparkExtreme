@@ -17,7 +17,7 @@ namespace ChronoSpark.Service
     public class ResponseFormatter
     {
 
-        public HttpResponseMessage FormatRespnse(HttpResponseMessage res, String result) 
+        public HttpResponseMessage FormatResponse(HttpResponseMessage res, String result) 
         {          
             res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");

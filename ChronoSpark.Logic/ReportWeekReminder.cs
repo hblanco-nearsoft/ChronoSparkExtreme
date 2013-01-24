@@ -25,7 +25,7 @@ namespace ChronoSpark.Logic
 
                 foreach(SparkTask task in list)
                 {
-                    if (task.State != TaskState.reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
+                    if (task.State != TaskState.Reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
                 }
 
                 if (accumulatedTime >= new TimeSpan(36, 0, 0)) 
@@ -53,7 +53,7 @@ namespace ChronoSpark.Logic
 
                 foreach (SparkTask task in list)
                 {
-                    if(task.State != TaskState.reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
+                    if(task.State != TaskState.Reported){ accumulatedTime = accumulatedTime.Add(task.TimeElapsed); }
                 }
 
                 if (accumulatedTime >= new TimeSpan(36, 0, 0))

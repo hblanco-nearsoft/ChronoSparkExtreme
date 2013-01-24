@@ -30,7 +30,7 @@ namespace ChronoSpark.Service
             //return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatRespnse(res,result);
+            Formatter.FormatResponse(res,result);
             //res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             //res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             return res;
@@ -38,10 +38,17 @@ namespace ChronoSpark.Service
         
         [System.Web.Http.Authorize]
         [System.Web.Http.HttpGet]
-        public String Something()
+        public HttpResponseMessage Something()
         {
-            var userName = User.Identity.Name;
-            return userName;
+            var userName = User.Identity;
+
+
+            String result = Razor.Resolve("Something.cshtml", userName).Run(new ExecuteContext());
+            var res = Request.CreateResponse(HttpStatusCode.OK);
+            Formatter.FormatResponse(res, result);
+
+            return res;
+
         }
 
         public HttpResponseMessage GetAllTasks() 
@@ -50,7 +57,7 @@ namespace ChronoSpark.Service
             string result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
             
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatRespnse(res, result);
+            Formatter.FormatResponse(res, result);
             return res;
         }
 

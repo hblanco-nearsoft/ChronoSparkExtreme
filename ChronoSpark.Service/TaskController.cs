@@ -41,11 +41,11 @@ namespace ChronoSpark.Service
             var taskToSave = builder.BuildTask(formData);
             addCmd.ItemToWork = taskToSave;
             addCmd.AddItem();
-
+            
             var tasks = SparkLogic.ReturnTaskList();
             String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatRespnse(res, result);
+            Formatter.FormatResponse(res, result);
             return res;
         }
 
@@ -56,7 +56,7 @@ namespace ChronoSpark.Service
             String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
 
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatRespnse(res, result);
+            Formatter.FormatResponse(res, result);
             return res;
         }
 
@@ -68,7 +68,38 @@ namespace ChronoSpark.Service
             String result = Razor.Resolve("GetActiveTask.cshtml", activeTask).Run(new ExecuteContext());
 
             var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatRespnse(res, result);
+            Formatter.FormatResponse(res, result);
+            return res;
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage GetByID(FormDataCollection formData) 
+        {
+            var id = formData.ElementAt(0).Value;
+            SparkTask taskToFetch = new SparkTask { Id = id };
+            var retrievedTask = SparkLogic.fetch(taskToFetch) as SparkTask;
+
+            String result = Razor.Resolve("EditTask.cshtml", retrievedTask).Run(new ExecuteContext());
+            var res = Request.CreateResponse(HttpStatusCode.OK);
+            Formatter.FormatResponse(res, result);
+
+            return res;
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage SaveChanges(FormDataCollection formData)
+        {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+            var taskToSave = builder.RebuildTask(formData);
+            updateCmd.ItemToWork = taskToSave;
+            updateCmd.UpdateItem();
+
+            var tasks = SparkLogic.ReturnTaskList();
+            String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
+            var res = Request.CreateResponse(HttpStatusCode.OK);
+            Formatter.FormatResponse(res, result);
             return res;
         }
     }

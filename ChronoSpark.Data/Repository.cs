@@ -115,7 +115,7 @@ namespace ChronoSpark.Data
             using (var Session = _docStore.OpenSession())
             {
 
-                if (DocStore.DatabaseCommands.Head(UpdatedItem.Id)== null) { return false; }
+                if (_docStore.DatabaseCommands.Head(UpdatedItem.Id)== null) { return false; }
                     var doc = Session.Load<T>(UpdatedItem.LoadString());
                     doc.InjectFrom<InjectNotNull>(UpdatedItem);
                
@@ -174,7 +174,7 @@ namespace ChronoSpark.Data
             string myStr = String.Empty;
             using (var session = _docStore.OpenSession())
             {
-                if (DocStore.DatabaseCommands.Head(item.Id) == null) { return default(T); }
+                if (_docStore.DatabaseCommands.Head(item.Id) == null) { return default(T); }
                 var storedItem = session.Load<T>(item.LoadString());
                 return storedItem;
             }
@@ -220,6 +220,18 @@ namespace ChronoSpark.Data
             using (var session = _docStore.OpenSession())
             {
                 var queriedTasks = session.Query<SparkTask>().Where(t => t.StartDate.Day >= startDate.Day && t.StartDate < endDate);
+                var result = queriedTasks.ToList();
+                return result;
+            }
+        }
+
+
+        public IEnumerable<SparkTask> GetNonReportedList()
+        {
+            using (var session = _docStore.OpenSession())
+            {
+                var queriedTasks = session.Query<SparkTask>().Where(t => t.State != TaskState.Reported);
+                //var taskInProgress = session.Query<SparkTask>().Where(t => t.State.Equals(TaskState.InProgress));
                 var result = queriedTasks.ToList();
                 return result;
             }

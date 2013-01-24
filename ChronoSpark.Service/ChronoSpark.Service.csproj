@@ -152,12 +152,12 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <EmbeddedResource Include="Views\Home\Index.cshtml" />
     <EmbeddedResource Include="Views\Index.cshtml" />
     <EmbeddedResource Include="Views\Something.cshtml" />
     <EmbeddedResource Include="Views\GetAllTasks.cshtml" />
     <EmbeddedResource Include="Views\AddTask.cshtml" />
     <EmbeddedResource Include="Views\GetActiveTask.cshtml" />
+    <EmbeddedResource Include="Views\EditTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
