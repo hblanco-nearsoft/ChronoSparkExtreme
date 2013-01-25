@@ -36,13 +36,16 @@
         <title>Hello </title>
     </head>
     <body>
-        <form method="post" name="addForm" id="task-form" action="/task/addtask" onsubmit="return validateForm()">
-          <h2>Add task</h2>
-          Description: <input type="text" class="input-big" name="task_name" value="" />
-          Duration:    <input type="text" class="input-big" name="task_duration" value="" />
-          Client:      <input type="text" class="input-big" name="task_client" value="" />
-          <input type="submit" name="send" value="Add" class="addtask-btn"/>
-        </form>
+        <div>
+            <form method="post" name="addForm" id="task-form" action="/task/addtask" onsubmit="return validateForm()">
+                <h2>Add task</h2>
+                Description: <input type="text" class="input-big" name="task_name" value="" />
+                Duration:    <input type="text" class="input-big" name="task_duration" value="" />
+                Client:      <input type="text" class="input-big" name="task_client" value="" />
+                <input type="submit" name="send" value="Add" class="addtask-btn"/>
+            </form>
+        </div>
+
         <h2>Tasks</h2>
         <table>            
             <tr>
@@ -66,7 +69,7 @@
                     <td>@idNumber</td>
                     <td>@item.Description</td>
                     <td>@toDisplay</td>
-                        
+                    <td>@item.State</td>
                     <td>   
                         <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
                             <input type="hidden" class="id" name="task_id" value=@item.Id />

@@ -56,6 +56,16 @@ namespace ChronoSpark.Service
             retrievedTask.Client = taskClient;
             
             return retrievedTask;
+        }
+
+        public SparkTask ReturnToActivate(FormDataCollection formData)
+        {
+            SparkTask taskToRetrieve = new SparkTask { Id = formData.ElementAt(0).Value };
+            SparkTask retrievedTask = SparkLogic.fetch(taskToRetrieve) as SparkTask;
+            
+            retrievedTask.State = TaskState.InProgress;
+
+            return retrievedTask;
 
         }
     }

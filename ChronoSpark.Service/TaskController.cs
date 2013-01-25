@@ -22,15 +22,6 @@ namespace ChronoSpark.Service
     {
         ResponseFormatter Formatter = new ResponseFormatter();
 
-        public SparkTask TaskByID(String id)
-        {
-            IRavenEntity entityToFetch = new SparkTask { Id = "SparkTasks/" + id };
-
-            var task = SparkLogic.fetch(entityToFetch) as SparkTask;
-
-            return task;
-        }
-
         [System.Web.Http.HttpPost]
         public HttpResponseMessage AddTask(FormDataCollection formData)
         {
@@ -42,11 +33,13 @@ namespace ChronoSpark.Service
             addCmd.ItemToWork = taskToSave;
             addCmd.AddItem();
             
-            var tasks = SparkLogic.ReturnTaskList();
-            String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res, result);
-            return res;
+            //var tasks = SparkLogic.ReturnTaskList();
+            //String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
+            //var res = Request.CreateResponse(HttpStatusCode.OK);
+            //Formatter.FormatResponse(res, result);
+            
+            var resultToReturn = GetAllTasks();
+            return resultToReturn;
         }
 
         [System.Web.Http.HttpGet]
@@ -95,12 +88,53 @@ namespace ChronoSpark.Service
             var taskToSave = builder.RebuildTask(formData);
             updateCmd.ItemToWork = taskToSave;
             updateCmd.UpdateItem();
+ 
+            return GetAllTasks();
+        }
 
-            var tasks = SparkLogic.ReturnTaskList();
-            String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res, result);
-            return res;
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage ActivateTask(FormDataCollection formData) 
+        {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+            var taskToActivate = builder.ReturnToActivate(formData);
+
+            TaskStateControl taskStateControl = new TaskStateControl();
+            ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+            if (taskToActivate == null)
+            {
+            }
+
+            var result = taskStateControl.SetActiveTask(taskToActivate);
+
+            if (result == true) { Console.WriteLine("The task was activated"); }
+            if (taskToActivate != null && result == false)
+            {
+                taskStateControl.PauseTask();
+                taskStateControl.SetActiveTask(taskToActivate);
+            }
+
+            ReminderControl.StartTime = DateTime.Now;
+            taskProcessor.SetStartTime();
+
+            return GetAllTasks();
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage PauseActiveTask(FormDataCollection formData)
+        {
+           TaskStateControl taskStateControl = new TaskStateControl();
+            SparkLogic sparkLogic = new SparkLogic();
+            var activeTask = sparkLogic.ReturnActiveTask();
+
+            if (activeTask == null) 
+            {
+            }
+            taskStateControl.PauseTask();
+   
+            return GetAllTasks();
         }
     }
 }
