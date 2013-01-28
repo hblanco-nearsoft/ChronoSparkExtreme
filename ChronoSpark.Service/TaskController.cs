@@ -109,7 +109,6 @@ namespace ChronoSpark.Service
 
             var result = taskStateControl.SetActiveTask(taskToActivate);
 
-            if (result == true) { Console.WriteLine("The task was activated"); }
             if (taskToActivate != null && result == false)
             {
                 taskStateControl.PauseTask();
@@ -131,9 +130,33 @@ namespace ChronoSpark.Service
 
             if (activeTask == null) 
             {
+                
             }
             taskStateControl.PauseTask();
    
+            return GetAllTasks();
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage FinishTask(FormDataCollection formData)
+        {
+               SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+            var taskToFinish = builder.ReturnToActivate(formData);
+
+            TaskStateControl taskStateControl = new TaskStateControl();
+            ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+            if (taskToFinish == null)
+            {
+            }
+
+            taskStateControl.FinishTask(taskToFinish);
+
+            ReminderControl.StartTime = DateTime.Now;
+            taskProcessor.SetStartTime();
+
             return GetAllTasks();
         }
     }

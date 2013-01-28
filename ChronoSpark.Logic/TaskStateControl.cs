@@ -43,16 +43,17 @@ namespace ChronoSpark.Logic
             }
         }
 
-        public String FinishTask() 
+        public String FinishTask(SparkTask taskToFinish) 
         {
-            var activeTask = repo.GetActiveTask();
-            if (activeTask == null)
+            var fetchedTask = SparkLogic.fetch(taskToFinish) as SparkTask;
+            if (fetchedTask == null)
             {
                 return "There is no Active Task";
             }
             else 
             {
-                activeTask.State = TaskState.Finished;
+                fetchedTask.State = TaskState.Finished;
+                repo.Update(fetchedTask);
                 return "The task has been finished";
             }
         }

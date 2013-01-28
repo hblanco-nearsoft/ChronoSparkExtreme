@@ -52,6 +52,7 @@
                 <td>Id</td>
                 <td>Description</td>
                 <td>Time Elapsed</td>
+                <td>State</td>
             </tr>
             @{
                 foreach(var item in Model)
@@ -71,19 +72,52 @@
                     <td>@toDisplay</td>
                     <td>@item.State</td>
                     <td>   
-                        <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
-                            <input type="hidden" class="id" name="task_id" value=@item.Id />
-                            <ul class="actions">
-                                <li class="edit-btn">
+@*                        <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
+                            <input type="hidden" class="id" name="task_id" value=@item.Id />*@
+
+                        <td>
+                                    <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
+                                        <input type="hidden" class="id" name="task_id" value= "@item.Id" />
+                                        <a href="#">
+                                            <input type="submit" name="edit" value="edit" class="edittask-btn"/>                                      
+                                        </a>
+                                    </form>
+
+                            </td> 
+                        @{ 
+                        if(item.State == ChronoSpark.Data.Entities.TaskState.Paused){
+                            <td>                        
+                                <form method="post" name="activateform" id="activate-form" action="/task/activatetask" >
+                                    <input type="hidden" class="id" name="task_id" value= "@item.Id" />
                                     <a href="#">
-                                        <input type="submit" name="edit" value="edit" class="edittask-btn"/>
+                                        <input type="submit" name="activate" value="activate" class="activate-btn"/>
                                     </a>
-                                </li>
-                                <li class="finish-btn"><a href ="#"></a></li>
-                            </ul>
-                        </form>
-                    </td>
-                    </tr>
+                                </form>
+                            </td>
+                        }
+                        if(item.State == ChronoSpark.Data.Entities.TaskState.InProgress){
+                            <td>
+                                
+                                <form method="post" name="pauseform" id="pause-form" action="/task/pauseactivetask" >
+                                    <input type="hidden" class="id" name="task_id" value= "@item.Id" />
+                                    <a href="#">
+                                        <input type="submit" name="pause" value="pause" class="pause-btn"/>
+                                    </a>
+                                </form>
+                            </td>
+                        }
+                        if(item.State != ChronoSpark.Data.Entities.TaskState.Finished){
+                        <td>
+                            <form method="post" name="finishform" id="finish-form" action="/task/finishtask" >
+                                <input type="hidden" class="id" name="task_id" value= "@item.Id" />
+                                <a href="#">
+                                    <input type="submit" name="finish" value="finish" class="finish-btn"/>
+                                </a>
+                            </form>
+                        </td>
+                        }
+                        }
+                    </tr> 
                 }
             }
         </table>
