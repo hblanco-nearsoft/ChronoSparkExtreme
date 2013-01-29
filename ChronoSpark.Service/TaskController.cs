@@ -37,28 +37,14 @@ namespace ChronoSpark.Service
             //String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
             //var res = Request.CreateResponse(HttpStatusCode.OK);
             //Formatter.FormatResponse(res, result);
-            
-            var resultToReturn = GetAllTasks();
-            return resultToReturn;
+            return GetAllTasks();
         }
-
+         
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetAllTasks()
         {
             var tasks = SparkLogic.ReturnTaskList();
             String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
-
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res, result);
-            return res;
-        }
-
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetActiveTask() 
-        {
-            SparkLogic logic = new SparkLogic();
-            var activeTask = logic.ReturnActiveTask();
-            String result = Razor.Resolve("GetActiveTask.cshtml", activeTask).Run(new ExecuteContext());
 
             var res = Request.CreateResponse(HttpStatusCode.OK);
             Formatter.FormatResponse(res, result);
@@ -88,7 +74,10 @@ namespace ChronoSpark.Service
             var taskToSave = builder.RebuildTask(formData);
             updateCmd.ItemToWork = taskToSave;
             updateCmd.UpdateItem();
- 
+
+            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            //return response;
             return GetAllTasks();
         }
 
@@ -118,6 +107,9 @@ namespace ChronoSpark.Service
             ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
 
+            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            //return response;
             return GetAllTasks();
         }
 
@@ -133,14 +125,17 @@ namespace ChronoSpark.Service
                 
             }
             taskStateControl.PauseTask();
-   
+
+            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            //return response;
             return GetAllTasks();
         }
 
         [System.Web.Http.HttpPost]
         public HttpResponseMessage FinishTask(FormDataCollection formData)
         {
-               SparkTaskBuilder builder = new SparkTaskBuilder();
+            SparkTaskBuilder builder = new SparkTaskBuilder();
             UpdateItemCmd updateCmd = new UpdateItemCmd();
 
             var taskToFinish = builder.ReturnToActivate(formData);
@@ -157,6 +152,9 @@ namespace ChronoSpark.Service
             ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
 
+            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            //return response;
             return GetAllTasks();
         }
     }

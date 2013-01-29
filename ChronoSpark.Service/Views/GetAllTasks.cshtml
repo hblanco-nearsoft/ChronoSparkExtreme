@@ -1,12 +1,10 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-<script>
-
+<script type ="text/javascript">
     function isNumber(n) {
         return !isNaN(parseInt(n)) && isFinite(n);
     }
-
     function validateForm() {
         var description = document.forms["addForm"]["task_name"].value;
         var duration = document.forms["addForm"]["task_duration"].value;
@@ -33,7 +31,7 @@
 </script>
 
     <head>
-        <title>Hello </title>
+        <title>ChronoSpark Extreme</title>
     </head>
     <body>
         <div>
@@ -70,8 +68,7 @@
                     <td>@idNumber</td>
                     <td>@item.Description</td>
                     <td>@toDisplay</td>
-                    <td>@item.State</td>
-                    <td>   
+                    <td>@item.State</td>                     
 @*                        <form method="post" name="editForm" id="edit-form" action="/task/getbyid" >
                             <input type="hidden" class="id" name="task_id" value=@item.Id />*@
 
@@ -98,8 +95,9 @@
                         if(item.State == ChronoSpark.Data.Entities.TaskState.InProgress){
                             <td>
                                 
-                                <form method="post" name="pauseform" id="pause-form" action="/task/pauseactivetask" >
+                                <form method="post" name="pauseform" id="pause-form" action="/task/pauseactivetask" onsubmit="" >
                                     <input type="hidden" class="id" name="task_id" value= "@item.Id" />
+                                    <input type="hidden" class="state" name ="task_state" value="@item.State" />
                                     <a href="#">
                                         <input type="submit" name="pause" value="pause" class="pause-btn"/>
                                     </a>
@@ -110,6 +108,7 @@
                         <td>
                             <form method="post" name="finishform" id="finish-form" action="/task/finishtask" >
                                 <input type="hidden" class="id" name="task_id" value= "@item.Id" />
+                                <input type="hidden" class="state" name ="task_state" value="@item.State" />
                                 <a href="#">
                                     <input type="submit" name="finish" value="finish" class="finish-btn"/>
                                 </a>

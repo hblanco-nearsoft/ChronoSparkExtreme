@@ -23,7 +23,7 @@ namespace ChronoSpark.Service
             res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             return res;
         }
-      
+       
 
     }
 }
