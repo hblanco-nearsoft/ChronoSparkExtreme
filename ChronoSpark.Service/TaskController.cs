@@ -37,7 +37,10 @@ namespace ChronoSpark.Service
             //String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
             //var res = Request.CreateResponse(HttpStatusCode.OK);
             //Formatter.FormatResponse(res, result);
-            return GetAllTasks();
+            var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            return response;
+            //return GetAllTasks();
         }
          
         [System.Web.Http.HttpGet]

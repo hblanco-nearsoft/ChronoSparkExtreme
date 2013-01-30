@@ -13,7 +13,8 @@
             alert("Description must be filled out");
             return false;
         }
-        if (duration == null || duration == "") {
+        if (duration == null || duration == "")
+        {
             alert("Duration must be filled out");
             return false;
         }
@@ -28,6 +29,39 @@
             return false;
         }
     }
+    </script>
+    <script type="text/javascript">
+    function AddTask() {
+        jQuery.support.cors = true;
+        var SparkTask = {
+            Description: $('#dxtdes').val(),
+            Duration: $('#txtdur').val(),
+            Client: $('#txtcli').val()
+        };
+
+        $.ajax({
+            url: 'http://localhost:8080/task/addtask',
+            type: 'POST',
+            data: JSON.stringify(employee),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                WriteResponse(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+    function WriteResponse(employees) {
+        var strResult = "<table><th>Task ID</th><th>DEscription</th><th>Time Elapsed</th><th>State</th>";
+        $.each(employees, function (index, SparkTask) {
+            strResult += "<tr><td>" + SparkTask.ID + "</td><td> " + SparkTask.Description + "</td><td>" + SparkTask.ElapsedTime + "</td><td>" + SparkTask.State + "</td></tr>";
+        });
+        strResult += "</table>";
+        $("#divResult").html(strResult);
+    }
+
 </script>
 
     <head>
@@ -37,10 +71,11 @@
         <div>
             <form method="post" name="addForm" id="task-form" action="/task/addtask" onsubmit="return validateForm()">
                 <h2>Add task</h2>
-                Description: <input type="text" class="input-big" name="task_name" value="" />
-                Duration:    <input type="text" class="input-big" name="task_duration" value="" />
-                Client:      <input type="text" class="input-big" name="task_client" value="" />
-                <input type="submit" name="send" value="Add" class="addtask-btn"/>
+                Description: <input type="text" class="input-big" name="task_name"  id="txtdesc" value="" />
+                Duration:    <input type="text" class="input-big" name="task_duration" id="txtdur" value="" />
+                Client:      <input type="text" class="input-big" name="task_client" id="txtcli" value="" />
+               @* <input type="submit" name="send" value="Add" class="addtask-btn"/>*@
+                <button onclick="AddTask();return false;">Add Task</button>
             </form>
         </div>
 
@@ -120,5 +155,7 @@
                 }
             }
         </table>
+
+         <div id="divResult"></div>
     </body>
 </html>
