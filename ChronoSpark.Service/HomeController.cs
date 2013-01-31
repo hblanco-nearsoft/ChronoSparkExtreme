@@ -25,18 +25,17 @@ namespace ChronoSpark.Service
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Index()
         {
-            var model = new { Name = "World", Email = "someone@somewhere.com" };
+            var model = SparkLogic.ReturnTaskList();
             //string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             //return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res,result);
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            Formatter.FormatResponse(response,result);
             //res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
             //res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-            return res;
+            return response;
         }
         
-        [System.Web.Http.Authorize]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Something()
         {
@@ -51,14 +50,9 @@ namespace ChronoSpark.Service
 
         }
 
-        public HttpResponseMessage GetAllTasks() 
+        public IEnumerable<SparkTask> GetTasks() 
         {
-            var tasks = SparkLogic.ReturnTaskList();
-            string result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
-            
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res, result);
-            return res;
+            return SparkLogic.ReturnTaskList();
         }
 
 

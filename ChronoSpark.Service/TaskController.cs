@@ -38,7 +38,7 @@ namespace ChronoSpark.Service
             //var res = Request.CreateResponse(HttpStatusCode.OK);
             //Formatter.FormatResponse(res, result);
             var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
+            response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
             return response;
             //return GetAllTasks();
         }
@@ -77,11 +77,9 @@ namespace ChronoSpark.Service
             var taskToSave = builder.RebuildTask(formData);
             updateCmd.ItemToWork = taskToSave;
             updateCmd.UpdateItem();
-
-            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
-            //return response;
-            return GetAllTasks();
+            var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
+            return response;
         }
 
         [System.Web.Http.HttpPost]
@@ -110,10 +108,9 @@ namespace ChronoSpark.Service
             ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
 
-            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
-            //return response;
-            return GetAllTasks();
+            var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
+            return response;
         }
 
         [System.Web.Http.HttpPost]
@@ -129,10 +126,9 @@ namespace ChronoSpark.Service
             }
             taskStateControl.PauseTask();
 
-            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
-            //return response;
-            return GetAllTasks();
+            var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
+            return response;
         }
 
         [System.Web.Http.HttpPost]
@@ -155,10 +151,9 @@ namespace ChronoSpark.Service
             ReminderControl.StartTime = DateTime.Now;
             taskProcessor.SetStartTime();
 
-            //var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            //response.Headers.Location = new Uri("localhost:8080/task/getalltasks");
-            //return response;
-            return GetAllTasks();
+            var response = Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
+            return response;
         }
     }
 }

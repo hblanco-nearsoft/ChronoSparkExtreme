@@ -1,15 +1,17 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+@*<html>
     <head>
-        <title>Index</title>
+        <title>Hello @Model.Name</title>
     </head>
     <body>
-
+        Email: <input type='text' value='@Model.Email'></input>
+    </body>
+</html>*@
 <script type="text/javascript">
 function GetTasks() {
         jQuery.support.cors = true;
         $.ajax({
-            url: 'http://localhost:8080/task/gettasks',
+            url: 'http://localhost:8080/home/gettasks',
             type: 'GET',
             dataType: 'json',            
             success: function (data) {                
@@ -19,20 +21,19 @@ function GetTasks() {
                 alert(x + '\n' + y + '\n' + z);
             }
         });        
-    }
-
+}
     
 function WriteResponse(tasks) {
     var strResult = "<table><th>ID</th><th>Name</th><th>Time Elapsed</th><th>State</th>";
-    $.each(tasks, function (index, task) {
-        strResult += "<tr><td>" + task.ID + "</td><td> " + task.Description + "</td><td>" + task.TimeElapsed + "</td><td>" + task.State + "</td></tr>";
+    $.each(tasks, function (index, SparkTask) {
+        strResult += "<tr><td>" + Sparktask.ID + "</td><td> " + SparkTask.Description + "</td><td>" + SparkTask.TimeElapsed + "</td><td>" + Sparktask.State + "</td></tr>";
     });
     strResult += "</table>";
     $("#divResult").html(strResult);
 }
 
 function ShowEmployee(task) {
-    if (task != null) {
+    if (employee != null) {
         var strResult = "<table><th>EmpID</th><th>Emp Name</th><th>Emp Department</th><th>Mobile No</th>";
         strResult += "<tr><td>" + task.ID + "</td><td> " + task.Description + "</td><td>" + task.TimeElapsed + "</td><td>" + task.State + "</td></tr>";
         strResult += "</table>";
@@ -42,7 +43,6 @@ function ShowEmployee(task) {
         $("#divResult").html("No Results To Display");
     }
 }
-
     </script>
 @{
     ViewBag.Title = "Home Page";
@@ -81,6 +81,4 @@ function ShowEmployee(task) {
     <li>
         <div id="divResult"></div>
     </li>
-</ol>             
-    </body>
-</html>
+</ol>

@@ -163,6 +163,7 @@
     <EmbeddedResource Include="Views\GetActiveTask.cshtml" />
     <EmbeddedResource Include="Views\EditTask.cshtml" />
     <None Include="Scripts\jquery-1.9.0.min.map" />
+    <EmbeddedResource Include="Views\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
