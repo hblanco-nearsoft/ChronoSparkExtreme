@@ -49,20 +49,11 @@ namespace ChronoSpark.Service
             return res;
 
         }
-
-        public IEnumerable<SparkTask> GetTasks() 
-        {
-            return SparkLogic.ReturnTaskList();
+    public IEnumerable<SparkTask> GetTasks()
+        {             
+             return SparkLogic.ReturnTaskList();   
         }
-
-
-        public SparkTask TaskByID(String id)
-        {
-            IRavenEntity entityToFetch = new SparkTask {Id = "SparkTasks/" + id};
-
-            var task = SparkLogic.fetch(entityToFetch) as SparkTask;
-
-            return task;
-        }   
+        
+          
     }
 }

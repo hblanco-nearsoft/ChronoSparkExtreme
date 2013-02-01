@@ -20,7 +20,26 @@ namespace ChronoSpark.Service
 {
     public class ReminderController : ApiController
     {
-        
+
+        public IEnumerable<Reminder> GetReminders() 
+        {
+            return SparkLogic.ReturnReminderList();
+        }
+
+        public void Post(Reminder reminderToEdit) 
+        {
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+            updateCmd.ItemToWork = reminderToEdit;
+            updateCmd.UpdateItem();
+        }
+
+        public Reminder GetReminder(Reminder theReminder) 
+        {
+            var reminderToFetch = theReminder;
+            var fetchedReminder = SparkLogic.fetch(reminderToFetch) as Reminder;
+
+            return fetchedReminder;
+        }
 
     }
 }

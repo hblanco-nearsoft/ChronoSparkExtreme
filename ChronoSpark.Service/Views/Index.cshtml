@@ -3,22 +3,23 @@
     <head>
         <title>Index</title>
     </head>
-    <body>
+  
 
-<script type="text/javascript">
-function GetTasks() {
+<script src="Scripts/jquery-1.9.0.min.js" type="text/javascript">
+    function GetAllTasks() {
         jQuery.support.cors = true;
         $.ajax({
-            url: 'http://localhost:8080/task/gettasks',
+            url: 'http://localhost:8080/home',
             type: 'GET',
             dataType: 'json',            
-            success: function (data) {                
+            success: function (data) {
+                alert("llegue aqui");
                 WriteResponse(data);
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
             }
-        });        
+        });
     }
 
     
@@ -44,38 +45,14 @@ function ShowEmployee(task) {
 }
 
     </script>
-@{
-    ViewBag.Title = "Home Page";
-}
-@section featured {
-  @*  <section class="featured">*@
+      <body>
         <div class="content-wrapper">
-     @*       <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>*@
             <div>
                 <table><tr>
-                        <td><button onclick="GetTasks();return false;">Get All Tasks</button></td>
-@*                        <td>Enter Employee Id: <input type="text" id="txtEmpid" style="width:50PX"/></td>
-                        <td><button onclick="GetEmployee();return false;">Get Employee</button></td>
-                    <td>
-                        <table>
-                            <tr><td>EmpId:</td><td><input type="text" id="txtaddEmpid" /></td></tr>
-                            <tr>  <td>Emp Name:</td><td><input type="text" id="txtaddEmpName" /></td></tr>
-                            <tr> <td>Emp Department:</td><td><input type="text" id="txtaddEmpDep" /></td></tr>
-                            <tr><td>Mobile no:</td><td><input type="text" id="txtaddEmpMob" /></td></tr>
-                        </table>
-                    </td>
-                        <td><button onclick="AddEmployee();return false;">Add Employee</button></td>
-                    <td>Delete Employee <input type="text" id="txtdelEmpId" style="width:50PX"/></td>
-                        <td><button onclick="DeleteEmployee(); return false;">Delete Employee</button></td>*@
-                       </tr></table>
-                
+                        <td><button onclick="GetAllTasks();return false;">Get All Tasks</button></td>
+                       </tr></table>                
             </div>
         </div>
-    @*</section>*@
-}
 <h3>Oputput of action done through WEB API:</h3>
 <ol class="round">
     <li>
