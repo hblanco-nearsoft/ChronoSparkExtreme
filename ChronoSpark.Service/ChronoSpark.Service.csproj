@@ -140,6 +140,8 @@
     <Compile Include="ReminderController.cs" />
     <Compile Include="ResponseFormatter.cs" />
     <Compile Include="SparkTaskBuilder.cs" />
+    <Compile Include="Static.File.Handlers\StaticFileHandler.cs" />
+    <Compile Include="Static.File.Handlers\StaticJSRouteHandler.cs" />
     <Compile Include="TaskController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,8 +149,15 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Scripts\jquery-1.9.0.intellisense.js" />
-    <Content Include="Scripts\jquery-1.9.0.js" />
-    <Content Include="Scripts\jquery-1.9.0.min.js" />
+    <Content Include="Scripts\jquery-1.9.0.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery-1.9.0.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -203,6 +212,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -17,6 +17,8 @@ using RazorEngine.Templating;
 using System.IO;
 using System.Reflection;
 using RazorEngine.Configuration;
+using ChronoSpark.Service.Static.File.Handlers;
+using System.Web.Routing;
 
 namespace ChronoSpark.Service
 {
@@ -24,27 +26,24 @@ namespace ChronoSpark.Service
     {
         private HttpSelfHostServer _server;
         private readonly HttpSelfHostConfiguration _config;
-        public const string ServiceAddress = "http://localhost:8080";
+        public const string ServiceAddress = "http://localhost:8080"; //TODO: Move this to config file
 
         public ChronoSparkService()
         {
             InitializeComponent();
 
             _config = new NtlmSelfHostConfiguration(ServiceAddress);
+
+            _config.Routes.MapHttpRoute("StaticJS", "Scripts/{controller}/{action}/{filename}", new { controller = "Home", action = "FileServer" });
             
             _config.Routes.MapHttpRoute("DefaultApi",
                 "chronospark/{controller}/{action}",
                 new {controller = "home", action = "something", id = RouteParameter.Optional });
 
             _config.Routes.MapHttpRoute(
-            "Default", "{controller}/{action}",
+            "Default", "{controller}/{action}/",
             new { controller = "Home", action = "Index" }); 
-            //_config.Routes.MapHttpRoute("Other",
-            //    "/{controller}/{action}",
-            //    new { controller = "home", action = "something", id = RouteParameter.Optional });
-
-
-
+            
             string viewPathTemplate = "ChronoSpark.Service.Views.{0}";
             TemplateServiceConfiguration templateConfig = new TemplateServiceConfiguration();
             templateConfig.Resolver = new DelegateTemplateResolver(name =>

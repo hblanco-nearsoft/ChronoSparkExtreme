@@ -13,6 +13,7 @@ using ChronoSpark.Logic;
 using RazorEngine.Templating;
 using ChronoSpark.Data;
 using System.Net.Http.Headers;
+using System.IO;
 
 namespace ChronoSpark.Service
 {
@@ -53,7 +54,19 @@ namespace ChronoSpark.Service
         {             
              return SparkLogic.ReturnTaskList();   
         }
+
+    [System.Web.Http.HttpGet]
+    public HttpResponseMessage FileServer(string filename)
+    {
+        var response = new HttpResponseMessage();
+        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", filename);
+
+        response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
+        response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
         
-          
+        return response;
+    }
+
+
     }
 }

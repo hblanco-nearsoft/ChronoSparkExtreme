@@ -5,11 +5,11 @@
     </head>
   
 
-<script src="Scripts/jquery-1.9.0.min.js" type="text/javascript">
+@*<script src="Scripts/jquery-1.9.0.min.js" type="text/javascript">
     function GetAllTasks() {
         jQuery.support.cors = true;
         $.ajax({
-            url: 'http://localhost:8080/home',
+            url: 'home/gettasks',
             type: 'GET',
             dataType: 'json',            
             success: function (data) {
@@ -44,20 +44,17 @@ function ShowEmployee(task) {
     }
 }
 
-    </script>
+    </script>*@
       <body>
         <div class="content-wrapper">
             <div>
-                <table><tr>
-                        <td><button onclick="GetAllTasks();return false;">Get All Tasks</button></td>
-                       </tr></table>                
+                <button id="getAllTasks">Get All Tasks</button>
             </div>
         </div>
-<h3>Oputput of action done through WEB API:</h3>
-<ol class="round">
-    <li>
-        <div id="divResult"></div>
-    </li>
-</ol>             
+        <h3>Output of action done through WEB API:</h3>
+        <ol id="task-list" class="round"></ol>
+        
+          <script src="Scripts/Home/FileServer/jquery-1.9.0.min.js" type="text/javascript"></script>           
+          <script src="Scripts/Home/FileServer/main.js" type="text/javascript"></script>
     </body>
 </html>
