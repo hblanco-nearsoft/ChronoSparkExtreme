@@ -1,5 +1,5 @@
 ﻿(function chronoSparkMain($) {
-    var $taskList = $('#task-list');
+    var $taskList = $('#tasks-list');
 
 
     function getAllTasks(e) {

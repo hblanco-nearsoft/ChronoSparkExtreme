@@ -1,0 +1,6 @@
+Color specs:
+
+Page, Header and Footer background 			#ddd
+Text color														#3f3f3f
+Work area background									#fff
+Task table rows alternating background		#f1f1f1 / transparent.
