@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>ChronoSpark</title>
-     <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+     <link rel="stylesheet" href="Scripts/Home/StyleServer/Style.css" type="text/css" />
   </head>
   <body>
     <div id="wrapper">
@@ -12,7 +12,9 @@
       <div id="content">
         <form method="post" id="task-form" action="/tasks/add">
           <h2>Add task</h2>
-          <input type="text" class="input-big" name="task_name" value="" />
+          Description: <input type="text" class="input-big" name="task_description" value="" />
+          Duration: <input type="text" class="input-big" name="task_duration" value="" />
+          Client: <input type="text" class="input-big" name="task_client" value="" />    
           <input type="submit" name="send" value="Add" class="add-btn"/>
         </form>
 

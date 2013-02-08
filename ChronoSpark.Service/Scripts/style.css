@@ -1,0 +1,148 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+}
+
+.cleared {
+  clear: both;
+}
+
+body,
+#header,
+#footer {
+  background-color: #ddd;
+}
+
+form {
+  margin-top: 30px;
+}
+
+form h2 {
+  font-size: 1.3em;
+  margin: 5px 0;o
+}
+
+input[type=text].input-big {
+  width: 880px;
+  height: 27px;
+  border: 1px solid #999;
+}
+
+.add-btn,
+.save-btn,
+.load-btn {
+  margin-left: 5px;
+  color: transparent;
+  float: right;
+  width: 66px;
+  height: 29px;
+  border: none;
+}
+
+.add-btn {
+  background-image: url('../images/button-add.png');
+}
+.add-btn:active {
+  background-image: url('../images/button-add-active.png');
+}
+.save-btn {
+  background-image: url('../images/button-save.png');
+}
+.save-btn:active {
+  background-image: url('../images/button-save-active.png');
+}
+.load-btn {
+  background-image: url('../images/button-load.png');
+}
+.load-btn:active {
+  background-image: url('../images/button-load-active.png');
+}
+
+#tasks-wrapper ul.actions  {
+  position: absolute;
+  height: 100%;
+  top: 4px;
+  right: 0;
+  margin-right: 10px;
+}
+#tasks-wrapper .actions li {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+#tasks-wrapper .actions li.delete-btn {
+  background-image: url('../images/icon-delete.png');
+}
+#tasks-wrapper .actions li.edit-btn {
+  background-image: url('../images/icon-edit.png');
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 13px;
+}
+
+#wrapper {
+  background-color: #fff;
+  width: 960px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+#task-form {
+  /* margin-top: 50px; */
+}
+
+#tasks-wrapper {
+  /* margin-top: 30px; */
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #999;
+}
+
+#tasks-wrapper li {
+  position: relative;
+  padding: 5px 10px;
+}
+
+#tasks-wrapper>ul>li:nth-child(odd) {
+  background-color: #ddd;
+}
+#tasks-wrapper li input[type=checkbox]:checked+label {
+  text-decoration: line-through;
+}
+#tasks-wrapper li label {
+  margin-left: 10px;
+}
+
+#header {
+  padding: 10px 20px;
+  background-image: url('../images/logo.png');
+  height: 60px;
+  background-repeat: no-repeat;
+  background-position: 98% center;
+}
+#header h1 {
+  font-size: 1.5em;
+  margin-top: 5px;
+  width: 270px;
+}
+
+/* h1.small-h { */
+/*    */
+/* } */
+
+#content {
+  min-height: 600px;
+  padding-top: 20px;
+}
+
+#footer {
+  text-align: center;
+  padding: 5px;
+}

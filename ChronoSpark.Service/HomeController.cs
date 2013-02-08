@@ -15,6 +15,7 @@ using ChronoSpark.Data;
 using System.Net.Http.Headers;
 using System.IO;
 
+
 namespace ChronoSpark.Service
 {
 
@@ -62,8 +63,38 @@ namespace ChronoSpark.Service
         var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", filename);
 
         response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
-        response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
-        
+        var parts = filename.Split('.');
+        var extension = parts.Last();
+
+        if (extension.ToLower() == "js")
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
+
+
+        return response;
+    }
+
+    [System.Web.Http.HttpGet]
+    public HttpResponseMessage StyleServer(string filename)
+    {
+        var response = new HttpResponseMessage();
+        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Styles", filename);
+
+        response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
+        var parts = filename.Split('.');
+        var extension = parts.Last();
+
+        if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg")
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+        if (extension.ToLower() == "gif")
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/gif");
+
+        if (extension.ToLower() == "png")
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+        if (extension.ToLower() == "css")
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/css");
+
         return response;
     }
 

@@ -21,5 +21,6 @@
     }
     
     /** Event Handling Setup*/
+    
     $('#getAllTasks').click(getAllTasks);
 }(jQuery))
