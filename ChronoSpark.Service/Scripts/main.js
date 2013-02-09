@@ -11,7 +11,7 @@
              for (; idx < length; idx += 1) {
                  var $item = $('<li/>');
 
-                 $item.text(data[idx].Description);
+                 $item.text(data[idx].Description + " " + data[idx].Client);
                  $taskList.append($item);
              }
 

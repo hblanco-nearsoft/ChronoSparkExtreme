@@ -43,22 +43,22 @@ input[type=text].input-big {
 }
 
 .add-btn {
-  background-image: url('button-add.png');
+  background-image: url('images/button-add.png');
 }
 .add-btn:active {
-  background-image: url('button-add-active.png');
+  background-image: url('images/button-add-active.png');
 }
 .save-btn {
-  background-image: url('button-save.png');
+  background-image: url('images/button-save.png');
 }
 .save-btn:active {
-  background-image: url('button-save-active.png');
+  background-image: url('images/button-save-active.png');
 }
 .load-btn {
-  background-image: url('button-load.png');
+  background-image: url('images/button-load.png');
 }
 .load-btn:active {
-  background-image: url('button-load-active.png');
+  background-image: url('images/button-load-active.png');
 }
 
 #tasks-wrapper ul.actions  {
@@ -76,10 +76,10 @@ input[type=text].input-big {
   display: inline-block;
 }
 #tasks-wrapper .actions li.delete-btn {
-  background-image: url('icon-delete.png');
+  background-image: url('images/icon-delete.png');
 }
 #tasks-wrapper .actions li.edit-btn {
-  background-image: url('icon-edit.png');
+  background-image: url('images/icon-edit.png');
 }
 
 body {
@@ -122,7 +122,7 @@ body {
 
 #header {
   padding: 10px 20px;
-  background-image: url('logo.png');
+  background-image: url('images/logo.png');
   height: 60px;
   background-repeat: no-repeat;
   background-position: 98% center;

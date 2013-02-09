@@ -159,19 +159,19 @@
     <Content Include="Scripts\main.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\button-add-active.png">
+    <Content Include="Styles\Images\button-add-active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\button-add.png">
+    <Content Include="Styles\Images\button-add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\icon-delete.png">
+    <Content Include="Styles\Images\icon-delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\icon-edit.png">
+    <Content Include="Styles\Images\icon-edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\logo.png">
+    <Content Include="Styles\Images\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Styles\style.css">
