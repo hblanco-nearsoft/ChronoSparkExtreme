@@ -159,19 +159,19 @@
     <Content Include="Scripts\main.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Images\button-add-active.png">
+    <Content Include="Styles\button-add-active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Images\button-add.png">
+    <Content Include="Styles\button-add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Images\icon-delete.png">
+    <Content Include="Styles\icon-delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Images\icon-edit.png">
+    <Content Include="Styles\icon-edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Styles\Images\logo.png">
+    <Content Include="Styles\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Styles\style.css">
@@ -234,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Styles\images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

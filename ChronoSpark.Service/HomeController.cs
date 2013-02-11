@@ -56,6 +56,25 @@ namespace ChronoSpark.Service
              return SparkLogic.ReturnTaskList();   
         }
 
+    
+    public void AddTask(String description, int duration, String client) 
+    {
+        var addCmd = new AddItemCmd();
+
+        var taskToAdd = new SparkTask
+        {
+            Description = description,
+            Duration = duration,
+            Client = client, 
+            StartDate = DateTime.Now
+        };
+
+        addCmd.ItemToWork = taskToAdd;
+
+        addCmd.AddItem();
+
+    }
+
     [System.Web.Http.HttpGet]
     public HttpResponseMessage FileServer(string filename)
     {
