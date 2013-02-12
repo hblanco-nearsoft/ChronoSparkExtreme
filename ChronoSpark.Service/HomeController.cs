@@ -56,23 +56,25 @@ namespace ChronoSpark.Service
              return SparkLogic.ReturnTaskList();   
         }
 
-    
-    public void AddTask(String description, int duration, String client) 
+    [System.Web.Http.HttpPost]
+    public HttpResponseMessage AddTask(SparkTask task) 
     {
         var addCmd = new AddItemCmd();
 
-        var taskToAdd = new SparkTask
-        {
-            Description = description,
-            Duration = duration,
-            Client = client, 
-            StartDate = DateTime.Now
-        };
+        //var taskToAdd = new SparkTask
+        //{
+        //    Description = description,
+        //    Duration = duration,
+        //    Client = client, 
+        //    StartDate = DateTime.Now
+        //};
+        var taskToAdd = task;
+        taskToAdd.StartDate = DateTime.Now;
 
         addCmd.ItemToWork = taskToAdd;
-
         addCmd.AddItem();
 
+        return Request.CreateResponse<SparkTask>(HttpStatusCode.OK, task);
     }
 
     [System.Web.Http.HttpGet]

@@ -12,7 +12,7 @@
              for (; idx < length; idx += 1) {
                  var $item = $('<li/>');
                  $item.text(data[idx].Description + " " + data[idx].Client);
-                 $item.append('<ul class="actions"><button class="edit-btn"><a href="#"></a></button><button class="delete-btn"><a href="#"></a></button></ul>');
+                 $item.append('<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>');
                  $taskList.append($item);                 
              }
 
@@ -21,21 +21,36 @@
          });
     }
 
-    function addTask()
+    function addTask(e)
     {
-        var formData = $(this).serialize();
+          var data = {
+            Description: $('#description').val(),
+            Duration: $('#duration').val(),
+            Client: $('#client').val()
+        };
 
-        $.post(
-            '<%= Url.Action("addTask") %>',
-            formData,
-            processResult       
-        );
-        event.preventDefault();
+        //$.post('home/addtask', JSON.stringify(data))
+        //.done(function (data) {
+        //    console.log(data);
+        //})
+        //.fail();
+
+        $.ajax({
+            url: 'http://localhost:8080/home/addtask',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        }).done(function (datat)
+        {
+            console.log(data);
+        }
+        )
+        .fail(function (err) { console.erro(err); });     
+    
     }
 
-
     /** Event Handling Setup*/
-    $('#task-form').submit(addTask);
+    $('#addtask').click(addTask);
     $(getAllTasks);
     $('#getAllTasks').click(getAllTasks);
 }(jQuery))
