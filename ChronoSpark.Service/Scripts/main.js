@@ -11,11 +11,10 @@
 
              for (; idx < length; idx += 1) {
                  var $item = $('<li/>');
-                 $item.text(data[idx].Description + " " + data[idx].Client);
+                 $item.text(data[idx].Description);
                  $item.append('<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>');
                  $taskList.append($item);                 
              }
-
          }).fail(function (err) {
              console.error(err);
          });
@@ -28,7 +27,6 @@
             Duration: $('#duration').val(),
             Client: $('#client').val()
         };
-
         //$.post('home/addtask', JSON.stringify(data))
         //.done(function (data) {
         //    console.log(data);
@@ -45,8 +43,7 @@
             console.log(data);
         }
         )
-        .fail(function (err) { console.erro(err); });     
-    
+        .fail(function (err) { console.erro(err); });    
     }
 
     /** Event Handling Setup*/

@@ -6,63 +6,41 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using ChronoSpark.Logic;
+using Omu.ValueInjecter;
+
 
 namespace ChronoSpark.Service
 {
     public class SparkTaskBuilder
     {
-        public SparkTask BuildTask(FormDataCollection formData) 
-        {
-            var drescription = formData.ElementAt(0);
-            var duration = formData.ElementAt(1);
-            int durationValue;
-
-            if (!int.TryParse(duration.Value, out durationValue)) 
+        public SparkTask BuildTask(SparkTask sparktask) 
+        {          
+            SparkTask builtTask = new SparkTask
             {
-                durationValue = 0;
-            }
-
-            var client = formData.ElementAt(2);
-
-            SparkTask buildedTask = new SparkTask
-            {
-                Description = drescription.Value,
-                Duration = durationValue,
-                Client = client.Value,
+                Description = sparktask.Description,
+                Duration = sparktask.Duration,
+                Client = sparktask.Client,
                 StartDate = DateTime.Now,
                 State = TaskState.Paused,
             };
 
-            return buildedTask;
+            return builtTask;
         }
 
-        public SparkTask RebuildTask(FormDataCollection formData) 
-        {
-            SparkTask taskToRetrieve = new SparkTask { Id = formData.ElementAt(3).Value };
-            SparkTask retrievedTask = SparkLogic.fetch(taskToRetrieve) as SparkTask;
-            String taskDescription = formData.ElementAt(0).Value;
-            String taskDuration = formData.ElementAt(1).Value;
-            int durationValue;                  
-
-            if (!int.TryParse(taskDuration, out durationValue)) 
-            {
-                durationValue = 0;
-            }
-
-            String taskClient = formData.ElementAt(2).Value;
-
-            retrievedTask.Description = taskDescription;
-            retrievedTask.Duration = durationValue;
-            retrievedTask.Client = taskClient;
+        public SparkTask RebuildTask(SparkTask receivedTask) 
+        {      
+            SparkTask retrievedTask = SparkLogic.fetch(receivedTask) as SparkTask;
+               
+            retrievedTask.Description = receivedTask.Description;
+            retrievedTask.Duration = receivedTask.Duration;
+            retrievedTask.Client = receivedTask.Client;
             
             return retrievedTask;
         }
 
-        public SparkTask ReturnToActivate(FormDataCollection formData)
+        public SparkTask ReturnToActivate(SparkTask taskToRetrieve)
         {
-            SparkTask taskToRetrieve = new SparkTask { Id = formData.ElementAt(0).Value };
             SparkTask retrievedTask = SparkLogic.fetch(taskToRetrieve) as SparkTask;
-            
             retrievedTask.State = TaskState.InProgress;
 
             return retrievedTask;

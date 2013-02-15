@@ -51,6 +51,7 @@ namespace ChronoSpark.Service
             return res;
 
         }
+
     public IEnumerable<SparkTask> GetTasks()
         {             
              return SparkLogic.ReturnTaskList();   
@@ -76,6 +77,90 @@ namespace ChronoSpark.Service
 
         return Request.CreateResponse<SparkTask>(HttpStatusCode.OK, task);
     }
+
+    [System.Web.Http.HttpPost]
+    public HttpResponseMessage SaveChanges(SparkTask formData)
+    {
+        SparkTaskBuilder builder = new SparkTaskBuilder();
+        UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+        var taskToSave = builder.RebuildTask(formData);
+        updateCmd.ItemToWork = taskToSave;
+        updateCmd.UpdateItem();
+        return Request.CreateResponse(HttpStatusCode.OK);
+    }
+
+    [System.Web.Http.HttpPost]
+    public HttpResponseMessage ActivateTask(SparkTask receivedTask)
+    {
+        SparkTaskBuilder builder = new SparkTaskBuilder();
+        UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+        var taskToActivate = builder.ReturnToActivate(receivedTask);
+
+        TaskStateControl taskStateControl = new TaskStateControl();
+        ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+        if (taskToActivate == null)
+        {
+        }
+
+        var result = taskStateControl.SetActiveTask(taskToActivate);
+
+        if (taskToActivate != null && result == false)
+        {
+            taskStateControl.PauseTask();
+            taskStateControl.SetActiveTask(taskToActivate);
+        }
+
+        ReminderControl.StartTime = DateTime.Now;
+        taskProcessor.SetStartTime();
+
+        return Request.CreateResponse(HttpStatusCode.OK);
+    }
+
+    [System.Web.Http.HttpPost]
+    public HttpResponseMessage PauseActiveTask()
+    {
+        TaskStateControl taskStateControl = new TaskStateControl();
+        SparkLogic sparkLogic = new SparkLogic();
+        var activeTask = sparkLogic.ReturnActiveTask();
+
+        if (activeTask == null)
+        {
+
+        }
+        taskStateControl.PauseTask();
+
+        return Request.CreateResponse(HttpStatusCode.OK);
+    }
+
+    [System.Web.Http.HttpPost]
+    public HttpResponseMessage FinishTask(SparkTask formData)
+    {
+        SparkTaskBuilder builder = new SparkTaskBuilder();
+        UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+        var taskToFinish = builder.ReturnToActivate(formData);
+
+        TaskStateControl taskStateControl = new TaskStateControl();
+        ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+        if (taskToFinish == null)
+        {
+        }
+
+        taskStateControl.FinishTask(taskToFinish);
+
+        ReminderControl.StartTime = DateTime.Now;
+        taskProcessor.SetStartTime();
+
+        return Request.CreateResponse(HttpStatusCode.OK);
+    }
+
+
+
+
 
     [System.Web.Http.HttpGet]
     public HttpResponseMessage FileServer(string filename)

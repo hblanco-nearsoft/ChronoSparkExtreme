@@ -23,7 +23,7 @@ namespace ChronoSpark.Service
         ResponseFormatter Formatter = new ResponseFormatter();
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTask(FormDataCollection formData)
+        public HttpResponseMessage AddTask(SparkTask formData)
         {
             SparkTaskBuilder builder = new SparkTaskBuilder();
             AddItemCmd addCmd = new AddItemCmd();
@@ -32,15 +32,10 @@ namespace ChronoSpark.Service
             var taskToSave = builder.BuildTask(formData);
             addCmd.ItemToWork = taskToSave;
             addCmd.AddItem();
-            
-            //var tasks = SparkLogic.ReturnTaskList();
-            //String result = Razor.Resolve("GetAllTasks.cshtml", tasks).Run(new ExecuteContext());
-            //var res = Request.CreateResponse(HttpStatusCode.OK);
-            //Formatter.FormatResponse(res, result);
+  
             var response = Request.CreateResponse(HttpStatusCode.Redirect);
             response.Headers.Location = new Uri("http://localhost:8080/task/getalltasks");
             return response;
-            //return GetAllTasks();
         }
          
         [System.Web.Http.HttpGet]
@@ -69,7 +64,7 @@ namespace ChronoSpark.Service
         }
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage SaveChanges(FormDataCollection formData)
+        public HttpResponseMessage SaveChanges(SparkTask formData)
         {
             SparkTaskBuilder builder = new SparkTaskBuilder();
             UpdateItemCmd updateCmd = new UpdateItemCmd();
@@ -83,7 +78,7 @@ namespace ChronoSpark.Service
         }
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage ActivateTask(FormDataCollection formData) 
+        public HttpResponseMessage ActivateTask(SparkTask formData) 
         {
             SparkTaskBuilder builder = new SparkTaskBuilder();
             UpdateItemCmd updateCmd = new UpdateItemCmd();
@@ -114,7 +109,7 @@ namespace ChronoSpark.Service
         }
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage PauseActiveTask(FormDataCollection formData)
+        public HttpResponseMessage PauseActiveTask()
         {
            TaskStateControl taskStateControl = new TaskStateControl();
             SparkLogic sparkLogic = new SparkLogic();
@@ -132,7 +127,7 @@ namespace ChronoSpark.Service
         }
 
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage FinishTask(FormDataCollection formData)
+        public HttpResponseMessage FinishTask(SparkTask formData)
         {
             SparkTaskBuilder builder = new SparkTaskBuilder();
             UpdateItemCmd updateCmd = new UpdateItemCmd();
