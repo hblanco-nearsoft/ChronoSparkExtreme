@@ -7,12 +7,13 @@
         $.getJSON('home/gettasks')
          .done(function (data) {
              var idx = 0,
-                 length = data.length;
-
+                 length = data.length,
+                 form ='<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>';
              for (; idx < length; idx += 1) {
                  var $item = $('<li/>');
                  $item.text(data[idx].Description);
-                 $item.append('<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>');
+                 // $item.append('<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>');
+                 $item.append(form);
                  $taskList.append($item);                 
              }
          }).fail(function (err) {
@@ -45,6 +46,29 @@
         )
         .fail(function (err) { console.erro(err); });    
     }
+
+    $( "#dialog" ).dialog({
+        
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Create an account": function() {
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () {       
+        }
+    });
+    
+    $( ".edit-btn" )
+      .button()
+      .click(function(e) {
+          $( "#dialog" ).dialog( "open" );
+      });
+
 
     /** Event Handling Setup*/
     $('#addtask').click(addTask);
