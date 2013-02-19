@@ -8,7 +8,7 @@
          .done(function (data) {
              var idx = 0,
                  length = data.length,
-                 form ='<ul class="actions"><button class="edit-btn"></button><button class="delete-btn"></button></ul>';
+                 form = '<ul class="actions"><input type="button" class="edit-btn"></input><input type="button" class="delete-btn"></input></ul>';
              for (; idx < length; idx += 1) {
                  var $item = $('<li/>');
                  $item.text(data[idx].Description);
@@ -47,31 +47,50 @@
         .fail(function (err) { console.erro(err); });    
     }
 
-    $( "#dialog" ).dialog({
-        
-        height: 300,
-        width: 350,
-        modal: true,
-        buttons: {
-            "Create an account": function() {
-            },
-            Cancel: function () {
-                $(this).dialog("close");
-            }
-        },
-        close: function () {       
-        }
-    });
+    function getbox() {
+        Shadowbox.open({
+            content: 'task/getbyid',
+            player: "html",
+            title: "Welcome",
+            height: 350,
+            width: 350
+        });
+    }
+    //$( "#dialog" ).dialog({
+    //    autoOpen: false,
+    //    height: 300,
+    //    width: 350,
+    //    modal: true,
+    //    buttons: {
+    //        "Accept": function() {
+    //        },
+    //        Cancel: function () {
+    //            $(this).dialog("close");
+    //        }
+    //    },
+    //    close: function () {       
+    //    }
+    //});
     
-    $( ".edit-btn" )
-      .button()
-      .click(function(e) {
-          $( "#dialog" ).dialog( "open" );
-      });
+    //$('.edit-btn').click(function (e)
+    //{
+    //      $( "#dialog" ).dialog( "open" );
+    //});
 
+    window.onload = function()
+    {
+        Shadowbox.open({
+            content: ,
+            player: "html",
+            title: "Welcome",
+            height: 350,
+            width: 350
+        });
+    };
+ 
 
     /** Event Handling Setup*/
     $('#addtask').click(addTask);
     $(getAllTasks);
-    $('#getAllTasks').click(getAllTasks);
+    //$('#getAllTasks').click(getAllTasks);
 }(jQuery))

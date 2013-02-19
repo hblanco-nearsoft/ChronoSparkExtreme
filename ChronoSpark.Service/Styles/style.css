@@ -68,17 +68,17 @@ input[type=text].input-big {
   right: 0;
   margin-right: 10px;
 }
-#tasks-wrapper .actions button {
+#tasks-wrapper .actions input {
   width: 16px;
   height: 16px;
   margin: 0;
   padding: 0;
   display: inline-block;
 }
-#tasks-wrapper .actions button.delete-btn {
+#tasks-wrapper .actions input.delete-btn {
   background-image: url('icon-delete.png');
 }
-#tasks-wrapper .actions button.edit-btn {
+#tasks-wrapper .actions input.edit-btn {
   background-image: url('icon-edit.png');
 }
 

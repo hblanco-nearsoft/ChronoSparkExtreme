@@ -79,12 +79,12 @@ namespace ChronoSpark.Service
     }
 
     [System.Web.Http.HttpPost]
-    public HttpResponseMessage SaveChanges(SparkTask formData)
+    public HttpResponseMessage SaveChanges(SparkTask receivedTask)
     {
         SparkTaskBuilder builder = new SparkTaskBuilder();
         UpdateItemCmd updateCmd = new UpdateItemCmd();
 
-        var taskToSave = builder.RebuildTask(formData);
+        var taskToSave = builder.RebuildTask(receivedTask);
         updateCmd.ItemToWork = taskToSave;
         updateCmd.UpdateItem();
         return Request.CreateResponse(HttpStatusCode.OK);
