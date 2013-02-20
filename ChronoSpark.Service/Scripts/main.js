@@ -77,20 +77,27 @@
     //      $( "#dialog" ).dialog( "open" );
     //});
 
-    window.onload = function()
-    {
-        Shadowbox.open({
-            content: ,
-            player: "html",
-            title: "Welcome",
-            height: 350,
-            width: 350
-        });
-    };
+    //window.onload = function()
+    //{
+    //    Shadowbox.open({
+    //        content: "welcome",
+    //        player: "html",
+    //        title: "Welcome",
+    //        height: 350,
+    //        width: 350
+    //    });
+    //};
  
 
     /** Event Handling Setup*/
+    $descInput = $('<div><label/><input/></div>');
+    $('label', $descInput).text("Description: ");
+
+    //$('#tasks-list > li > ul > input.edit-btn').on('click', function (e) { console.log($(this).parent().parent().text()); console.log('In Action Button'); });
+    $taskList.on('click', 'li > ul > input.edit-btn', function (e) {$('input', $descInput).val($(this).parent().parent().text()); $.facebox($descInput); });
     $('#addtask').click(addTask);
     $(getAllTasks);
     //$('#getAllTasks').click(getAllTasks);
+    
+
 }(jQuery))
