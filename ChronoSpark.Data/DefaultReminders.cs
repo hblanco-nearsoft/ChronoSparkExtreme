@@ -32,23 +32,23 @@ namespace ChronoSpark.Data
                 State = TaskState.Paused,
                 TimeElapsed = new TimeSpan(36, 0, 0)
             };
-            
+
 
             Reminder thisReminder = new Reminder
             {
                 Description = "test reminder",
                 Interval = 1,
                 Type = ReminderType.NoActiveTask,
-                Source= ReminderSource.System
+                Source = ReminderSource.System
             };
-           
+
 
             Reminder thisReminder2 = new Reminder
             {
                 Description = "reminder 2",
                 Interval = 1,
                 Type = ReminderType.DefaultHourly,
-                Source= ReminderSource.System
+                Source = ReminderSource.System
             };
             
 

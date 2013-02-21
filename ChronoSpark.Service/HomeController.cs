@@ -37,21 +37,7 @@ namespace ChronoSpark.Service
             //res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             return response;
         }
-        
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage Something()
-        {
-            var userName = User.Identity;
-
-
-            String result = Razor.Resolve("Something.cshtml", userName).Run(new ExecuteContext());
-            var res = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(res, result);
-
-            return res;
-
-        }
-
+      
     public IEnumerable<SparkTask> GetTasks()
         {             
              return SparkLogic.ReturnTaskList();   
@@ -62,13 +48,6 @@ namespace ChronoSpark.Service
     {
         var addCmd = new AddItemCmd();
 
-        //var taskToAdd = new SparkTask
-        //{
-        //    Description = description,
-        //    Duration = duration,
-        //    Client = client, 
-        //    StartDate = DateTime.Now
-        //};
         var taskToAdd = task;
         taskToAdd.StartDate = DateTime.Now;
 
