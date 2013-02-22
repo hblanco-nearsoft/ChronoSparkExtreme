@@ -30,10 +30,9 @@ namespace ChronoSpark.Service
         public SparkTask RebuildTask(SparkTask receivedTask) 
         {      
             SparkTask retrievedTask = SparkLogic.fetch(receivedTask) as SparkTask;
-               
             retrievedTask.Description = receivedTask.Description;
-            retrievedTask.Duration = receivedTask.Duration;
-            retrievedTask.Client = receivedTask.Client;
+            //retrievedTask.Duration = receivedTask.Duration;
+            //retrievedTask.Client = receivedTask.Client;
             
             return retrievedTask;
         }
