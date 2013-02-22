@@ -82,6 +82,7 @@ namespace ChronoSpark.Service
 
         if (taskToActivate == null)
         {
+            
         }
 
         var result = taskStateControl.SetActiveTask(taskToActivate);

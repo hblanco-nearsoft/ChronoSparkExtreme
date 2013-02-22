@@ -1,25 +1,38 @@
 ﻿(function chronoSparkMain($) {
     var $taskList = $('#tasks-list');
-
-
+    
     function getAllTasks(e)
     {
         $.getJSON('home/gettasks')
          .done(function (data) {
              var idx = 0,
                  length = data.length,
-                 $form = '<ul class="actions"><input type="button" class="edit-btn"></input><input type="button" class="delete-btn"></input></ul>';
-                  
-             $taskList.text('');
-             for (; idx < length; idx += 1) {
-                 var $item = $('<li/>'),
-                     $idHolder = $('<input type="hidden" class="idHolder"/>');
-                 $item.text(data[idx].Description);
-                 $idHolder.val(data[idx].Id);
-                 $item.append($idHolder);
-                 $item.append($form);
-                 $taskList.append($item);                 
-             }
+                 TaskState = {
+                     Paused: 0,
+                     InProgress: 1,
+                     Finished: 2,
+                     Reported: 3,
+                 };
+                //$buttons = '<ul class="actions"><input type="button" class="edit-btn"></input><input type="button" class="delete-btn"></input></ul>'
+               
+                
+            $taskList.text('');
+            for (; idx < length; idx += 1) {
+                var $item = $('<li/>'),
+                    $idHolder = $('<input type="hidden" class="idHolder"/>'),
+                    $buttons = $('<ul class="actions"><input type="button" class="edit-btn"></input></ul>'),
+                    $playButton = $('<input type="button" class="play-btn"></input>'),
+                    $pauseButton = $('<input type="button" class="pause-btn"></input>');
+
+                if (data[idx].State == TaskState.InProgress) { $buttons.append($pauseButton); }
+                if (data[idx].State == TaskState.Paused) { $buttons.append($playButton); }
+
+                $item.text(data[idx].Description);
+                $idHolder.val(data[idx].Id);
+                $item.append($idHolder);
+                $item.append($buttons);
+                $taskList.append($item);                 
+            }
          }).fail(function (err) {
              console.error(err);
          });
@@ -47,8 +60,7 @@
         {
             getAllTasks();
             console.log(data);
-        }
-        )
+        })
         .fail(function (err) { console.error(err); });    
     }
 
@@ -74,11 +86,32 @@
     function activateTask(e)
     {
         var data = {
+            Id: e
         };
+        $.ajax({
+            url: 'http://localhost:8080/home/activatetask',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        }).done(function (datat) {
+            console.log(data);
+            getAllTasks();
+        })
+       .fail(function (err) { console.error(err); });
 
         console.log(data.Id);
     }
 
+    function pauseTask()
+    {
+        $.post('home/pauseActiveTask')
+        .done(function (e)
+        {
+            getAllTasks();
+            console.log('paused');
+        })
+        .fail(function (err) { console.error(err); });   
+    }
 
 
     $editInput = $('<form><input type="hidden" id="IdInput"/><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
@@ -90,16 +123,20 @@
     /** Event Handling Setup*/
 
     //$('#tasks-list > li > ul > input.edit-btn').on('click', function (e) { console.log($(this).parent().parent().text()); console.log('In Action Button'); });
-    $taskList.on('click', 'li > ul > input.delete-btn', function (e)
+    $taskList.on('click', 'li > ul > input.play-btn', function (e)
     {
-        activateTask(e);
+        activateTask($(this).parent().parent().children(".idHolder").val());
     })
+
+    $taskList.on('click', 'li > ul > input.pause-btn', function (e) {
+        pauseTask();
+    })
+
     $taskList.on('click', 'li > ul > input.edit-btn', function (e)
     {
         $('#Description', $editInput).val($(this).parent().parent().text());
         $('#IdInput', $editInput).val($(this).parent().parent().children(".idHolder").val());
-
-
+        
         $.facebox($editInput);
         $editInput.on('click', '#save', function (e) {
             saveChanges(e);
@@ -110,8 +147,7 @@
             $(document).trigger('close.facebox');
         });
     });
-
-   
+       
     $('#addtask').click(addTask);
     $(getAllTasks);
     //$('#getAllTasks').click(getAllTasks);
