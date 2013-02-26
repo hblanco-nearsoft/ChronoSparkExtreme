@@ -32,7 +32,7 @@ namespace ChronoSpark.Service
             SparkTask retrievedTask = SparkLogic.fetch(receivedTask) as SparkTask;
             retrievedTask.Description = receivedTask.Description;
             //retrievedTask.Duration = receivedTask.Duration;
-            //retrievedTask.Client = receivedTask.Client;
+            retrievedTask.Client = receivedTask.Client;
             
             return retrievedTask;
         }

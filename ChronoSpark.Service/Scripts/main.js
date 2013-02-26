@@ -18,19 +18,26 @@
                 
             $taskList.text('');
             for (; idx < length; idx += 1) {
-                var $item = $('<li/>'),
-                    $idHolder = $('<input type="hidden" class="idHolder"/>'),
-                    $buttons = $('<ul class="actions"><input type="button" class="edit-btn"></input></ul>'),
-                    $playButton = $('<input type="button" class="play-btn"></input>'),
-                    $pauseButton = $('<input type="button" class="pause-btn"></input>');
+                var $item = $('<li id = "' + data[idx].Id + '"/>'),
+                    $content = $('<ul class="actions"></ul>'),
+                    $playButton = $('<input type="button" class="play-btn"/>'),
+                    $pauseButton = $('<input type="button" class="pause-btn"/>'),
+                    $displayDesc = $('<li id="desc"/>'),
+                    $displayClient = $('<li id="clie"/>'),
+                    $displayTime = $('<li id="elapsed"/>');
+                
+                $displayDesc.text(data[idx].Description);
+                $displayClient.text(data[idx].Client);                
+                $displayTime.text(data[idx].TimeElapsed);
 
-                if (data[idx].State == TaskState.InProgress) { $buttons.append($pauseButton); }
-                if (data[idx].State == TaskState.Paused) { $buttons.append($playButton); }
+                $content.append($displayDesc, $displayClient, $displayTime);
 
-                $item.text(data[idx].Description);
-                $idHolder.val(data[idx].Id);
-                $item.append($idHolder);
-                $item.append($buttons);
+                $content.append('<input type="button" class="edit-btn">');
+                if (data[idx].State == TaskState.InProgress) { $content.append($pauseButton); }
+                if (data[idx].State == TaskState.Paused) { $content.append($playButton); }
+                
+                //$item.text(data[idx].Description);
+                $item.append($content);
                 $taskList.append($item);                 
             }
          }).fail(function (err) {
@@ -66,10 +73,10 @@
 
     function saveChanges(e) {
         var data = {
-            Id: $('#IdInput').val(),
-            Description: $('#Description').val()
+            Id: $('#save').parent().attr('id'),
+            Description: $('#Description').val(),
             //Duration: $('#duration').val(),
-            //Client: $('#client').val()
+            Client: $('#Client').val()
         };
         
         $.ajax({
@@ -114,7 +121,7 @@
     }
 
 
-    $editInput = $('<form><input type="hidden" id="IdInput"/><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
+    $editInput = $('<form class="editForm" ><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
     $('#descLabel', $editInput).text("Description: ");
     $('#durLabel', $editInput).text("Duration: ");
     $('#clientLabel', $editInput).text("Client: ");
@@ -125,7 +132,7 @@
     //$('#tasks-list > li > ul > input.edit-btn').on('click', function (e) { console.log($(this).parent().parent().text()); console.log('In Action Button'); });
     $taskList.on('click', 'li > ul > input.play-btn', function (e)
     {
-        activateTask($(this).parent().parent().children(".idHolder").val());
+        activateTask($(this).parent().parent().attr('id'));
     })
 
     $taskList.on('click', 'li > ul > input.pause-btn', function (e) {
@@ -134,10 +141,10 @@
 
     $taskList.on('click', 'li > ul > input.edit-btn', function (e)
     {
-        $('#Description', $editInput).val($(this).parent().parent().text());
-        $('#IdInput', $editInput).val($(this).parent().parent().children(".idHolder").val());
-        
+        $('#Description', $editInput).val($(this).parent().children('#desc').text());
+        $('#Client', $editInput).val($(this).parent().children('#clie').text());
         $.facebox($editInput);
+        $('.editForm').attr('id', $(this).parent().parent().attr('id'));
         $editInput.on('click', '#save', function (e) {
             saveChanges(e);
             $(document).trigger('close.facebox');

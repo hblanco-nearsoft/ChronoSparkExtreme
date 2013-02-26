@@ -14,7 +14,7 @@ namespace ChronoSpark.Clients.Cli
             foreach (var sparkTask in receivedList)
             {
                 var parts = sparkTask.Id.Split('/');
-                var idNumber = parts[1];
+                var idNumber = parts.Last();
                 var hours = sparkTask.TimeElapsed.TotalHours;
                 var hoursInteger = (int)hours;
                 var hoursToPrint = hoursInteger.ToString();

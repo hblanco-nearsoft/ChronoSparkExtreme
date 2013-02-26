@@ -62,7 +62,7 @@ input[type=text].input-big {
 }
 
 #tasks-wrapper ul.actions  {
-  position: absolute;
+  position: relative;
   height: 100%;
   top: 4px;
   right: 0;
@@ -75,6 +75,11 @@ input[type=text].input-big {
   padding: 0;
   display: inline-block;
 }
+
+#tasks-wrapper .actions li {
+  display: inline-block;
+}
+
 #tasks-wrapper .actions input.delete-btn {
   background-image: url('icon-delete.png');
 }
