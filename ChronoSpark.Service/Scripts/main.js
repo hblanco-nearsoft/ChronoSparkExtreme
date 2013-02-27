@@ -24,13 +24,15 @@
                     $pauseButton = $('<input type="button" class="pause-btn"/>'),
                     $displayDesc = $('<li id="desc"/>'),
                     $displayClient = $('<li id="clie"/>'),
-                    $displayTime = $('<li id="elapsed"/>');
+                    $displayTime = $('<li id="elapsed"/>'),
+                    $displayDur = $('<li id="dura"/>');
                 
                 $displayDesc.text(data[idx].Description);
                 $displayClient.text(data[idx].Client);                
                 $displayTime.text(data[idx].TimeElapsed);
+                $displayDur.text(data[idx].Duration);
 
-                $content.append($displayDesc, $displayClient, $displayTime);
+                $content.append($displayDesc, $displayDur ,$displayClient, $displayTime);
 
                 $content.append('<input type="button" class="edit-btn">');
                 if (data[idx].State == TaskState.InProgress) { $content.append($pauseButton); }
@@ -142,6 +144,7 @@
     $taskList.on('click', 'li > ul > input.edit-btn', function (e)
     {
         $('#Description', $editInput).val($(this).parent().children('#desc').text());
+        $('#Duration', $editInput).val($(this).parent().children('#dura').text());
         $('#Client', $editInput).val($(this).parent().children('#clie').text());
         $.facebox($editInput);
         $('.editForm').attr('id', $(this).parent().parent().attr('id'));
