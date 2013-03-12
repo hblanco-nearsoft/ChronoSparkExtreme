@@ -27,14 +27,23 @@ namespace ChronoSpark.Service
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Index()
         {
-            var model = SparkLogic.ReturnTaskList();
-            //string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
-            //return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+            var model = SparkLogic.ReturnTaskList();    
+
+            //foreach(SparkTask task in model){
+            //    var hours = task.TimeElapsed.TotalHours;
+            //    var hoursInteger = (int)hours;
+            //    var hoursToPrint = hoursInteger.ToString();
+            //    var minutes = task.TimeElapsed.Minutes.ToString();
+            //    var time = hoursToPrint +":"+ minutes;
+            //    TimeSpan span;
+            //    //task.TimeElapsed = TimeSpan.Parse(time);
+            //    if (TimeSpan.TryParse(time, out span)) { task.TimeElapsed = span; }      
+            //}
+
+
             string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             var response = Request.CreateResponse(HttpStatusCode.OK);
-            Formatter.FormatResponse(response,result);
-            //res.Content = new StringContent(result, System.Text.Encoding.UTF8, "text/html");
-            //res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            Formatter.FormatResponse(response,result);         
             return response;
         }
       
