@@ -25,11 +25,36 @@
                     $displayDesc = $('<li id="desc"/>'),
                     $displayClient = $('<li id="clie"/>'),
                     $displayTime = $('<li id="elapsed"/>'),
-                    $displayDur = $('<li id="dura"/>');
+                    $displayDur = $('<li id="dura"/>'),
+                    formated,
+                    daysToHours,
+                    timeParts,
+                    toPrint;
                 
                 $displayDesc.text(data[idx].Description);
-                $displayClient.text(data[idx].Client);                
-                $displayTime.text(data[idx].TimeElapsed);
+                $displayClient.text(data[idx].Client);
+
+                //formated = moment(data[idx].TimeElapsed).format('HH:mm');
+
+                formated = data[idx].TimeElapsed.split('.');
+
+                if (formated.length > 1) {
+                    if (formated[0].length > 2) { $displayTime.text(formated[0]); }
+                    else {
+                        daysToHours = formated[0] * 24;
+                        timeParts = formated[1].split(':');
+
+                        timeParts[0] = parseInt(daysToHours,10) + parseInt( timeParts[0], 10);
+                        toPrint = timeParts[0] + ':' + timeParts[1] + ':' + timeParts[2];
+
+                        $displayTime.text(toPrint);
+                    }
+                }
+                if (formated.length == 1) {
+                    $displayTime.text(formated[0]);
+                }
+
+
                 $displayDur.text(data[idx].Duration);
 
                 $content.append($displayDesc, $displayDur ,$displayClient, $displayTime);
