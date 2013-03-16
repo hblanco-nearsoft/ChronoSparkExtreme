@@ -14,7 +14,8 @@ using RazorEngine.Templating;
 using ChronoSpark.Data;
 using System.Net.Http.Headers;
 using System.IO;
-
+using ChronoSpark.Service.Models;
+using Omu.ValueInjecter;
 
 namespace ChronoSpark.Service
 {
@@ -27,29 +28,33 @@ namespace ChronoSpark.Service
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Index()
         {
-            var model = SparkLogic.ReturnTaskList();    
-
-            //foreach(SparkTask task in model){
-            //    var hours = task.TimeElapsed.TotalHours;
-            //    var hoursInteger = (int)hours;
-            //    var hoursToPrint = hoursInteger.ToString();
-            //    var minutes = task.TimeElapsed.Minutes.ToString();
-            //    var time = hoursToPrint +":"+ minutes;
-            //    TimeSpan span;
-            //    //task.TimeElapsed = TimeSpan.Parse(time);
-            //    if (TimeSpan.TryParse(time, out span)) { task.TimeElapsed = span; }      
-            //}
-
-
+            var model = SparkLogic.ReturnTaskList();
             string result = Razor.Resolve("Index.cshtml", model).Run(new ExecuteContext());
             var response = Request.CreateResponse(HttpStatusCode.OK);
             Formatter.FormatResponse(response,result);         
             return response;
         }
       
-    public IEnumerable<SparkTask> GetTasks()
+    public IEnumerable<TaskModel> GetTasks()
         {             
-             return SparkLogic.ReturnTaskList();   
+             var taskList = SparkLogic.ReturnTaskList();
+             List<TaskModel> model = new List<TaskModel>();
+
+             foreach (SparkTask task in taskList)
+             {
+                 var hours = task.TimeElapsed.TotalHours;
+                 var roundedHours = Math.Floor(hours);
+                 var hoursToPrint = roundedHours.ToString();
+                 var minutes = task.TimeElapsed.Minutes.ToString();
+                 var time = hoursToPrint + ":" + minutes;
+                 var newTask = new TaskModel();
+
+                 newTask.InjectFrom(task);
+                 newTask.TimeInHours = time;
+                 model.Add(newTask);
+                 //task.TimeElapsed = TimeSpan.Parse(time);
+             }
+             return model;
         }
 
     [System.Web.Http.HttpPost]

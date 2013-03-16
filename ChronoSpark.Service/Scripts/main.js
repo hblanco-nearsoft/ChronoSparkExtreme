@@ -13,53 +13,27 @@
                      Finished: 2,
                      Reported: 3,
                  };
-                //$buttons = '<ul class="actions"><input type="button" class="edit-btn"></input><input type="button" class="delete-btn"></input></ul>'
-               
-                
+             console.log(data);
             $taskList.text('');
             for (; idx < length; idx += 1) {
-                var $item = $('<li id = "' + data[idx].Id + '"/>'),
+                var $task = data[idx],
+                    $item = $('<li id = "' + data[idx].Id + '"/>'),
                     $content = $('<ul class="actions"></ul>'),
                     $playButton = $('<input type="button" class="play-btn"/>'),
                     $pauseButton = $('<input type="button" class="pause-btn"/>'),
                     $displayDesc = $('<li id="desc"/>'),
                     $displayClient = $('<li id="clie"/>'),
                     $displayTime = $('<li id="elapsed"/>'),
-                    $displayDur = $('<li id="dura"/>'),
-                    formated,
-                    daysToHours,
-                    timeParts,
-                    toPrint;
-                
-                $displayDesc.text(data[idx].Description);
-                $displayClient.text(data[idx].Client);
+                    $displayDur = $('<li id="dura"/>');
 
-                //formated = moment(data[idx].TimeElapsed).format('HH:mm');
-
-                formated = data[idx].TimeElapsed.split('.');
-
-                if (formated.length > 1) {
-                    if (formated[0].length > 2) { $displayTime.text(formated[0]); }
-                    else {
-                        daysToHours = formated[0] * 24;
-                        timeParts = formated[1].split(':');
-
-                        timeParts[0] = parseInt(daysToHours,10) + parseInt( timeParts[0], 10);
-                        toPrint = timeParts[0] + ':' + timeParts[1] + ':' + timeParts[2];
-
-                        $displayTime.text(toPrint);
-                    }
-                }
-                if (formated.length == 1) {
-                    $displayTime.text(formated[0]);
-                }
-
-
-                $displayDur.text(data[idx].Duration);
+                $displayDesc.text($task.Description);
+                $displayClient.text($task.Client);
+                $displayTime.text($task.TimeInHours);
+                $displayDur.text($task.Duration);
 
                 $content.append($displayDesc, $displayDur ,$displayClient, $displayTime);
-
                 $content.append('<input type="button" class="edit-btn">');
+
                 if (data[idx].State == TaskState.InProgress) { $content.append($pauseButton); }
                 if (data[idx].State == TaskState.Paused) { $content.append($playButton); }
                 

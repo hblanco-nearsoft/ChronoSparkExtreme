@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HomeController.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="NtlmSelfHostConfiguration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -295,9 +296,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>net stop ChronoSpark</PreBuildEvent>

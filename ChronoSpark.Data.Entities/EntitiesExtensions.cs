@@ -27,6 +27,5 @@ namespace ChronoSpark.Data.Entities
           //  return ent.TimeElapsed; 
             return taskToGetTimeFrom.TimeElapsed;
         }
-
     }
 }
