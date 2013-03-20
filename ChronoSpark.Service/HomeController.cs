@@ -35,168 +35,177 @@ namespace ChronoSpark.Service
             return response;
         }
       
-    public IEnumerable<TaskModel> GetTasks()
+        public IEnumerable<TaskModel> GetTasks()
         {             
-             var taskList = SparkLogic.ReturnTaskList();
-             List<TaskModel> model = new List<TaskModel>();
+                var taskList = SparkLogic.ReturnTaskList();
+                List<TaskModel> model = new List<TaskModel>();
 
-             foreach (SparkTask task in taskList)
-             {
-                 var hours = task.TimeElapsed.TotalHours;
-                 var roundedHours = Math.Floor(hours);
-                 var hoursToPrint = roundedHours.ToString();
-                 var minutes = task.TimeElapsed.Minutes.ToString();
-                 var time = hoursToPrint + ":" + minutes;
-                 var newTask = new TaskModel();
+                foreach (SparkTask task in taskList)
+                {
+                    var hours = task.TimeElapsed.TotalHours;
+                    var roundedHours = Math.Floor(hours);
+                    var hoursToPrint = roundedHours.ToString();
+                    var minutes = task.TimeElapsed.Minutes.ToString();
+                    var time = hoursToPrint + ":" + minutes;
+                    var newTask = new TaskModel();
 
-                 newTask.InjectFrom(task);
-                 newTask.TimeInHours = time;
-                 model.Add(newTask);
-                 //task.TimeElapsed = TimeSpan.Parse(time);
-             }
-             return model;
+                    newTask.InjectFrom(task);
+                    newTask.TimeInHours = time;
+                    model.Add(newTask);
+                    //task.TimeElapsed = TimeSpan.Parse(time);
+                }
+                return model;
         }
 
-    [System.Web.Http.HttpPost]
-    public HttpResponseMessage AddTask(SparkTask task) 
-    {
-        var addCmd = new AddItemCmd();
-
-        var taskToAdd = task;
-        taskToAdd.StartDate = DateTime.Now;
-
-        addCmd.ItemToWork = taskToAdd;
-        addCmd.AddItem();
-
-        return Request.CreateResponse<SparkTask>(HttpStatusCode.OK, task);
-    }
-
-    [System.Web.Http.HttpPost]
-    public HttpResponseMessage SaveChanges(SparkTask receivedTask)
-    {
-        SparkTaskBuilder builder = new SparkTaskBuilder();
-        UpdateItemCmd updateCmd = new UpdateItemCmd();
-
-        var taskToSave = builder.RebuildTask(receivedTask);
-        updateCmd.ItemToWork = taskToSave;
-        updateCmd.UpdateItem();
-        return Request.CreateResponse(HttpStatusCode.OK);
-    }
-
-    [System.Web.Http.HttpPost]
-    public HttpResponseMessage ActivateTask(SparkTask receivedTask)
-    {
-        SparkTaskBuilder builder = new SparkTaskBuilder();
-        UpdateItemCmd updateCmd = new UpdateItemCmd();
-
-        var taskToActivate = builder.ReturnToActivate(receivedTask);
-
-        TaskStateControl taskStateControl = new TaskStateControl();
-        ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
-
-        if (taskToActivate == null)
+        [System.Web.Http.HttpGet]
+        public TaskModel GetTaskData(SparkTask taskToFetch)
         {
+            var returnedTask = SparkLogic.fetch(taskToFetch);
+            var model = new TaskModel();
+            model.InjectFrom(returnedTask);
+            return model;        
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage AddTask(SparkTask task) 
+        {
+            var addCmd = new AddItemCmd();
+
+            var taskToAdd = task;
+            taskToAdd.StartDate = DateTime.Now;
+
+            addCmd.ItemToWork = taskToAdd;
+            addCmd.AddItem();
+
+            return Request.CreateResponse<SparkTask>(HttpStatusCode.OK, task);
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage SaveChanges(SparkTask receivedTask)
+        {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+            var taskToSave = builder.RebuildTask(receivedTask);
+            updateCmd.ItemToWork = taskToSave;
+            updateCmd.UpdateItem();
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage ActivateTask(SparkTask receivedTask)
+        {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
+
+            var taskToActivate = builder.ReturnToActivate(receivedTask);
+
+            TaskStateControl taskStateControl = new TaskStateControl();
+            ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+            if (taskToActivate == null)
+            {
             
+            }
+
+            var result = taskStateControl.SetActiveTask(taskToActivate);
+
+            if (taskToActivate != null && result == false)
+            {
+                taskStateControl.PauseTask();
+                taskStateControl.SetActiveTask(taskToActivate);
+            }
+
+            ReminderControl.StartTime = DateTime.Now;
+            taskProcessor.SetStartTime();
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        var result = taskStateControl.SetActiveTask(taskToActivate);
-
-        if (taskToActivate != null && result == false)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage PauseActiveTask()
         {
+            TaskStateControl taskStateControl = new TaskStateControl();
+            SparkLogic sparkLogic = new SparkLogic();
+            var activeTask = sparkLogic.ReturnActiveTask();
+
+            if (activeTask == null)
+            {
+
+            }
             taskStateControl.PauseTask();
-            taskStateControl.SetActiveTask(taskToActivate);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        ReminderControl.StartTime = DateTime.Now;
-        taskProcessor.SetStartTime();
-
-        return Request.CreateResponse(HttpStatusCode.OK);
-    }
-
-    [System.Web.Http.HttpPost]
-    public HttpResponseMessage PauseActiveTask()
-    {
-        TaskStateControl taskStateControl = new TaskStateControl();
-        SparkLogic sparkLogic = new SparkLogic();
-        var activeTask = sparkLogic.ReturnActiveTask();
-
-        if (activeTask == null)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage FinishTask(SparkTask formData)
         {
+            SparkTaskBuilder builder = new SparkTaskBuilder();
+            UpdateItemCmd updateCmd = new UpdateItemCmd();
 
+            var taskToFinish = builder.ReturnToActivate(formData);
+
+            TaskStateControl taskStateControl = new TaskStateControl();
+            ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
+
+            if (taskToFinish == null)
+            {
+            }
+
+            taskStateControl.FinishTask(taskToFinish);
+
+            ReminderControl.StartTime = DateTime.Now;
+            taskProcessor.SetStartTime();
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
-        taskStateControl.PauseTask();
 
-        return Request.CreateResponse(HttpStatusCode.OK);
-    }
 
-    [System.Web.Http.HttpPost]
-    public HttpResponseMessage FinishTask(SparkTask formData)
-    {
-        SparkTaskBuilder builder = new SparkTaskBuilder();
-        UpdateItemCmd updateCmd = new UpdateItemCmd();
 
-        var taskToFinish = builder.ReturnToActivate(formData);
 
-        TaskStateControl taskStateControl = new TaskStateControl();
-        ActiveTaskProcess taskProcessor = new ActiveTaskProcess();
 
-        if (taskToFinish == null)
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage FileServer(string filename)
         {
+            var response = new HttpResponseMessage();
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", filename);
+
+            response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
+            var parts = filename.Split('.');
+            var extension = parts.Last();
+
+            if (extension.ToLower() == "js")
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
+
+
+            return response;
         }
 
-        taskStateControl.FinishTask(taskToFinish);
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage StyleServer(string filename)
+        {
+            var response = new HttpResponseMessage();
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Styles", filename);
 
-        ReminderControl.StartTime = DateTime.Now;
-        taskProcessor.SetStartTime();
+            response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
+            var parts = filename.Split('.');
+            var extension = parts.Last();
 
-        return Request.CreateResponse(HttpStatusCode.OK);
-    }
+            if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg")
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
+            if (extension.ToLower() == "gif")
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/gif");
 
+            if (extension.ToLower() == "png")
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
+            if (extension.ToLower() == "css")
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/css");
 
-
-    [System.Web.Http.HttpGet]
-    public HttpResponseMessage FileServer(string filename)
-    {
-        var response = new HttpResponseMessage();
-        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", filename);
-
-        response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
-        var parts = filename.Split('.');
-        var extension = parts.Last();
-
-        if (extension.ToLower() == "js")
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
-
-
-        return response;
-    }
-
-    [System.Web.Http.HttpGet]
-    public HttpResponseMessage StyleServer(string filename)
-    {
-        var response = new HttpResponseMessage();
-        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Styles", filename);
-
-        response.Content = new StreamContent(File.Open(filePath, FileMode.Open));
-        var parts = filename.Split('.');
-        var extension = parts.Last();
-
-        if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg")
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-
-        if (extension.ToLower() == "gif")
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/gif");
-
-        if (extension.ToLower() == "png")
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-
-        if (extension.ToLower() == "css")
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/css");
-
-        return response;
-    }
+            return response;
+        }
 
 
     }

@@ -13,7 +13,6 @@
                      Finished: 2,
                      Reported: 3,
                  };
-             console.log(data);
             $taskList.text('');
             for (; idx < length; idx += 1) {
                 var $task = data[idx],
@@ -113,7 +112,7 @@
     function pauseTask()
     {
         $.post('home/pauseActiveTask')
-        .done(function (e)
+        .done(function (data)
         {
             getAllTasks();
             console.log('paused');
@@ -121,6 +120,13 @@
         .fail(function (err) { console.error(err); });   
     }
 
+    function checkForReminders() {
+        $.getJSON('event/checkeventlist')
+        .done(function (data) {
+            if (data.length == 0) { console.log('nothing to report');}
+        })
+        .fail(function (err) { console.error(err);});
+    }
 
     $editInput = $('<form class="editForm" ><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
     $('#descLabel', $editInput).text("Description: ");
@@ -161,5 +167,6 @@
     $(getAllTasks);
     //$('#getAllTasks').click(getAllTasks);
     
+   // setInterval(function () { checkForReminders(); }, 60000);
 
 }(jQuery))
