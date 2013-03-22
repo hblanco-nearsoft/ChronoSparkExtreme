@@ -17,7 +17,9 @@ namespace ChronoSpark.Service
 
     public class EventModel
     {
+        public String Name { get; set; }
         public EventType Type { get; set; }
         public SparkTask SourceTask { get; set; }
+        public String Message { get; set; }
     }
 }

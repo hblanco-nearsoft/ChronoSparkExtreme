@@ -121,9 +121,20 @@
     }
 
     function checkForReminders() {
-        $.getJSON('event/checkeventlist')
+        $.getJSON('events/home/checkeventlist')
         .done(function (data) {
-            if (data.length == 0) { console.log('nothing to report');}
+            var idx,
+                len = data.length,
+                 EventType = {
+                     Name: 0,
+                     Type: 1,
+                     SourceTask: 2,
+                     Message: 3,
+                 };
+            for (idx = 0; idx < len ; idx += 1)
+            {
+                 console.log(data[idx])
+            }
         })
         .fail(function (err) { console.error(err);});
     }
@@ -167,6 +178,6 @@
     $(getAllTasks);
     //$('#getAllTasks').click(getAllTasks);
     
-   // setInterval(function () { checkForReminders(); }, 60000);
+    setInterval(function () { checkForReminders(); }, 60000);
 
 }(jQuery))

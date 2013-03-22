@@ -34,22 +34,22 @@ namespace ChronoSpark.Data
             };
 
 
-            Reminder thisReminder = new Reminder
-            {
-                Description = "test reminder",
-                Interval = 1,
-                Type = ReminderType.NoActiveTask,
-                Source = ReminderSource.System
-            };
+            //Reminder thisReminder = new Reminder
+            //{
+            //    Description = "test reminder",
+            //    Interval = 1,
+            //    Type = ReminderType.NoActiveTask,
+            //    Source = ReminderSource.System
+            //};
 
 
-            Reminder thisReminder2 = new Reminder
-            {
-                Description = "reminder 2",
-                Interval = 1,
-                Type = ReminderType.DefaultHourly,
-                Source = ReminderSource.System
-            };
+            //Reminder thisReminder2 = new Reminder
+            //{
+            //    Description = "reminder 2",
+            //    Interval = 1,
+            //    Type = ReminderType.DefaultHourly,
+            //    Source = ReminderSource.System
+            //};
             
 
             //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
@@ -114,8 +114,8 @@ namespace ChronoSpark.Data
             #region debug
 #if DEBUG
             repo.Add(thisTask);
-            repo.Add(thisReminder);
-            repo.Add(thisReminder2);
+            //repo.Add(thisReminder);
+            //repo.Add(thisReminder2);
             repo.Add(theOtherTask);
 #endif
             #endregion

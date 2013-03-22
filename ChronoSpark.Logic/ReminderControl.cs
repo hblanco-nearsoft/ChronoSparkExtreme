@@ -131,8 +131,8 @@ namespace ChronoSpark.Logic
                         {
                             reminderControl.OnEventIntervalPassed(eventArgs);
                         }                        
-                        if (reminder.Type==ReminderType.EndOfWeek) { reportWeekReminder.RemindEndOfWeek(reminder); }
-                        if (reminder.Type==ReminderType.StartOfWeek) { reportWeekReminder.RemindStartOfWeek(reminder); }
+                        if (reminder.Type == ReminderType.EndOfWeek) { reportWeekReminder.RemindEndOfWeek(reminder); }
+                        if (reminder.Type == ReminderType.StartOfWeek) { reportWeekReminder.RemindStartOfWeek(reminder); }
                         if (reminder.Type == ReminderType.StartOfDay) { dailyReminders.RemindStartOfDay(reminder); }
                         if (reminder.Type == ReminderType.EndOfDay) { dailyReminders.RemindEndOfDay(reminder); }
                     }

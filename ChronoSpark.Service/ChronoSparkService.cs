@@ -27,15 +27,21 @@ namespace ChronoSpark.Service
         private HttpSelfHostServer _server;
         private readonly HttpSelfHostConfiguration _config;
         public const string ServiceAddress = "http://localhost:8080"; //TODO: Move this to config file
+        public ListenerControl listeners = new ListenerControl();
+        ReminderControl reminderControl = new ReminderControl();
 
         public ChronoSparkService()
         {
             InitializeComponent();
+            listeners.Suscribe(reminderControl);
 
             _config = new NtlmSelfHostConfiguration(ServiceAddress);
 
             _config.Routes.MapHttpRoute("StaticJS", "Scripts/{controller}/{action}/{filename}", new { controller = "Home", action = "FileServer" });
+
+            _config.Routes.MapHttpRoute("EventLIst", "Events/{controller}/{action}", new { controller = "Home", action = "CheckEventList" });
             
+
             _config.Routes.MapHttpRoute("DefaultApi",
                 "chronospark/{controller}/{action}",
                 new {controller = "home", action = "something", id = RouteParameter.Optional });
@@ -57,8 +63,7 @@ namespace ChronoSpark.Service
             });
 
             Razor.SetTemplateService(new TemplateService(templateConfig));
-
-
+            
             if (!System.Diagnostics.EventLog.SourceExists("MySource"))
             {
                 System.Diagnostics.EventLog.CreateEventSource(
@@ -67,9 +72,7 @@ namespace ChronoSpark.Service
             eventLog1.Source = "MySource";
             eventLog1.Log = "MyNewLog";
         }
-
-
-
+        
         protected override void OnStart(string[] args)
         {
             SparkLogic.Initialize();

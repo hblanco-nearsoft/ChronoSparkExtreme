@@ -123,7 +123,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventController.cs" />
     <Compile Include="EventModel.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="ListenerControl.cs" />

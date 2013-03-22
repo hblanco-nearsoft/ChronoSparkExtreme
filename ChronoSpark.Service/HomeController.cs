@@ -160,11 +160,7 @@ namespace ChronoSpark.Service
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
-
-
-
-
-
+        
         [System.Web.Http.HttpGet]
         public HttpResponseMessage FileServer(string filename)
         {
@@ -205,6 +201,28 @@ namespace ChronoSpark.Service
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/css");
 
             return response;
+        }
+
+        public static List<EventModel> listOfEvents = new List<EventModel>();
+
+        [System.Web.Http.HttpGet]
+        public List<EventModel> CheckEventList()
+        {
+            if (listOfEvents.Count > 0)
+            {
+                var savedList = new List<EventModel>(listOfEvents);
+                listOfEvents.Clear();
+                return savedList;
+            }
+            else
+            {
+                return listOfEvents;
+            }
+        }
+
+        public static void RegisterEvent(EventModel eventToRegister)
+        {
+            listOfEvents.Add(eventToRegister);
         }
 
 
