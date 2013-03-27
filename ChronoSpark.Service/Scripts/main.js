@@ -126,10 +126,9 @@
             var idx,
                 len = data.length,
                  EventType = {
-                     Name: 0,
-                     Type: 1,
-                     SourceTask: 2,
-                     Message: 3,
+                     IntervalPassed:0,
+                     NoActiveTask:1,
+                     EndOfWeek:2
                  };
             for (idx = 0; idx < len ; idx += 1)
             {

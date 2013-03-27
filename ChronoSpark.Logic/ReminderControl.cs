@@ -119,8 +119,7 @@ namespace ChronoSpark.Logic
                     
                     ReminderEventArgs eventArgs = new ReminderEventArgs(reminder, activeTask);
                     ReminderControl reminderControl = new ReminderControl();
-
-
+                    
                     if (timeElapsed.Minutes >= 1)
                     {
                         if (timeElapsed.Minutes % reminder.Interval == 0 && activeTask == null && reminder.Type == ReminderType.NoActiveTask)

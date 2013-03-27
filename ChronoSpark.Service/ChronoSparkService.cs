@@ -27,13 +27,12 @@ namespace ChronoSpark.Service
         private HttpSelfHostServer _server;
         private readonly HttpSelfHostConfiguration _config;
         public const string ServiceAddress = "http://localhost:8080"; //TODO: Move this to config file
-        public ListenerControl listeners = new ListenerControl();
-        ReminderControl reminderControl = new ReminderControl();
 
+   
         public ChronoSparkService()
         {
             InitializeComponent();
-            listeners.Suscribe(reminderControl);
+           
 
             _config = new NtlmSelfHostConfiguration(ServiceAddress);
 
@@ -75,8 +74,15 @@ namespace ChronoSpark.Service
         
         protected override void OnStart(string[] args)
         {
+          
+
             SparkLogic.Initialize();
+
             ReminderControl defaultController = new ReminderControl();
+
+            ListenerControl listeners = new ListenerControl();
+            listeners.Suscribe(defaultController);
+
             ThreadPool.QueueUserWorkItem(delegate { defaultController.ActivateReminders(); });
              _server = new HttpSelfHostServer(_config);            
             _server.OpenAsync();        

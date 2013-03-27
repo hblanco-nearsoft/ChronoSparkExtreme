@@ -203,11 +203,17 @@ namespace ChronoSpark.Service
             return response;
         }
 
-        public static List<EventModel> listOfEvents = new List<EventModel>();
+        public static List<EventModel> listOfEvents;
 
         [System.Web.Http.HttpGet]
         public List<EventModel> CheckEventList()
         {
+            if (listOfEvents == null)
+            {
+                listOfEvents = new List<EventModel>();
+            }
+
+
             if (listOfEvents.Count > 0)
             {
                 var savedList = new List<EventModel>(listOfEvents);
@@ -222,6 +228,10 @@ namespace ChronoSpark.Service
 
         public static void RegisterEvent(EventModel eventToRegister)
         {
+            if (listOfEvents == null) {
+                listOfEvents = new List<EventModel>();
+            }
+
             listOfEvents.Add(eventToRegister);
         }
 
