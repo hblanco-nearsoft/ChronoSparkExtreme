@@ -68,12 +68,34 @@ input[type=text].input-big {
   right: 0;
   margin-right: 10px;
 }
-#tasks-wrapper .actions input {
+#tasks-wrapper .actions .edit-btn {
   width: 16px;
   height: 16px;
   margin: 0;
   padding: 0;
   display: inline-block;
+  position: absolute;
+  right: 33px;
+}
+
+#tasks-wrapper .actions .play-btn {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  position: absolute;
+  right: 16px;
+}
+
+#tasks-wrapper .actions .pause-btn {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  position: absolute;
+  right: 16px;
 }
 
 #tasks-wrapper .actions li {

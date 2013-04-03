@@ -68,7 +68,7 @@ namespace ChronoSpark.Data
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
                 Description = "There is no active task.",
-                Interval = 120,
+                Interval = 5,
                 Type = ReminderType.NoActiveTask,
                 Source= ReminderSource.System
             };

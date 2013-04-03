@@ -75,7 +75,6 @@ namespace ChronoSpark.Service
         protected override void OnStart(string[] args)
         {
           
-
             SparkLogic.Initialize();
 
             ReminderControl defaultController = new ReminderControl();
