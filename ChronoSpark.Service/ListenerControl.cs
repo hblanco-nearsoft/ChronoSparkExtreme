@@ -26,7 +26,7 @@ namespace ChronoSpark.Service
                 Type = EventType.IntervalPassed,
                 SourceTask = args.TheTask,
                 Name = "Interval Passed",
-                Message = "Are you still working on this?"
+                Message = "Are you still working on '"+ args.TheTask.Description  +"'?"
             };
             HomeController.RegisterEvent(model);
         }

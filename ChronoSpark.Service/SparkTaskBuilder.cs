@@ -13,16 +13,12 @@ namespace ChronoSpark.Service
 {
     public class SparkTaskBuilder
     {
-        public SparkTask BuildTask(SparkTask sparktask) 
-        {          
-            SparkTask builtTask = new SparkTask
-            {
-                Description = sparktask.Description,
-                Duration = sparktask.Duration,
-                Client = sparktask.Client,
-                StartDate = DateTime.Now,
-                State = TaskState.Paused,
-            };
+        public SparkTask BuildTask(SparkTask receivedTask) 
+        {
+            SparkTask builtTask = new SparkTask();
+            builtTask.InjectFrom(receivedTask);
+            builtTask.StartDate = DateTime.Now;
+            builtTask.State = TaskState.Paused;
 
             return builtTask;
         }

@@ -55,6 +55,7 @@ namespace ChronoSpark.Data
             //ThreadPool.QueueUserWorkItem(delegate { ReminderControl.ActivateReminder(thisReminder, thisTask); });
 #endif
             #endregion  
+            
 
             DateTime EntranceTime = DateTime.Now;
             TimeSpan ts = new TimeSpan(9, 0, 0);
@@ -68,7 +69,7 @@ namespace ChronoSpark.Data
             Reminder DefaultReminderNoOtherActive = new Reminder
             {
                 Description = "There is no active task.",
-                Interval = 5,
+                Interval = 120,
                 Type = ReminderType.NoActiveTask,
                 Source= ReminderSource.System
             };
@@ -114,8 +115,8 @@ namespace ChronoSpark.Data
             #region debug
 #if DEBUG
             repo.Add(thisTask);
-            //repo.Add(thisReminder);
-            //repo.Add(thisReminder2);
+            repo.Add(thisReminder);
+            repo.Add(thisReminder2);
             repo.Add(theOtherTask);
 #endif
             #endregion

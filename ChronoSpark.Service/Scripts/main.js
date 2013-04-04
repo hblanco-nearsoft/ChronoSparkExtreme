@@ -16,21 +16,22 @@
             $taskList.text('');
             for (; idx < length; idx += 1) {
                 var $task = data[idx],
-                    $item = $('<li id = "' + data[idx].Id + '"/>'),
+                    $item = $('<li id = "' + $task.Id + '" duration = "'+ $task.Duration +'" />'),
                     $content = $('<ul class="actions"></ul>'),
                     $playButton = $('<input type="button" class="play-btn"/>'),
                     $pauseButton = $('<input type="button" class="pause-btn"/>'),
                     $displayDesc = $('<li id="desc"/>'),
                     $displayClient = $('<li id="clie"/>'),
-                    $displayTime = $('<li id="elapsed"/>'),
-                    $displayDur = $('<li id="dura"/>');
+                    $displayTime = $('<li id="elapsed"/>');
+                //  $displayDur = $('<li id="dura"/>');
+
 
                 $displayDesc.text($task.Description);
                 $displayClient.text($task.Client);
                 $displayTime.text($task.TimeInHours);
-                $displayDur.text($task.Duration);
+               // $displayDur.text($task.Duration);
 
-                $content.append($displayDesc, $displayDur ,$displayClient, $displayTime);
+                $content.append($displayDesc, $displayClient, $displayTime);
                 $content.append('<input type="button" class="edit-btn">');
 
                 if (data[idx].State == TaskState.InProgress) { $content.append($pauseButton); }
@@ -75,7 +76,7 @@
         var data = {
             Id: $('#save').parent().attr('id'),
             Description: $('#Description').val(),
-            //Duration: $('#duration').val(),
+            Duration: $('#Duration').val(),
             Client: $('#Client').val()
         };
         
@@ -125,17 +126,28 @@
         .done(function (data) {
             var idx,
                 len = data.length,
-                 EventType = {
-                     IntervalPassed:0,
-                     NoActiveTask:1,
-                     EndOfWeek:2
-                 };
+                $faceBoxDiv = $('<div/>'),
+                $ok = $('<input id = "ok" type = "button" value = "Ok"/>'),
+                $reminder;
+            EventType = {
+                IntervalPassed:0,
+                NoActiveTask:1,
+                EndOfWeek:2
+            };
             for (idx = 0; idx < len ; idx += 1)
             {
-                 console.log(data[idx])
+                $reminder = data[idx];
+                $faceBoxDiv.text($reminder.Message);
+                $faceBoxDiv.append('</br>');
+                $faceBoxDiv.append($ok);
+                $.facebox($faceBoxDiv);
+                $.titleAlert($reminder.Name);
+                $faceBoxDiv.on('click', '#ok', function (e) {
+                    $(document).trigger('close.facebox');
+                })
             }
         })
-        .fail(function (err) { console.error(err);});
+        .fail(function (err) { console.error(err); });
     }
 
     $editInput = $('<form class="editForm" ><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
@@ -159,7 +171,7 @@
     $taskList.on('click', 'li > ul > input.edit-btn', function (e)
     {
         $('#Description', $editInput).val($(this).parent().children('#desc').text());
-        $('#Duration', $editInput).val($(this).parent().children('#dura').text());
+        $('#Duration', $editInput).val($(this).parent().parent().attr('duration'));
         $('#Client', $editInput).val($(this).parent().children('#clie').text());
         $.facebox($editInput);
         $('.editForm').attr('id', $(this).parent().parent().attr('id'));
