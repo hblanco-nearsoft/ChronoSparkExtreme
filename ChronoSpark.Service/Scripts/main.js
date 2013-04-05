@@ -48,7 +48,7 @@
 
     function addTask(e)
     {
-          var data = {
+        var data = {
             Description: $('#description').val(),
             Duration: $('#duration').val(),
             Client: $('#client').val()
@@ -58,6 +58,9 @@
         //    console.log(data);
         //})
         //.fail();
+        if (!validateTask(data)) {
+            return false;
+        }
 
         $.ajax({
             url: 'http://localhost:8080/home/addtask',
@@ -70,6 +73,36 @@
             console.log(data);
         })
         .fail(function (err) { console.error(err); });    
+    }
+
+    function validateTask(e) {
+        var $validation = $('#validation');
+        
+        $validation.text("");
+
+        if (!e.Description) {
+            $validation.append('<li>Description must be filled</li><br/>');
+            return false;
+        }
+        if (!e.Duration) {
+            $validation.append('<li>Duration must be filled</li><br/>');
+            return false;
+        }
+        if (isNaN(e.Duration)) {
+            $validation.append('<li>Duration must be a number</li><br/>');
+            return false;
+        }
+        if (e.Duration <= 0) {
+            $validation.append('<li>Duration must be greater than 0</li><br/>')
+            return false;
+        }
+
+        $validation.text("");
+        return true;
+    }
+
+    function is_number(value) {
+        return typeof value === "number" && isFinite(value);
     }
 
     function saveChanges(e) {

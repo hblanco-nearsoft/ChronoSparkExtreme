@@ -37,7 +37,7 @@ namespace ChronoSpark.Data
             Reminder thisReminder = new Reminder
             {
                 Description = "test reminder",
-                Interval = 1,
+                Interval = 10,
                 Type = ReminderType.NoActiveTask,
                 Source = ReminderSource.System
             };
