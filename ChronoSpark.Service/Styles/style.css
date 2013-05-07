@@ -25,7 +25,7 @@ form h2 {
   margin: 5px 0;
 }
 
-input[type=text].input-big {
+input.input-big {
   width: 230px;
   height: 27px;
   border: 1px solid #999;
@@ -102,16 +102,16 @@ input[type=text].input-big {
   display: inline-block;
 }
 
-#tasks-wrapper .actions input.delete-btn {
+#tasks-wrapper .actions li.delete-btn {
   background-image: url('icon-delete.png');
 }
-#tasks-wrapper .actions input.edit-btn {
+#tasks-wrapper .actions li.edit-btn {
   background-image: url('icon-edit.png');
 }
-#tasks-wrapper .actions input.pause-btn {
+#tasks-wrapper .actions li.pause-btn {
   background-image: url('pause.png');
 }
-#tasks-wrapper .actions input.play-btn {
+#tasks-wrapper .actions li.play-btn {
   background-image: url('play.png');
 }
 

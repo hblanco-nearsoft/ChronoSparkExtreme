@@ -1,6 +1,6 @@
 ﻿(function chronoSparkMain($) {
     var $taskList = $('#tasks-list');
-    
+
     function getAllTasks(e)
     {
         $.getJSON('home/gettasks')
@@ -13,13 +13,14 @@
                      Finished: 2,
                      Reported: 3,
                  };
+             idx = length -1;
             $taskList.text('');
-            for (; idx < length; idx += 1) {
+            for (; idx >= 0; idx -= 1) {
                 var $task = data[idx],
                     $item = $('<li id = "' + $task.Id + '" duration = "'+ $task.Duration +'" />'),
                     $content = $('<ul class="actions"></ul>'),
-                    $playButton = $('<input type="button" class="play-btn"/>'),
-                    $pauseButton = $('<input type="button" class="pause-btn"/>'),
+                    $playButton = $('<li class="play-btn"/>'),
+                    $pauseButton = $('<li class="pause-btn"/>'),
                     $displayDesc = $('<li id="desc"/>'),
                     $displayClient = $('<li id="clie"/>'),
                     $displayTime = $('<li id="elapsed"/>');
@@ -32,11 +33,11 @@
                // $displayDur.text($task.Duration);
 
                 $content.append($displayDesc, $displayClient, $displayTime);
-                $content.append('<input type="button" class="edit-btn">');
+                $content.append('<li class="edit-btn">');
 
                 if (data[idx].State == TaskState.InProgress) { $content.append($pauseButton); }
                 if (data[idx].State == TaskState.Paused) { $content.append($playButton); }
-                
+
                 //$item.text(data[idx].Description);
                 $item.append($content);
                 $taskList.append($item);                 
@@ -72,12 +73,18 @@
             getAllTasks();
             console.log(data);
         })
-        .fail(function (err) { console.error(err); });    
+        .fail(function (err) { console.error(err); });
+
+        return false;
+    }
+
+    function is_number(value) {
+        return typeof value === "number" && isFinite(value);
     }
 
     function validateTask(e) {
         var $validation = $('#validation');
-        
+
         $validation.text("");
 
         if (!e.Description) {
@@ -88,7 +95,7 @@
             $validation.append('<li>Duration must be filled</li><br/>');
             return false;
         }
-        if (isNaN(e.Duration)) {
+        if (is_number(e.Duration)) {
             $validation.append('<li>Duration must be a number</li><br/>');
             return false;
         }
@@ -106,13 +113,14 @@
     }
 
     function saveChanges(e) {
+        e.preventDefault();
         var data = {
             Id: $('#save').parent().attr('id'),
             Description: $('#Description').val(),
             Duration: $('#Duration').val(),
             Client: $('#Client').val()
         };
-        
+
         $.ajax({
             url: 'http://localhost:8080/home/savechanges',
             type: 'POST',
@@ -120,6 +128,7 @@
             data: JSON.stringify(data)
         }).done(function (datat) {
             console.log(data);
+            getAllTasks();
         })
         .fail(function (err) { console.error(err); });
     }
@@ -181,9 +190,14 @@
             }
         })
         .fail(function (err) { console.error(err); });
+
+        getAllTasks();
     }
 
-    $editInput = $('<form class="editForm" ><label id="descLabel"/><input id="Description" /><br/><label id="durLabel"/><input id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="button" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
+    $editInput = $('<form class="editForm" ><label id="descLabel"/><input id="Description" required /><br/><label id="durLabel"/><input type="number" required id="Duration"/><br/><label id="clientLabel"/><input id="Client"/><br/><input type="submit" id="save" value="Update"/><input type="button" id="cancel" value="Cancel"/></form>');
+
+
+
     $('#descLabel', $editInput).text("Description: ");
     $('#durLabel', $editInput).text("Duration: ");
     $('#clientLabel', $editInput).text("Client: ");
@@ -192,23 +206,23 @@
     /** Event Handling Setup*/
 
     //$('#tasks-list > li > ul > input.edit-btn').on('click', function (e) { console.log($(this).parent().parent().text()); console.log('In Action Button'); });
-    $taskList.on('click', 'li > ul > input.play-btn', function (e)
+    $taskList.on('click', 'li > ul > li.play-btn', function (e)
     {
         activateTask($(this).parent().parent().attr('id'));
     })
 
-    $taskList.on('click', 'li > ul > input.pause-btn', function (e) {
+    $taskList.on('click', 'li > ul > li.pause-btn', function (e) {
         pauseTask();
     })
 
-    $taskList.on('click', 'li > ul > input.edit-btn', function (e)
+    $taskList.on('click', 'li > ul > li.edit-btn', function (e)
     {
         $('#Description', $editInput).val($(this).parent().children('#desc').text());
         $('#Duration', $editInput).val($(this).parent().parent().attr('duration'));
         $('#Client', $editInput).val($(this).parent().children('#clie').text());
         $.facebox($editInput);
         $('.editForm').attr('id', $(this).parent().parent().attr('id'));
-        $editInput.on('click', '#save', function (e) {
+        $editInput.submit(function (e) {
             saveChanges(e);
             $(document).trigger('close.facebox');
             getAllTasks();
@@ -217,11 +231,11 @@
             $(document).trigger('close.facebox');
         });
     });
-       
-    $('#addtask').click(addTask);
+
+    $('#task-form').submit(addTask);
     $(getAllTasks);
     //$('#getAllTasks').click(getAllTasks);
-    
+
     setInterval(function () { checkForReminders(); }, 60000);
 
 }(jQuery))
