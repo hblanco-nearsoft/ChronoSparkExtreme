@@ -92,6 +92,16 @@ namespace ChronoSpark.Service
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [System.Web.Http.HttpDelete]
+        public HttpResponseMessage DeleteTask(SparkTask task) 
+        {
+            var deleteCommand = new DeleteItemCmd();
+            deleteCommand.ItemToWork = task;
+            deleteCommand.DeleteItem();
+
+            return Request.CreateResponse<SparkTask>(HttpStatusCode.OK, task);
+        }
+
         [System.Web.Http.HttpPost]
         public HttpResponseMessage ActivateTask(SparkTask receivedTask)
         {

@@ -1,0 +1,210 @@
+﻿* {
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+}
+h2 {
+    color: darkorange;
+}
+
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+
+#wrapper {
+ height: 100%;
+}
+
+#main {
+    position :static;
+    width: 960px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+header {
+    background-color: lightgray;   
+}
+
+h1 {
+    background-image: url('logo.png');
+    height: 60px;
+    background-repeat: no-repeat;
+}
+header ul {
+    background-color: black;
+    border-top-style: solid;
+    border-top-color: #ff6633;
+    color: white;
+}
+header li {
+    display: inline-block;
+}
+header li:hover {
+    display: inline-block;
+    background-color: #ff6633;
+}
+
+#list {
+    border-top-style: solid;
+    border-top-color: #cacaca;
+    border-top-width: 2px;
+}
+
+#tasks-list {
+    margin-top: 10px;
+    padding-top: 2px;
+}
+
+#list .task {
+    height: 35px;
+}
+
+#list .task:nth-child(odd){
+    background-color: whitesmoke;
+}
+
+#fields {
+    width: 960px;
+}
+
+#fields span.desc{
+    position: relative;
+    float: left;
+    width: 40%;
+}
+
+#fields span.dura{
+    position: relative;
+    float: left;
+    width: 10%;
+}
+
+#fields span.cli{
+    position: relative;
+    float: left;
+}
+
+#fields span.ela {
+    position: relative;
+    float: left;
+    width: 15%;
+}
+
+.data li{
+  display: inline-block;
+}
+
+.data li.desc {
+    float:left;
+    width: 40%;
+    font: bold;
+    color: #ff6633;
+}
+.data li.dura {
+    float:left;
+    width: 10%;
+}
+
+.data li.ela {
+    float: left;
+    width: 15%;
+}
+
+.data li.cli {
+    float: left;
+}
+
+
+span.actions{
+  position: absolute;
+  right: 15px;
+}
+
+span.actions li{
+  color:transparent;
+}
+
+.k-listview {
+    border-color: transparent;
+}
+
+.actions li.delete {
+  margin-top: 2px;
+  width: 70px;
+  height: 30px;
+  background-image: url('deletebtn.png');
+}
+
+.actions li.edit {
+  margin-top: 2px;
+  height: 30px;
+  width: 54px; 
+  background-image: url('editbtn.png');
+}
+
+.actions li.cancel {
+  margin-top: 2px;
+  width: 70px;
+  height: 30px;
+  background-image: url('deletebtn.png');
+}
+
+.actions li.update {
+  margin-top: 2px;
+  height: 30px;
+  width: 54px; 
+  background-image: url('editbtn.png');
+}
+
+.pager div {
+   float: left;
+}
+
+.k-pager-wrap
+{
+    border: 0;
+}
+
+footer {
+    width: 960px;
+    border-top-style: solid;
+    border-top-color: #cacaca;
+    border-top-width: 2px;
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+    margin-left: auto;
+    margin-right: auto;
+    color:#cacaca;
+    padding-top: 10px;
+}
+
+#bot-nav {
+    float: right;
+    color: #cacaca;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #ff6633;
+}
+footer a:link {
+    text-decoration: none;
+    color: #ff6633;
+}
+footer a:visited {
+    text-decoration: none;
+    color: #ff6633;
+}
+footer a:active {
+    text-decoration: none;
+    color: #ff6633;
+}

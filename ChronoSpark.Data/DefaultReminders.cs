@@ -46,7 +46,7 @@ namespace ChronoSpark.Data
             Reminder thisReminder2 = new Reminder
             {
                 Description = "reminder 2",
-                Interval = 1,
+                Interval = 10,
                 Type = ReminderType.DefaultHourly,
                 Source = ReminderSource.System
             };

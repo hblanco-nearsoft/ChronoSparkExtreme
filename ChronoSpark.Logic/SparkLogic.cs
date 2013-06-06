@@ -22,7 +22,7 @@ namespace ChronoSpark.Logic
             DefaultReminders.AddDefaultReminders();
             return true;
         }
-         
+
         public static IEnumerable<SparkTask> ReturnTaskList() 
         {
             Repository repo = new Repository();

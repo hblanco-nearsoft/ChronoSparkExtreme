@@ -40,12 +40,49 @@
 
                 //$item.text(data[idx].Description);
                 $item.append($content);
-                $taskList.append($item);                 
+                $taskList.append($item);
             }
          }).fail(function (err) {
              console.error(err);
          });
     }
+    //function getAllTasks(e) {
+    //    $.getJSON('home/gettasks').done(function (data) {
+           
+    //    });
+
+    //}
+    
+    //var dataSource = new kendo.data.DataSource({
+    //    transport: {
+    //        read: {
+    //            url: "home/gettasks",
+    //            dataType: "json",
+    //        }
+    //    },
+    //    change: function () {
+
+    //    },
+    //    pageSize: 10
+    //});
+
+    //$taskList.kendoGrid({
+    //    dataSource: dataSource,
+    //    groupable: true,
+    //    sortable: true,
+    //    pageable: {
+    //        regresh: true,
+    //        pageSizes: true
+    //    },
+    //    columns: [
+	//			"Description",
+	//			"Duration",
+	//			"Client",
+    //            { command: { text: "View Details", click: addTask }, title: " ", width: "140px" }
+    //    ],
+    //    editable: "inline"
+
+    //})
 
     function addTask(e)
     {

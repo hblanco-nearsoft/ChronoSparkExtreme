@@ -140,7 +140,7 @@ namespace ChronoSpark.Data
                  *     we decide so, we would need to also delete it.
                  */
 
-                    if (DocStore.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
+                    if (_docStore.DatabaseCommands.Head(toDeleteItem.Id) == null) { return false; }
                     var doc = session.Load<T>(toDeleteItem.LoadString());
                     try
                     {

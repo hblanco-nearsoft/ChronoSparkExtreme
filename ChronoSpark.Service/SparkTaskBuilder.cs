@@ -19,6 +19,7 @@ namespace ChronoSpark.Service
             builtTask.InjectFrom(receivedTask);
             builtTask.StartDate = DateTime.Now;
             builtTask.State = TaskState.Paused;
+            builtTask.Id = null;
 
             return builtTask;
         }
